@@ -2,6 +2,8 @@
 
 int tcpInit(const char * ip, const char * port)
 {
+    printf("server.c ip=%s,port=%s\n",ip,port);
+
     //1. 创建TCP的监听套接字
     int listenfd = socket(AF_INET, SOCK_STREAM, 0);
     printf("listenfd: %d\n", listenfd);
