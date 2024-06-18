@@ -58,12 +58,13 @@ int main(void)
     close(exitPipe[1]);//子进程关闭写端
     //打开日志文件流
     FILE *fp = fopen("./sys.log","a");
-    if(fp){
+    if(fp){ 
         log_add_fp(fp,LOG_INFO);
     }else{
         exit(1);
 
     }
+
     //true - 关闭控制台写日志；
     log_set_quiet(true);
     //设置锁为递归锁
@@ -159,6 +160,10 @@ int main(void)
                     close(listenfd);
                     close(epfd);
                     close(exitPipe[0]);
+                    //关闭目录流
+                    fclose(fp);
+                    pthread_mutex_destroy(&lock);
+                    pthread_mutexattr_destroy(&attr);
                     printf("\nchild process exit.\n");
                     exit(0);
                 } else {//客户端的连接的处理
@@ -167,8 +172,6 @@ int main(void)
             }
         }
     }
-    //关闭目录流
-    fclose(fp);
     return 0;
 }
 
