@@ -2,13 +2,24 @@
 
 int main() {
     //连接服务器
-    int sockfd = my_connect("0.0.0.0", "8080");
-
+     // int sockfd = my_connect("127.0.0.1", "8080");
+    int sockfd = socket(AF_INET, SOCK_STREAM, 0);                 
+     ERROR_CHECK(sockfd, -1, "sockfd");                           
+                                                                  
+    struct sockaddr_in addr;                                      
+    int ret = inet_aton("127.0.0.1", &addr.sin_addr);                      
+    ERROR_CHECK(ret, -1, "inet_aton");                            
+    addr.sin_port = htons(atoi("8080"));                            
+    addr.sin_family=AF_INET;                                      
+                                                                  
+    ret = connect(sockfd, (struct sockaddr *)&addr, sizeof(addr));
+    ERROR_CHECK(ret, -1, "connect");                              
+                                                                  
     //函数在login.c
-    //login(sockfd);
+    login(sockfd);
 
     char str[MAXLINE];
-    for (;;) {
+    for (; ; ) {
         printf(">> "); // 提示符
         fgets(str, MAXLINE, stdin); // 从stdin读取命令
 
