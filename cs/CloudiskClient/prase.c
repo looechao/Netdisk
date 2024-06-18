@@ -44,11 +44,12 @@ CmdType parse_input(char* input, int peerfd) {
     train_t information;
     information.type = get_type(strs[0]);
     
-    for(int i = 1; i < cnt; ++i) {
-        printf("strs[%d]: %s\n", i, strs[i]);
-        information.len=strlen(strs[i]);
-        strcpy(information.buff,strs[i]);
-    }
+    //假设最多两个命令
+    //for(int i = 1; i < cnt; ++i) {
+        //printf("strs[%d]: %s\n", i, strs[i]);
+        information.len=strlen(strs[1]);
+        strcpy(information.buff,strs[1]);
+    //}
 
     //如果是gets命令，需要查看当前是否有这个文件
     if(information.type == CMD_TYPE_GETS){

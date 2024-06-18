@@ -40,7 +40,9 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
     File file={0,{0}};
     file.length=strlen(filename);
     strcpy(file.content, filename);
+    
     puts(filename);
+    
     int ret=Send_Info(sockfd,(char *)&file,sizeof(file.length)+file.length,MSG_NOSIGNAL);
     if (ret == -1) {
         perror("send");
@@ -50,9 +52,15 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
     }
 
     int fd=open(file_address,O_RDWR,0666);
+    if(fd < 0){
+        printf("文件%s打开错误\n",file_address);
+        return -1;
+    }
+
     //实现断开，再传输；客户端是否有此文件 ；若有，获取大小；
     // 移动文件指针到位置后移n字节
     off_t offset = lseek(fd, file_start, SEEK_SET);
+   
     if (offset == -1) {
         perror("lseek");
          //message->log_level=ACTION_INFO;
@@ -70,6 +78,7 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
     file.length=sizeof(file_stat.st_size);
     memcpy(file.content,&file_stat.st_size,file.length);
     ret=Send_Info(sockfd,(char *)&file,sizeof(file.length)+file.length,MSG_NOSIGNAL);
+    
     if (ret == -1) {
         perror("send");
          //message->log_level=ACTION_INFO;
