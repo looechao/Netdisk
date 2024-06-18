@@ -64,6 +64,8 @@ int main(void)
         exit(1);
 
     }
+    //true - 关闭控制台写日志；
+    log_set_quiet(true);
     //设置锁为递归锁
     pthread_mutexattr_init(&attr);
     pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
