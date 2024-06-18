@@ -11,7 +11,7 @@ LDFLAGS = -lcrypt
 SRCS = $(wildcard *.c)
 
 # 可执行文件
-TARGET = client
+TARGET = main
 
 # 默认目标
 all: $(TARGET)
