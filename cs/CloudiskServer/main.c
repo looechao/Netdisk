@@ -1,9 +1,11 @@
 #include "thread_pool.h"
+#include "linked_list.h"
+#include "user.h"
 
 #define EPOLL_ARR_SIZE 100
 
 int exitPipe[2];
-
+ListNode * userList = NULL;
 void sigHandler(int num)
 {
     printf("\n sig is coming.\n");
@@ -76,6 +78,10 @@ int main(int argc, char ** argv)
                     //将默认工作目录,用户ip放入用户结构体,
                     strcpy(client_users[peerfd].directory_address,"./User");    
                     client_users[peerfd].clientaddr=clientaddr;
+                     //添加用户节点
+                    user_t * user = (user_t*)calloc(1, sizeof(user_t));
+                    user->sockfd = peerfd;
+					appendNode(&userList, user);
                 } else if(fd == exitPipe[0]) {
                     //线程池要退出
                     int howmany = 0;
