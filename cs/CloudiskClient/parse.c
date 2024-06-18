@@ -86,8 +86,16 @@ int check_files(train_t *command){
     char full_path[1024];
     // 初始化 full_path 为 default_download 的内容
     strcpy(full_path, default_download);
-    // 将 full_path 拼接到 full_path
-    strcat(full_path, command->buff);
+    // 将 command->buff 拼接到 full_path
+    // 取出 command->buff 文件名
+    char* last_post = strrchr(command->buff, '/');
+    if (last_post != NULL) {
+        last_post++;
+    }
+    else {
+        last_post = command->buff;
+    }
+    strcat(full_path, last_post);
 
     
     struct stat file_stat;
