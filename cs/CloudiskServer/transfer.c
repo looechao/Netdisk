@@ -4,28 +4,31 @@ ssize_t Recv_Info(int sockfd,char* buff,off_t readsize,int flags);
 //写操作
 ssize_t Send_Info(int sockfd,const char* buff,int sendsize,int flags);
 
-int transferFile(int sockfd,char *file_address,off_t file_start,msg* message);
+int transferFile(int sockfd,char *file_address,off_t file_start);
 
 
-int putsCommand(task_t * task,msg* message) {
+void putsCommand(task_t * task) {
     printf("execute puts command.\n");
-    return 1;
 }
 
-int getsCommand(task_t * task,msg* message) {
+void getsCommand(task_t * task) {
     printf("execute gets command.\n");
     //获取文件位置
     char file_address[4096];
     strcpy(file_address,client_users[task->peerfd].directory_address);
+    
+    if(task->data[0]!='/'){
+        strcat(file_address,"/");
+    }
+
     strcat(file_address,task->data);
     puts(file_address);
 
-    int ret=transferFile(task->peerfd,file_address,task->file_size,message);
+    transferFile(task->peerfd,file_address,task->file_size);
 
-    return ret;
 }
 
-int transferFile(int sockfd,char *file_address,off_t file_start,msg* message)
+int transferFile(int sockfd,char *file_address,off_t file_start)
 {
     printf("开始传文件\n");
     //发送文件名
@@ -37,11 +40,12 @@ int transferFile(int sockfd,char *file_address,off_t file_start,msg* message)
     File file={0,{0}};
     file.length=strlen(filename);
     strcpy(file.content, filename);
+    puts(filename);
     int ret=Send_Info(sockfd,(char *)&file,sizeof(file.length)+file.length,MSG_NOSIGNAL);
     if (ret == -1) {
         perror("send");
-        message->log_level=ACTION_INFO;
-        strcpy(message->msg_body,"CMD_TYPE_GETS  failled");
+        //message->log_level=ACTION_INFO;
+        //strcpy(message->msg_body,"CMD_TYPE_GETS  failled");
         return -1;
     }
 
@@ -51,8 +55,8 @@ int transferFile(int sockfd,char *file_address,off_t file_start,msg* message)
     off_t offset = lseek(fd, file_start, SEEK_SET);
     if (offset == -1) {
         perror("lseek");
-         message->log_level=ACTION_INFO;
-        strcpy(message->msg_body,"CMD_TYPE_GETS  failled");
+         //message->log_level=ACTION_INFO;
+        //strcpy(message->msg_body,"CMD_TYPE_GETS  failled");
         close(fd);
         return -1;
     }
@@ -68,8 +72,8 @@ int transferFile(int sockfd,char *file_address,off_t file_start,msg* message)
     ret=Send_Info(sockfd,(char *)&file,sizeof(file.length)+file.length,MSG_NOSIGNAL);
     if (ret == -1) {
         perror("send");
-         message->log_level=ACTION_INFO;
-        strcpy(message->msg_body,"CMD_TYPE_GETS  failled");
+         //message->log_level=ACTION_INFO;
+        //strcpy(message->msg_body,"CMD_TYPE_GETS  failled");
         
         close(fd);
         return -1;
@@ -85,8 +89,8 @@ int transferFile(int sockfd,char *file_address,off_t file_start,msg* message)
     char *p =(char *) mmap(NULL, file_stat.st_size+file_start, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (p == MAP_FAILED) {
         perror("mmap");
-        message->log_level=ACTION_INFO;
-        strcpy(message->msg_body,"CMD_TYPE_GETS  failled"); 
+        //message->log_level=ACTION_INFO;
+        //strcpy(message->msg_body,"CMD_TYPE_GETS  failled"); 
         close(fd);
         return -1;
     }

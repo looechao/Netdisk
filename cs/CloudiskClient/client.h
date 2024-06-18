@@ -1,5 +1,16 @@
 #include <func.h>
-#define MAXLINE 1024 // 最大输入长度
+#include <string.h>
+#include <unistd.h>
+#include <crypt.h>
+
+#define MAXSIZE 4096 // 最大输入长度
+#define MAXLINE 1024
+
+#define ERROR_CHECK(ret, num, msg) {\
+    if(ret == num) {\
+        perror(msg);\
+        return -1;\
+    }}
 
 typedef enum {
     CMD_TYPE_PWD=1,
@@ -29,17 +40,23 @@ typedef struct{
    int length;
    char content[4096];
 } File;
+
 //连接
-int My_Connect(const char* ip,const char* port);
+int my_connect(const char* ip,const char* port);
 
-ssize_t Recv_Info(int sockfd,void* buff,off_t readsize,int flags);//读操作
-ssize_t Send_Info(int sockfd,const void* buff,int sendsize,int flags);//写操作
+CmdType parse_input(char* str, int peerfd); // 解析命令
 
-int Epoll_Add(int epfd,int sockfd);//添加监听
-int Epoll_Delete(int epfd,int sockfd);//删除监听
+int login(int sockfd);
+int send_usename(int peerfd);
+int send_passwd(int peerfd, train_t* t);
 
-int transferFile(int sockfd);//上传文件
+// 一个具体命令的执行
+void cdCommand(int sockfd);
+void lsCommand(int sockfd);
+void pwdCommand(int sockfd);
+void mkdirCommand(int sockfd);
+void rmdirCommand(int sockfd);
+void notCommand(int sockfd);
+void putsCommand(int sockfd);
+void getsCommand(int sockfd);
 
-int send_command(int sockfd);//分析命令
-                        
-int prase(); // 解析命令
