@@ -7,6 +7,12 @@ int exitPipe[2];
 pthread_mutex_t lock;
 pthread_mutexattr_t attr;
 
+#include "linked_list.h"
+#include "user.h"
+
+#define EPOLL_ARR_SIZE 100
+
+ListNode * userList = NULL;
 void sigHandler(int num)
 {
     printf("\n sig is coming.%d\n",num);
@@ -143,6 +149,10 @@ int main(void)
 
                     strcpy(client_users[peerfd].directory_address,"./User");    
                     client_users[peerfd].clientaddr=clientaddr;
+                     //添加用户节点
+                    user_t * user = (user_t*)calloc(1, sizeof(user_t));
+                    user->sockfd = peerfd;
+					appendNode(&userList, user);
                 } else if(fd == exitPipe[0]) {
                     //线程池要退出
                     int howmany = 0;
