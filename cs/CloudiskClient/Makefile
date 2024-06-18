@@ -1,25 +1,13 @@
-# 编译器
-CC = gcc
+SRCS:=$(wildcard *.c)
+OBJS:=$(patsubst %.c, %.o, $(SRCS))
+BIN:=main
+CC:=gcc
+FLAGS:=-g -w -lcrypt
 
-# 编译器标志
-CFLAGS = -Wall -pthread -g
+$(BIN):$(OBJS)
+	$(CC) -o $@ $^ $(FLAGS)
+%.o:%.c
+	$(CC) -c $^ -o $@ $(FLAGS)
 
-# 链接库
-LDFLAGS = -lcrypt
-
-# 查找当前目录下的所有.c文件
-SRCS = $(wildcard *.c)
-
-# 可执行文件
-TARGET = main
-
-# 默认目标
-all: $(TARGET)
-
-# 生成可执行文件
-$(TARGET):
-	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS) $(LDFLAGS)
-
-# 清理生成的文件
 clean:
-	rm -f $(TARGET)
+	rm -rf $(OBJS) $(BIN)

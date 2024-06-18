@@ -47,26 +47,29 @@ void doTask(task_t * task)
     assert(task);
     switch(task->type) {
     case CMD_TYPE_PWD:  
-        pwdCommand(task);   break;
+        //pwdCommand(task);   break;
     case CMD_TYPE_CD:
-        cdCommand(task);    break;
+       // cdCommand(task);    break;
     case CMD_TYPE_LS:
-        lsCommand(task);    break;
+       // lsCommand(task);    break;
     case CMD_TYPE_MKDIR:
-        mkdirCommand(task);  break;
+        //mkdirCommand(task);  break;
     case CMD_TYPE_RMDIR:
-        rmdirCommand(task);  break;
+        //rmdirCommand(task);  break;
     case CMD_TYPE_NOTCMD:
-        notCommand(task);   break;
+       // notCommand(task);   break;
     case CMD_TYPE_PUTS:
-        putsCommand(task);   break;
+        //putsCommand(task);   break;
     case CMD_TYPE_GETS:
-        getsCommand(task);   break;
+        //getsCommand(task);   break;
     
-    case CMD_TYPE_USERNAME:
+    case TASK_LOGIN_USERNAME:
+        printf("coming \n");
         username_validation(task);     break;
-    case CMD_TYPE_PASSWD:
+    case TASK_LOGIN_PASSWD:
         password_validation(task);     break;
+    default:
+        break;
     }
 }
 
