@@ -18,11 +18,12 @@ void handleMessage(int sockfd, int epfd, task_queue_t * que)
     ptask->peerfd = sockfd;
     ptask->type=(CmdType)cmdType;
 
-    if(length > 0) {
-        //如果任务是下载文件，还需要传递文件大小，来实现断开重连
-        ret = recvn(sockfd,&ptask->file_size,sizeof(ptask->file_size));            
-        printf("bussines ptask->file_size=%ld\n",ptask->file_size);
+    //还需要传递文件大小，来实现断开重连
+    ret = recvn(sockfd,&ptask->file_size,sizeof(ptask->file_size));            
+    printf("bussines ptask->file_size=%ld\n",ptask->file_size);
 
+
+    if(length > 0) {
         //1.3 获取消息内容
         ret = recvn(sockfd, ptask->data, length);
         
