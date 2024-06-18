@@ -62,7 +62,7 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
     off_t offset = lseek(fd, file_start, SEEK_SET);
    
     if (offset == -1) {
-        perror("lseek");
+        fprintf(stderr,"lseek");
          //message->log_level=ACTION_INFO;
         //strcpy(message->msg_body,"CMD_TYPE_GETS  failled");
         close(fd);
@@ -78,10 +78,10 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
     file.length=sizeof(file_stat.st_size);
     memcpy(file.content,&file_stat.st_size,file.length);
     ret=Send_Info(sockfd,(char *)&file,sizeof(file.length)+file.length,MSG_NOSIGNAL);
-    
     if (ret == -1) {
-        perror("send");
-         //message->log_level=ACTION_INFO;
+        fprintf(stderr,"seed");
+
+        //message->log_level=ACTION_INFO;
         //strcpy(message->msg_body,"CMD_TYPE_GETS  failled");
         
         close(fd);
@@ -97,7 +97,7 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
     // 使用 mmap 发送文件
     char *p =(char *) mmap(NULL, file_stat.st_size+file_start, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (p == MAP_FAILED) {
-        perror("mmap");
+        fprintf(stderr,"mmap");
         //message->log_level=ACTION_INFO;
         //strcpy(message->msg_body,"CMD_TYPE_GETS  failled"); 
         close(fd);

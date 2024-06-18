@@ -1,0 +1,53 @@
+#include <func.h>
+#include "log.h"
+#include <pthread.h>
+
+
+
+
+
+void *print_message_function(void *ptr)
+{
+    FILE* fp = (FILE*)ptr;
+
+    log_set_lock(my_lock_func,NULL);
+    my_lock_func(true,NULL);
+    log_error("qinhao !dasfdsqgrqfwqfmqmgrqeojgrioqpngrqiegiqerngrioqwnr");
+    my_lock_func(false,NULL);
+    return NULL;
+}
+
+void* print_message(void* ptr){
+    
+    FILE* fp = (FILE*)ptr;
+
+    log_set_lock(my_lock_func,NULL);
+    my_lock_func(true,NULL);
+    log_info("lizhenhao !");
+    my_lock_func(false,NULL);
+    return NULL;
+}
+
+int main(int argc,char* argv[]){
+    
+   // log_set_level(LOG_INFO);
+    
+
+
+    pthread_t thread1, thread2;
+
+    int iret1 = pthread_create(&thread1, NULL, print_message_function, (void*)fp);
+    int iret2 = pthread_create(&thread2, NULL, print_message, (void*)fp);
+
+    /* 等待线程结束，回收其资源 */
+    pthread_join(thread1, NULL);
+    pthread_join(thread2, NULL);
+
+    log_set_lock(my_lock_func,NULL);
+    my_lock_func(true,NULL);
+    log_warn("server closed !");
+    my_lock_func(false,NULL);
+    fclose(fp);
+    return 0;
+}
+
