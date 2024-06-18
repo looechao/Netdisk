@@ -28,6 +28,10 @@
 #include <sys/uio.h>
 #include <sys/sendfile.h>
 
+//哈希表
+#include "hashtable.h"
+
+
 #define SIZE(a) (sizeof(a)/sizeof(a[0]))
 
 typedef void (*sighandler_t)(int);
@@ -113,35 +117,10 @@ typedef struct threadpool_s {
     task_queue_t que;//...任务队列
 }threadpool_t;
 
-/*
-*日志类型
-*@param ACTION_LOGIN:用户登录相关，登录成功或失败
-*@param ACTION_INFO:相关命令的执行消息
-*@param ACTION_SERVER: 服务器启动关闭相关
-*/
-
-typedef enum {
-    ACTION_LOGIN    =1,
-    ACTION_INFO     =2,
-    ACTION_SERVER   =3
-} level;
-
-/*
-*消息体
-*@param log_level 消息等级
-*@param msg_length 消息体长度
-*@param msg_body 指向消息体首地址的指针
-*/
-
-typedef struct msg{
-    level log_level;
-    char msg_body[128];
-}msg;
-
-
-
 //全局变量,存储所有用户的地址,索引是用户套接字的值；
 extern User client_users[100];
+
+int get_conf(HashTable *hash);
 
 int queueInit(task_queue_t * que);
 int queueDestroy(task_queue_t * que);
