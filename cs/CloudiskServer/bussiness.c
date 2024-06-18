@@ -46,7 +46,7 @@ void doTask(task_t * task)
 {
     assert(task);
     switch(task->type) {
-    case CMD_TYPE_PWD:  
+   /* case CMD_TYPE_PWD:  
         pwdCommand(task);   break;
     case CMD_TYPE_CD:
         cdCommand(task);    break;
@@ -60,37 +60,19 @@ void doTask(task_t * task)
         notCommand(task);   break;
     case CMD_TYPE_PUTS:
         putsCommand(task);   break;
+    */
     case CMD_TYPE_GETS:
         getsCommand(task);   break;
-    
+    /*
     case CMD_TYPE_USERNAME:
         username_validation(task);     break;
     case CMD_TYPE_PASSWD:
         password_validation(task);     break;
+    */
+    default:
+        break;
     }
-}
-
-//每一个具体任务的执行，交给一个成员来实现
-
-void cdCommand(task_t * task)
-{
-    printf("execute cd command.\n");
-}
-
-
-void mkdirCommand(task_t * task)
-{
-    printf("execute mkdir command.\n");
-}
-
-void rmdirCommand(task_t * task)
-{
-    printf("execute rmdir command.\n");
-}
-
-void notCommand(task_t * task)
-{
-    printf("execute not command.\n");
+    
 }
 
 

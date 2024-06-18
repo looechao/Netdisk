@@ -1,0 +1,29 @@
+2024-06-18 14:25:03 INFO  main.c:13: server started !
+2024-06-18 14:26:52 INFO  main.c:13: server started !
+2024-06-18 16:02:24 INFO  main.c:39: server started !
+2024-06-18 16:51:07 INFO  main.c:61: server started !
+2024-06-18 16:51:07 INFO  main.c:25: qinhao !
+2024-06-18 16:51:07 INFO  main.c:36: lizhenhao !
+2024-06-18 16:59:56 INFO  main.c:61: server started !
+2024-06-18 16:59:56 INFO  main.c:25: qinhao !
+2024-06-18 16:59:56 INFO  main.c:36: lizhenhao !
+2024-06-18 16:59:56 INFO  main.c:75: server started !
+2024-06-18 17:00:29 INFO  main.c:61: server started !
+2024-06-18 17:00:29 INFO  main.c:25: qinhao !
+2024-06-18 17:00:29 INFO  main.c:36: lizhenhao !
+2024-06-18 17:00:29 INFO  main.c:75: server closed !
+2024-06-18 17:03:03 ERROR main.c:25: qinhao !
+2024-06-18 17:03:03 INFO  main.c:36: lizhenhao !
+2024-06-18 17:03:03 WARN  main.c:75: server closed !
+2024-06-18 17:04:33 ERROR main.c:25: qinhao !
+2024-06-18 17:04:33 INFO  main.c:36: lizhenhao !
+2024-06-18 17:04:33 WARN  main.c:75: server closed !
+2024-06-18 17:12:37 ERROR main.c:23: qinhao !
+2024-06-18 17:12:37 INFO  main.c:34: lizhenhao !
+2024-06-18 17:12:37 WARN  main.c:73: server closed !
+2024-06-18 17:19:06 ERROR main.c:23: qinhao !
+2024-06-18 17:19:06 INFO  main.c:34: lizhenhao !
+2024-06-18 17:19:06 WARN  main.c:73: server closed !
+2024-06-18 17:20:29 ERROR main.c:23: qinhao !dasfdsqgrqfwqfmqmgrqeojgrioqpngrqiegiqerngrioqwnr
+2024-06-18 17:20:29 INFO  main.c:34: lizhenhao !
+2024-06-18 17:20:29 WARN  main.c:73: server closed !
