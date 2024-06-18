@@ -7,6 +7,7 @@ void freeStrs(char * pstrs[], int count);
 
 //获取命令类型
 CmdType get_type (char* args) {
+    
     if(strcmp(args, "pwd") == 0) {
         return CMD_TYPE_PWD;
     }
@@ -39,7 +40,10 @@ CmdType parse_input(char* input, int peerfd) {
     int cnt = 0;
     //分解字符串
     splitString(input, strs, 10, &cnt);
-    
+
+    if(cnt==0){
+        return CMD_TYPE_USERNAME;
+    }
     //解析命令
     train_t information;
     information.type = get_type(strs[0]);
@@ -47,8 +51,10 @@ CmdType parse_input(char* input, int peerfd) {
     //假设最多两个命令
     //for(int i = 1; i < cnt; ++i) {
         //printf("strs[%d]: %s\n", i, strs[i]);
+    if(cnt>1){
         information.len=strlen(strs[1]);
         strcpy(information.buff,strs[1]);
+    } 
     //}
 
     //如果是gets命令，需要查看当前是否有这个文件
@@ -96,18 +102,19 @@ int check_files(train_t *command){
 // 在使用后，记得要释放空间
 void splitString(const char * pstrs, char *tokens[], int max_tokens, int * pcount) {
     int token_count = 0;
-    char *token = strtok((char *)pstrs, " "); // 使用空格作为分隔符
+    char *token = strtok((char *)pstrs, " \n"); // 使用空格作为分隔符
 
     while (token != NULL && token_count < max_tokens - 1) { // 保留一个位置给NULL终止符
         char * pstr = (char*)calloc(1, strlen(token) + 1);
         strcpy(pstr, token);
         tokens[token_count] = pstr;//保存申请的堆空间首地址
         token_count++;
-        token = strtok(NULL, " "); // 继续获取下一个token
+        token = strtok(NULL, " \n"); // 继续获取下一个token
     }
     // 添加NULL终止符
     tokens[token_count] = NULL;
     *pcount= token_count;
+
 }
 
 void freeStrs(char * pstrs[], int count)
