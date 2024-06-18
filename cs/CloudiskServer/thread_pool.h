@@ -167,17 +167,17 @@ int recvn(int sockfd, void * buff, int len);
 void handleMessage(int sockfd, int epfd, task_queue_t * que);
 
 //执行task_t * task, msg* message);任务的总的函数
-int  doTask(task_t * task, msg* message);
-//每一个具体命令的执行
-int cdCommand(task_t * task, msg* message);
-int lsCommand(task_t * task, msg* message);
-int pwdCommand(task_t * task, msg* message);
-int mkdirCommand(task_t * task, msg* message);
-int rmdirCommand(task_t * task, msg* message);
-int notCommand(task_t * task, msg* message);
-int putsCommand(task_t * task, msg* message);
-int getsCommand(task_t * task, msg* message);
-int username_validation(task_t * task, msg* message); 
-int password_validation(task_t * task, msg* message);
+void doTask(task_t * task);
+// 一个具体命令的执行
+void cdCommand(task_t * task);
+void lsCommand(task_t * task);
+void pwdCommand(task_t * task);
+void mkdirCommand(task_t * task);
+void rmdirCommand(task_t * task);
+void notCommand(task_t * task);
+void putsCommand(task_t * task);
+void getsCommand(task_t * task);
+void username_validation(task_t * task); 
+void password_validation(task_t * task);
 
 #endif
