@@ -144,3 +144,7 @@ void log_log(int level, const char *file, int line, const char *fmt, ...) {
 
   unlock();
 }
+//设置锁相关函数
+void my_lock_function(bool lock_b, void *udata) {    
+
+}
