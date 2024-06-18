@@ -2,24 +2,27 @@
 CC = gcc
 
 # 编译器标志
-CFLAGS = -Wall -pthread -g
+CFLAGS = -Wall -pthread -g 
 
-# 链接库
-LDFLAGS = -lcrypt
-
-# 查找当前目录下的所有.c文件
-SRCS = $(wildcard *.c)
-
-# 可执行文件
+# 目标可执行文件
 TARGET = main
 
-# 默认目标
-all: $(TARGET)
+# 连接库
+LDFLAGS = -lcrypt
 
-# 生成可执行文件
+# 获取所有的 .c 文件
+SRCS = $(wildcard *.c)
+
+# 规则
+all: clean $(TARGET)
+
+# 链接可执行文件
 $(TARGET):
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS) $(LDFLAGS)
 
-# 清理生成的文件
+# 清理
 clean:
-	rm -f $(TARGET)
+	@if [ -f $(TARGET) ]; then rm -f $(TARGET); fi
+
+.PHONY: all clean
+
