@@ -14,10 +14,7 @@ void sigHandler(int num)
     int one = 1;
     write(exitPipe[1], &one, sizeof(one));
 }
-//设置锁相关函数
-void my_lock_function(bool lock_b, void *udata) {    
 
-}
 log_LockFn my_lock_func = my_lock_function;
 
 int main(void)
