@@ -1,4 +1,5 @@
 #include "thread_pool.h"
+#include "log.h"
 
 // cd 栈，用来解析路径字符串
 typedef struct stack_node {
@@ -63,6 +64,7 @@ int is_dir(char* dir_path) {
     return -1;
 }
 
+// 分析客户端传的路径，防止越界访问
 void parse_path(task_t* task, char* curr_dir, char* newfile) {
     char home_dir[1024] = "./User";
     // 初始化栈
@@ -116,6 +118,14 @@ void parse_path(task_t* task, char* curr_dir, char* newfile) {
     }
 }
 
+// 删除第一个字符
+void removeFirstChar(char *str) {
+    while (*str != '\0') {
+        *str = *(str + 1);
+        str++;
+    }
+}
+
 //每一个具体任务的执行，交给一个成员来实现
 
 /* int cdCommand(task_t * task, msg* message) */
@@ -135,28 +145,6 @@ void cdCommand(task_t* task)
     char last_filename[1024] = { 0 };
     strcpy(last_filename, current_dir);
 
-
-    // 初始化栈
-    dir_stack user_dir_stack;
-    user_dir_stack.size = 0;
-    user_dir_stack.top = NULL;
-    
-    // 绝对路径
-    bool is_abs_path = false;
-    if (task->data[0] == '/') {
-        strcat(home_dir, task->data);
-        strcpy(current_dir, home_dir);
-        is_abs_path = true;
-    }
-    printf("curr_dir = %s\n", current_dir);
-
-    // 将当前路径入栈
-    char* token = strtok(current_dir, "/\n");
-    while (token != NULL) {
-        push_dir_stack(&user_dir_stack, token);
-        token = strtok(NULL, "/\n");
-    }
-
     // 解析命令
     // cd 家目录
     // 使用 strrchr 查找字符 '\n' 最后一次出现的位置  
@@ -164,63 +152,19 @@ void cdCommand(task_t* task)
     if (last_post != NULL) {                         
         *last_post = '\0';                           
     }                                                
-    if (strcmp(task->data, "") == 0 || strcmp(task->data, "~") == 0) {
-        puts("~");
-        strcpy(current_dir, home_dir);
-        destroy_stack(&user_dir_stack);
-    }
-    // cd 上次目录
-    else if (strcmp(task->data, "-") == 0) {
-        puts("-");
-        char temp[1024] = { 0 };
-        strcpy(temp, current_dir);
-        strcpy(current_dir, last_dir);
-        strcpy(last_dir, temp);
-        destroy_stack(&user_dir_stack);
-    }
-    else {
-        // 相对路径
-        if (strcmp(current_dir, "/") != 0) {
-            // 拼接 / 在目录后
-            strcat(current_dir, "/");
+
+    if (strlen(task->data) > 1) {
+        if (task->data[0] == '~') {
+            removeFirstChar(task->data);   
+            strcpy(current_dir, home_dir);
         }
-
-        token = strtok(task->data, "/\n");                
-        while (token != NULL) {                     
-            if (strcmp(token, "..") == 0) {
-                pop_dir_stack(&user_dir_stack);
-            }
-            else if (strcmp(token, ".") == 0) {
-                token = strtok(NULL, "/\n");            
-                continue;
-            }
-            else if (is_abs_path == false) {
-                push_dir_stack(&user_dir_stack, token);     
-            }
-
-            token = strtok(NULL, "/\n");            
-        }                                           
-
+        
         char newfile[1024] = { 0 };
-        while (user_dir_stack.size != 0) {
-            char temp[4096] = { 0 };
-            char* token = user_dir_stack.top->dir_name;
-            sprintf(temp, "%s/%s", token, newfile);
-
-            pop_dir_stack(&user_dir_stack); 
-            strcpy(newfile, temp);
-        }
-
-        if (newfile[0] == '\0' || strcmp(newfile, "./") == 0) {
-            strcpy(newfile, home_dir);
-        }
-
+        parse_path(task, current_dir, newfile);
         int ret = is_dir(newfile);
         if (ret == -1) {
             // 没有这个目录或文件
-            /* message->log_level = ACTION_INFO; */                     
             sprintf(error_msg, "%s is not existing.\n", task->data); 
-            /* strcpy(message->msg_body, error_msg); */                 
 
             char is_true = '1';
             send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -238,9 +182,7 @@ void cdCommand(task_t* task)
         }
         // 普通文件
         else if (ret == 2) {
-            /* message->log_level = ACTION_INFO; */                     
             sprintf(error_msg, "%s is a file and is not a dir.\n", task->data); 
-            /* strcpy(message->msg_body, error_msg); */                 
 
             char is_true = '1';
             send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -251,10 +193,26 @@ void cdCommand(task_t* task)
         }
     }
 
+    if (strcmp(task->data, "") == 0 || strcmp(task->data, "~") == 0) {
+        strcpy(current_dir, home_dir);
+    }
+    // cd 上次目录
+    else if (strcmp(task->data, "-") == 0) {
+        char temp[1024] = { 0 };
+        strcpy(temp, current_dir);
+        strcpy(current_dir, last_dir);
+        strcpy(last_dir, temp);
+    }
+    // else {
+    //      // 相对路径
+    //      if (strcmp(current_dir, "/") != 0) {
+    //          // 拼接 / 在目录后
+    //          strcat(current_dir, "/");
+    //      }
+    // }
+
     strcpy(client_users[task->peerfd].directory_address, current_dir);
-    /* message->log_level = ACTION_INFO; */                     
     sprintf(error_msg, "Succeeded in switching directory %s\n", current_dir); 
-    /* strcpy(message->msg_body, error_msg); */                 
 
     char is_true = '1';
     send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -264,7 +222,6 @@ void cdCommand(task_t* task)
     return;
 }
 
-/* int rmCommand(task_t* task, msg* message) */ 
 void rmdirCommand(task_t * task)
 {
     printf("execute rmdir command.\n");
@@ -288,9 +245,7 @@ void rmdirCommand(task_t * task)
     int ret = is_dir(newfile);
     if (ret == 2) {
         if (unlink(newfile) == -1) {
-            /* message->log_level = ACTION_INFO; */                     
             sprintf(error_msg, "unlink %s failed.\n", task->data); 
-            /* strcpy(message->msg_body, error_msg); */                 
 
             char is_true = '1';
             send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -299,9 +254,7 @@ void rmdirCommand(task_t * task)
 
             return;
         }
-        /* message->log_level = ACTION_INFO; */ 
         sprintf(error_msg, "rm %s succese.\n", task->data);
-        /* strcpy(message->msg_body, error_msg); */
 
         char is_true = '0';
         send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -314,9 +267,7 @@ void rmdirCommand(task_t * task)
     else if (ret == 1) {
         ret = rmdir(newfile);
         if (ret == -1) {
-            /* message->log_level = ACTION_INFO; */ 
             sprintf(error_msg, "rm %s is an empty directory.\n", task->data);
-            /* strcpy(message->msg_body, error_msg); */
 
             char is_true = '1';
             send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -327,9 +278,7 @@ void rmdirCommand(task_t * task)
             return;
         }
 
-        /* message->log_level = ACTION_INFO; */ 
         sprintf(error_msg, "rmdir %s succese.\n", task->data);
-        /* strcpy(message->msg_body, error_msg); */
 
         char is_true = '0';
         send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -339,9 +288,7 @@ void rmdirCommand(task_t * task)
 
     }
     else if (ret == -1) {
-        /* message->log_level = ACTION_INFO; */                  
         sprintf(error_msg, "%s is not existing.\n", task->data);         
-        /* strcpy(message->msg_body, error_msg); */              
 
         char is_true = '1';
         send(task->peerfd, &is_true, sizeof(is_true), 0);
