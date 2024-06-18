@@ -46,8 +46,14 @@ CmdType parse_input(char* input, int peerfd) {
     }
     //解析命令
     train_t information;
+    
     information.type = get_type(strs[0]);
-    information.len=0;    
+    information.len=0;
+    information.file_size=0;
+
+    if(information.type==CMD_TYPE_NOTCMD){
+        return information.type;
+    }
     //假设最多两个命令
     //for(int i = 1; i < cnt; ++i) {
         //printf("strs[%d]: %s\n", i, strs[i]);
@@ -56,12 +62,13 @@ CmdType parse_input(char* input, int peerfd) {
         strcpy(information.buff,strs[1]);
     } 
     //}
-
+    
     //如果是gets命令，需要查看当前是否有这个文件
     if(information.type == CMD_TYPE_GETS){
         check_files(&information);   
     }
-
+    
+    printf("发送%d\n",information.type);
     //发送命令
     send(peerfd, &information, 
          sizeof(information.len)+sizeof(information.type)
