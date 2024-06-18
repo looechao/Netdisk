@@ -26,7 +26,7 @@ int transferFile(int sockfd){
     strcpy(full_path,default_download);
     //拼接到 full_path
     strcat(full_path, file.content);
-    printf("%s\n",full_path);
+    printf("打开文件： %s\n",full_path);
    
     int fd=open(full_path,O_RDWR | O_CREAT, 0666); 
     ERROR_CHECK(fd,-1,"open failed");
