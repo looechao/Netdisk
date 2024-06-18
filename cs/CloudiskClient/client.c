@@ -21,7 +21,11 @@ int main() {
     char str[MAXLINE];
     for (; ; ) {
         printf(">> "); // 提示符
-        fgets(str, MAXLINE, stdin); // 从stdin读取命令
+        char * ret=fgets(str, MAXLINE, stdin); // 从stdin读取命令
+        if(ret==NULL){
+            printf("\n");
+            break;    
+        }
 
         if (strcmp(str, "exit\n") == 0) { // 检查是否为exit命令
             break; // 退出循环
@@ -60,5 +64,6 @@ int main() {
             break;
         }
     }
+    close(sockfd);
     return 0;
 }
