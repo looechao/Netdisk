@@ -1,6 +1,13 @@
 #ifndef __DATABASES_H
 #define __DATABASES_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <mysql/mysql.h>
+
 typedef struct {
     char parent_name[128];   // 父级目录名称，NULL 表示家目录
     char file_name[128];     // 要增加或删除的文件和目录
