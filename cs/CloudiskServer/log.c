@@ -149,17 +149,26 @@ void my_lock_function(bool lock_b, void *udata) {
 
 }
 
-void write_log(char* msg, int level, log_LockFn my_lock_func) {
+void write_log(char* msg, char* level, log_LockFn my_lock_func) {
      log_set_lock(my_lock_func,NULL);
      my_lock_func(true,NULL);
-     if (level == 0) {
+     if (strcmp(level, "trace") == 0) {
+         log_trace("%s", msg);
+     }
+     else if (strcmp(level, "debug") == 0){
+         log_debug("%s", msg);
+     }
+     else if (strcmp(level, "info") == 0) {
          log_info("%s", msg);
      }
-     else if (level == 1){
+     else if (strcmp(level, "warn") == 0) {
          log_warn("%s", msg);
      }
-     else if (level == -1) {
+     else if (strcmp(level, "error") == 0) {
          log_error("%s", msg);
      }
+     else if (strcmp(level, "fatal") == 0) {
+         log_fatal("%s", msg);
+     }
      my_lock_func(false,NULL);
- }
+}
