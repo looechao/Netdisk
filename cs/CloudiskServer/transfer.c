@@ -1,4 +1,6 @@
 #include "thread_pool.h"
+#include "log.h"
+
 //读操作
 ssize_t Recv_Info(int sockfd,char* buff,off_t readsize,int flags);
 //写操作
@@ -6,6 +8,7 @@ ssize_t Send_Info(int sockfd,const char* buff,int sendsize,int flags);
 
 int transferFile(int sockfd,char *file_address,off_t file_start);
 
+extern  log_LockFn my_lock_func;
 
 void putsCommand(task_t * task) {
     printf("execute puts command.\n");
@@ -30,7 +33,6 @@ void getsCommand(task_t * task) {
 
 int transferFile(int sockfd,char *file_address,off_t file_start)
 {
-    printf("开始传文件\n");
     //发送文件名
     char *filename;
 
@@ -43,17 +45,24 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
     
     puts(filename);
     
+
+    int fd=open(file_address,O_RDWR,0666);
+    if(fd < 0){
+        write_log("文件打开失败","error",my_lock_func);
+        //文件目录不存在 返回给客户端 -1
+        file.length=-1;
+        Send_Info(sockfd,(char *)&file,sizeof(file.length),MSG_NOSIGNAL);
+        return -1;
+    }
+    
+    //发送文件名
     int ret=Send_Info(sockfd,(char *)&file,sizeof(file.length)+file.length,MSG_NOSIGNAL);
     if (ret == -1) {
         perror("send");
         //message->log_level=ACTION_INFO;
         //strcpy(message->msg_body,"CMD_TYPE_GETS  failled");
-        return -1;
-    }
+        write_log("发送文件名失败","error",my_lock_func);
 
-    int fd=open(file_address,O_RDWR,0666);
-    if(fd < 0){
-        printf("文件%s打开错误\n",file_address);
         return -1;
     }
 
@@ -65,6 +74,8 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
         fprintf(stderr,"lseek");
          //message->log_level=ACTION_INFO;
         //strcpy(message->msg_body,"CMD_TYPE_GETS  failled");
+        write_log("移动文件读指针失败","error",my_lock_func);
+
         close(fd);
         return -1;
     }
@@ -83,7 +94,8 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
 
         //message->log_level=ACTION_INFO;
         //strcpy(message->msg_body,"CMD_TYPE_GETS  failled");
-        
+        write_log("发送文件失败","error",my_lock_func);
+
         close(fd);
         return -1;
     }
@@ -91,6 +103,7 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
 
     if (file_stat.st_size == 0) { // 不用发文件
         close(fd);
+        write_log("发送文件成功","info",my_lock_func);
         return 0;
     }
 
@@ -100,6 +113,8 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
         fprintf(stderr,"mmap");
         //message->log_level=ACTION_INFO;
         //strcpy(message->msg_body,"CMD_TYPE_GETS  failled"); 
+        write_log("mmap映射文件失败","error",my_lock_func);
+
         close(fd);
         return -1;
     }
@@ -109,7 +124,8 @@ int transferFile(int sockfd,char *file_address,off_t file_start)
     Send_Info(sockfd, p+file_start, file_stat.st_size, MSG_NOSIGNAL);
     munmap(p, file_stat.st_size);
     close(fd);
-    printf("发送结束\n");
+    
+    write_log("发送文件成功","info",my_lock_func);
 
     return 0;
 }
@@ -121,6 +137,8 @@ ssize_t Recv_Info(int sockfd,char* buffer,off_t resvsize,int flags){
     while(size<resvsize){
        off_t ret=recv(sockfd,buffer+size,resvsize-size,flags);
        if(ret == -1){
+           write_log("读取失败","error",my_lock_func);
+
            return -1;
        }
     
@@ -135,6 +153,8 @@ ssize_t Send_Info(int sockfd,const char* buffer,int sendsize,int flags){
     
     ssize_t send_size=send(sockfd,buffer,sendsize,flags);
     if(send_size == -1){
+     write_log("发送文件失败","error",my_lock_func);
+
         return -1;
     }
     
