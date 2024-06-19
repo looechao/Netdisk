@@ -149,7 +149,7 @@ void my_lock_function(bool lock_b, void *udata) {
 
 }
 
-void write_log(char* msg, char* level, log_LockFn my_lock_func) {
+void write_log(char* msg, const char* level, log_LockFn my_lock_func) {
      log_set_lock(my_lock_func,NULL);
      my_lock_func(true,NULL);
      if (strcmp(level, "trace") == 0) {
