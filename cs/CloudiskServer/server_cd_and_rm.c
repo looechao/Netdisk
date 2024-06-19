@@ -163,7 +163,7 @@ void cdCommand(task_t* task)
         if (ret == -1) {
             // 没有这个目录或文件
             sprintf(error_msg, "%s is not existing.\n", task->data); 
-            /* write_log(error_msg, 1); */
+            write_log(error_msg, "warn", my_lock_func);
 
             char is_true = '1';
             send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -182,7 +182,7 @@ void cdCommand(task_t* task)
         // 普通文件
         else if (ret == 2) {
             sprintf(error_msg, "%s is a file and is not a dir.\n", task->data); 
-            /* write_log(error_msg, 1); */
+            write_log(error_msg, "warn", my_lock_func);
 
             char is_true = '1';
             send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -213,7 +213,7 @@ void cdCommand(task_t* task)
 
     strcpy(client_users[task->peerfd].directory_address, current_dir);
     sprintf(error_msg, "Succeeded in switching directory %s", current_dir); 
-    write_log(error_msg, 0, my_lock_func);
+    write_log(error_msg,"info" , my_lock_func);
 
 
     char is_true = '1';
@@ -248,7 +248,7 @@ void rmdirCommand(task_t * task)
     if (ret == 2) {
         if (unlink(newfile) == -1) {
             sprintf(error_msg, "unlink %s failed.\n", task->data); 
-            /* write_log(error_msg, 1); */
+            write_log(error_msg, "warn", my_lock_func);
 
             char is_true = '1';
             send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -258,7 +258,7 @@ void rmdirCommand(task_t * task)
             return;
         }
         sprintf(error_msg, "rm %s succese.\n", task->data);
-        /* write_log(error_msg, 0); */
+        write_log(error_msg, "info", my_lock_func);
 
         char is_true = '0';
         send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -272,7 +272,7 @@ void rmdirCommand(task_t * task)
         ret = rmdir(newfile);
         if (ret == -1) {
             sprintf(error_msg, "rm %s is an empty directory.\n", task->data);
-            /* write_log(error_msg, 1); */
+            write_log(error_msg, "warn", my_lock_func);
 
             char is_true = '1';
             send(task->peerfd, &is_true, sizeof(is_true), 0);
@@ -284,7 +284,7 @@ void rmdirCommand(task_t * task)
         }
 
         sprintf(error_msg, "rmdir %s succese.\n", task->data);
-        /* write_log(error_msg, 0); */
+        write_log(error_msg, "info", my_lock_func);
         log_set_lock(my_lock_func,NULL);
         my_lock_func(true,NULL);
         log_info("Succeeded");
@@ -299,7 +299,7 @@ void rmdirCommand(task_t * task)
     }
     else if (ret == -1) {
         sprintf(error_msg, "%s is not existing.\n", task->data);         
-        /* write_log(error_msg, 1); */
+        write_log(error_msg, "warn", my_lock_func);
 
         char is_true = '1';
         send(task->peerfd, &is_true, sizeof(is_true), 0);
