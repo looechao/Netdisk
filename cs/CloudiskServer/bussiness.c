@@ -48,13 +48,13 @@ void doTask(task_t * task)
     assert(task);
     switch(task->type) {
     case CMD_TYPE_PWD:  
-           pwdCommand(task);   break;
+        pwdCommand(task);   break;
     case CMD_TYPE_CD:
         cdCommand(task);    break;
     case CMD_TYPE_LS:
-         lsCommand(task);    break;
+        lsCommand(task);    break;
     case CMD_TYPE_MKDIR:
-         mkdirCommand(task);  break;
+        mkdirCommand(task);  break;
     case CMD_TYPE_RMDIR:
         rmdirCommand(task);  break;
     case CMD_TYPE_NOTCMD:

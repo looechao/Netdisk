@@ -27,3 +27,6 @@
 2024-06-19 10:33:12 INFO  log.c:156: Succeeded in switching directory ./User/aaa/
 2024-06-19 10:33:15 INFO  log.c:156: Succeeded in switching directory ./User/
 2024-06-19 10:33:18 INFO  log.c:156: Succeeded in switching directory ./User
+2024-06-19 14:10:37 INFO  main.c:76: server started !
+2024-06-19 14:10:43 WARN  log.c:165: Succeeded in switching directory ./User/aaa/
+2024-06-19 14:10:45 WARN  log.c:165: Succeeded in switching directory ./User/
