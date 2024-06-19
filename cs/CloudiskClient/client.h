@@ -20,11 +20,14 @@ typedef enum {
     CMD_TYPE_RMDIR,
     CMD_TYPE_PUTS,
     CMD_TYPE_GETS,
-    
-    CMD_TYPE_USERNAME,
-    CMD_TYPE_PASSWD,
+    CMD_TYPE_NOTCMD,  //不是命令
 
-    CMD_TYPE_NOTCMD  //不是命令
+    TASK_LOGIN_USERNAME = 100,
+    TASK_LOGIN_USERNAME_OK,
+    TASK_LOGIN_USERNAME_ERROR,
+    TASK_LOGIN_PASSWD,
+    TASK_LOGIN_PASSWD_OK,
+    TASK_LOGIN_PASSWD_ERROR,
 }CmdType;
 
 typedef struct 
@@ -43,12 +46,12 @@ typedef struct{
 
 //连接
 int my_connect(const char* ip,const char* port);
+int recvn(int sockfd, void * buff, int len);
+int sendn(int sockfd, const void * buff, int len);
 
 CmdType parse_input(char* str, int peerfd); // 解析命令
 
 int login(int sockfd);
-int send_usename(int peerfd);
-int send_passwd(int peerfd, train_t* t);
 
 // 一个具体命令的执行
 void cdCommand(int sockfd);
