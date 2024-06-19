@@ -11,3 +11,19 @@
 2024-06-18 22:44:51 INFO  main.c:76: server started !
 2024-06-18 22:49:31 INFO  main.c:76: server started !
 2024-06-18 22:51:39 INFO  main.c:76: server started !
+2024-06-18 22:58:06 INFO  main.c:76: server started !
+2024-06-18 23:04:55 INFO  main.c:76: server started !
+2024-06-18 23:06:49 INFO  main.c:76: server started !
+2024-06-18 23:09:12 INFO  main.c:76: server started !
+2024-06-19 09:02:14 INFO  main.c:76: server started !
+2024-06-19 09:04:19 INFO  main.c:76: server started !
+2024-06-19 09:06:51 INFO  main.c:76: server started !
+2024-06-19 09:10:50 INFO  main.c:76: server started !
+2024-06-19 09:10:57 INFO  server_cd_and_rm.c:310: Succeeded
+2024-06-19 09:14:18 INFO  main.c:76: server started !
+2024-06-19 09:14:24 INFO  server_cd_and_rm.c:10: Succeeded in switching directory ./User/aaa/
+2024-06-19 09:14:28 INFO  server_cd_and_rm.c:10: Succeeded in switching directory ./User/
+2024-06-19 10:33:03 INFO  main.c:76: server started !
+2024-06-19 10:33:12 INFO  log.c:156: Succeeded in switching directory ./User/aaa/
+2024-06-19 10:33:15 INFO  log.c:156: Succeeded in switching directory ./User/
+2024-06-19 10:33:18 INFO  log.c:156: Succeeded in switching directory ./User

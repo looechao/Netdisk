@@ -32,7 +32,7 @@ void rmdirCommand(int sockfd) {
     if (is_true == '1') {
         printf("%s\n", buf);
     }
-    /* else if (is_true == '0') { */
-    /*     printf("%s\n", buf); */
-    /* } */
+    else if (is_true == '0') {
+        printf("%s\n", buf);
+    }
 }
