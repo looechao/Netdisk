@@ -15,6 +15,11 @@ int transferFile(int sockfd){
     //接收文件名
     File file={0,{0}};
     Recv_Info(sockfd,(char *)&file.length,sizeof(file.length),0);
+    if(file.length==-1){
+        fprintf(stderr,"文件不存在\n"); 
+        return -1;
+    }
+
     Recv_Info(sockfd,(char *)file.content,file.length,0);
 
     printf("文件名长度： %d\n",file.length);
@@ -64,7 +69,7 @@ int transferFile(int sockfd){
     msync(p, new_size, MS_SYNC);
     munmap(p,content_size);
 
-    return 1;    
+    return 0;    
 }
 
 //读操作
