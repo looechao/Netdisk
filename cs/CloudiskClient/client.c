@@ -27,25 +27,25 @@ int main() {
         // 接收服务器返回的信息 #所有人自己创建.c文件，如：gets.c文件存放 getsCommand(sockfd);   
         switch(type){
         case CMD_TYPE_PWD:  
-            //pwdCommand(sockfd);   
+            pwdCommand(sockfd);   
             break;
         case CMD_TYPE_CD:
-            //cdCommand(sockfd);    
+            cdCommand(sockfd);    
             break;
         case CMD_TYPE_LS:
-            //lsCommand(sockfd);    
+            lsCommand(sockfd);    
             break;
         case CMD_TYPE_MKDIR:
-            //mkdirCommand(sockfd);  
+            mkdirCommand(sockfd);  
             break;
         case CMD_TYPE_RMDIR:
-            //rmdirCommand(sockfd);  
+            rmdirCommand(sockfd);  
             break;
         case CMD_TYPE_NOTCMD:
-            //notCommand(sockfd);   
+            notCommand(sockfd);   
             break;
         case CMD_TYPE_PUTS:
-            //putsCommand(sockfd);   
+            putsCommand(sockfd);   
             break;
         case CMD_TYPE_GETS:
             getsCommand(sockfd);   
