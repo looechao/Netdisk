@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <shadow.h>
+#include "log.c"
+extern  log_LockFn my_lock_func;
 
 static void get_setting(char *setting,char *passwd)
 {
@@ -27,6 +29,7 @@ void username_check(user_t * user)
         t.type = TASK_LOGIN_USERNAME_ERROR;
         t.file_size = 0;
         ret = sendn(user->sockfd, &t, sizeof(t.len) + sizeof(t.type) + sizeof(t.file_size));
+        write_log("用户不存在", "error", my_lock_func);
         printf("用户不存在\n");
         return;
     }
@@ -64,6 +67,8 @@ void passwd_check(user_t * user, const char * encrypted)
     } else {
         //登录失败, 密码错误
         t.type = TASK_LOGIN_PASSWD_ERROR;
+        write_log("密码错误", "error", my_lock_func);
+        printf("登录失败\n");
         printf("Login failed.\n");
         ret = sendn(user->sockfd, &t, 8);
     }
