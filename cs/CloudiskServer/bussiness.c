@@ -65,9 +65,10 @@ void doTask(task_t * task)
     case CMD_TYPE_GETS:
         getsCommand(task);   break;
     
-    case CMD_TYPE_USERNAME:
+    case TASK_LOGIN_USERNAME:
+        printf("coming \n");
         username_validation(task);     break;
-    case CMD_TYPE_PASSWD:
+    case TASK_LOGIN_PASSWD:
         password_validation(task);     break;
     
     default:
