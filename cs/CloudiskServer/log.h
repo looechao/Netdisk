@@ -41,6 +41,6 @@ void log_log(int level, const char *file, int line, const char *fmt, ...);
 
 void my_lock_function(bool lock_b, void *udata);
 
-void write_log(char* msg, int level, log_LockFn my_lock_func);
+void write_log(char* msg, char* level, log_LockFn my_lock_func);
 
 #endif
