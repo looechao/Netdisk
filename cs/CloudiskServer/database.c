@@ -6,6 +6,7 @@ int select_user_table(MYSQL* mysql, user_table* ptable) {
     MYSQL_STMT* stmt = mysql_stmt_init(mysql);
     if (stmt == NULL) {
         printf("(%d, %s)\n", mysql_errno(mysql), mysql_error(mysql));
+        mysql_stmt_close(stmt);
         return -1;
     } 
 
@@ -18,6 +19,7 @@ int select_user_table(MYSQL* mysql, user_table* ptable) {
     int count = mysql_stmt_param_count(stmt);
     if (count != 1) {
         printf("(%d, %s)\n", mysql_stmt_errno(stmt), mysql_stmt_error(stmt));
+        mysql_stmt_close(stmt);
         return -1;
     }
 
@@ -107,6 +109,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     MYSQL_STMT* stmt = mysql_stmt_init(mysql);
     if (stmt == NULL) {
         printf("(%d, %s)\n", mysql_errno(mysql), mysql_error(mysql));
+        mysql_stmt_close(stmt);
         return -1;
     } 
 
@@ -119,6 +122,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     int count = mysql_stmt_param_count(stmt);
     if (count != 3) {
         printf("(%d, %s)\n", mysql_stmt_errno(stmt), mysql_stmt_error(stmt));
+        mysql_stmt_close(stmt);
         return -1;
     }
 
@@ -237,6 +241,7 @@ int search_file(MYSQL* mysql, const char* sha1_hash) {
     MYSQL_STMT* stmt = mysql_stmt_init(mysql);
     if (stmt == NULL) {
         printf("(%d, %s)\n", mysql_errno(mysql), mysql_error(mysql));
+        mysql_stmt_close(stmt);
         return -1;
     } 
 
@@ -249,6 +254,7 @@ int search_file(MYSQL* mysql, const char* sha1_hash) {
     int count = mysql_stmt_param_count(stmt);
     if (count != 1) {
         printf("(%d, %s)\n", mysql_stmt_errno(stmt), mysql_stmt_error(stmt));
+        mysql_stmt_close(stmt);
         return -1;
     }
 
