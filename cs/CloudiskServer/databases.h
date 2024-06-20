@@ -12,7 +12,7 @@ typedef struct {
     int file_id;
     int parent_id;   // 父级目录名称，NULL 表示家目录
     char file_name[128];     // 要增加或删除的文件和目录
-    int ower_id;
+    int owner_id;
     char sha1[64];
     int filesize;
     char type;      // d 是目录， f是文件
@@ -22,7 +22,7 @@ typedef struct {
 typedef struct {
     int user_id;
     char user_name[128];
-    char crytpasswd[128];
+    char cryptpasswd[128];
     char pwd[128];
     int pwd_id;
 } user_table;
