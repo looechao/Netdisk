@@ -368,6 +368,11 @@ void parse_path(task_t* task, char* curr_dir, char* newfile) {
     if (newfile[0] == '\0' || strcmp(newfile, "./") == 0) {
         strcpy(newfile, home_dir);
     }
+    // 使用 strrchr 查找字符 '/' 最后一次出现的位置  
+    char* last_post = strrchr(newfile, '/');      
+    if (last_post != NULL) {                         
+        *last_post = '\0';                           
+    }
 }
 
 void cdCommand(task_t* task, MYSQL* conn)
@@ -444,19 +449,12 @@ void cdCommand(task_t* task, MYSQL* conn)
     else if (strcmp(task->data, "") == 0 || strcmp(task->data, "~") == 0) {
         strcpy(current_dir, home_dir);
     }
-    // else {
-    //      // 相对路径
-    //      if (strcmp(current_dir, "/") != 0) {
-    //          // 拼接 / 在目录后
-    //          strcat(current_dir, "/");
-    //      }
-    // }
 
     strcpy(client_users[task->peerfd].pwd, current_dir);
     sprintf(error_msg, "Succeeded in switching directory %s", current_dir); 
     write_log(error_msg,"info" , my_lock_func);
 
-    char is_true = '1';
+    char is_true = '0';
     send(task->peerfd, &is_true, sizeof(is_true), 0);
     int len = strlen(error_msg);
     sendn(task->peerfd, current_dir, len);
@@ -482,79 +480,185 @@ void rmdirCommand(task_t * task, MYSQL* conn)
                                                                               
     char newfile[1024] = { 0 };                                               
     parse_path(task, curr_dir, newfile);                                      
+
+    // 取出最后一个目录
+    char* last_post = strrchr(newfile, '/');
+    if (last_post != NULL) {
+        *last_post = '\0';
+        last_post++;
+
+        char* token = strtok(newfile, "/\n");
+        while ((token = strtok(NULL, "/\n")) != NULL) {
+            strcpy(f1.file_name, token);
+            int ret = select_file_table(conn, &f1);
+            if (ret == -1) {
+                sprintf(error_msg, "%s is not existing.\n", task->data); 
+                write_log(error_msg, "warn", my_lock_func);
+
+                char is_true = '1';
+                send(task->peerfd, &is_true, sizeof(is_true), 0);
+                int len = strlen(error_msg);
+                sendn(task->peerfd, error_msg, len);
+
+                return;
+            }
+            else if (f1.type == 'f') {
+                if (strtok(NULL, "/\n") != NULL) {
+                    sprintf(error_msg, "%s is not existing.\n", task->data);              
+                    write_log(error_msg, "warn", my_lock_func);                           
+
+                    char is_true = '1';                                                   
+                    send(task->peerfd, &is_true, sizeof(is_true), 0);                     
+
+                    int len = strlen(error_msg);                                          
+                    sendn(task->peerfd, error_msg, len);                                  
+
+                    return;
+                }
+
+                sprintf(error_msg, "rmdir %s is an file.", task->data);            
+                write_log(error_msg, "info", my_lock_func);
+
+                char is_true = '1';
+                send(task->peerfd, &is_true, sizeof(is_true), 0);
+                int len = strlen(error_msg);
+                sendn(task->peerfd, error_msg, len);
+
+                return;
+            }
+            f1.parent_id = f1.file_id;
+        }
+
+    }
+    else {
+        last_post = newfile;
+    }
+
+    strcpy(f1.file_name, last_post);
+    int ret = select_file_table(conn, &f1);
+    if (ret == -1) {
+        sprintf(error_msg, "%s is not existing.\n", task->data); 
+        write_log(error_msg, "warn", my_lock_func);
+
+        char is_true = '1';
+        send(task->peerfd, &is_true, sizeof(is_true), 0);
+        int len = strlen(error_msg);
+        sendn(task->peerfd, error_msg, len);
+
+        return;
+    }
+    else if (f1.type == 'f') {
+        if (strtok(NULL, "/\n") != NULL) {
+            sprintf(error_msg, "%s is not existing.\n", task->data);              
+            write_log(error_msg, "warn", my_lock_func);                           
+
+            char is_true = '1';                                                   
+            send(task->peerfd, &is_true, sizeof(is_true), 0);                     
+
+            int len = strlen(error_msg);                                          
+            sendn(task->peerfd, error_msg, len);                                  
+
+            return;
+        }
+
+        sprintf(error_msg, "rmdir %s is an file.", task->data);            
+        write_log(error_msg, "info", my_lock_func);
+
+        char is_true = '1';
+        send(task->peerfd, &is_true, sizeof(is_true), 0);
+        int len = strlen(error_msg);
+        sendn(task->peerfd, error_msg, len);
+
+        return;
+    }
+
+    // 删除目录
+    sub_file_table(conn, &f1);
+
+    sprintf(error_msg, "rm an directory %s succese.", task->data); 
+    write_log(error_msg, "warn", my_lock_func);                       
+
+    char is_true = '0';                                               
+    send(task->peerfd, &is_true, sizeof(is_true), 0);                 
+
+    int len = strlen(error_msg);                                      
+    sendn(task->peerfd, error_msg, len);                              
+
+    return;                                                           
+}
+
+void rmCommand(task_t * task, MYSQL* conn)                                              
+{                                                                             
+    printf("execute rm command.\n");                                       
+    // 错误消息                                                               
+    char error_msg[4096] = { 0 };                                             
+
+    // 初始化虚拟文件表
+    file_table f1;
+    memset(&f1, 0, sizeof(f1));
+    f1.parent_id = client_users->pwd_id;
+    f1.owner_id = client_users->user_id;
                                                                               
-    // 使用 strrchr 查找字符 '/' 最后一次出现的位置                           
-    char* last_post = strrchr(newfile, '/');                                  
-    if (last_post != NULL) {                                                  
-        *last_post = '\0';                                                    
-    }                                                                         
+    // 模拟用户根目录                                                         
+    char curr_dir[128] ;                                                      
+    strcpy(curr_dir, client_users[task->peerfd].pwd);           
                                                                               
-    // 判断是否是一个目录                                                     
-    int ret = is_dir(newfile);                                                
-    if (ret == 2) {                                                           
-        if (unlink(newfile) == -1) {                                          
-            sprintf(error_msg, "unlink %s failed.\n", task->data);            
-            write_log(error_msg, "warn", my_lock_func);                       
-                                                                              
-            char is_true = '1';                                               
-            send(task->peerfd, &is_true, sizeof(is_true), 0);                 
-            int len = strlen(error_msg);                                      
-            sendn(task->peerfd, error_msg, len);                              
-                                                                              
-            return;                                                           
-        }                                                                     
-        sprintf(error_msg, "rm %s succese.\n", task->data);                   
-        write_log(error_msg, "info", my_lock_func);                           
-                                                                              
-        char is_true = '0';                                                   
-        send(task->peerfd, &is_true, sizeof(is_true), 0);                     
-                                                                              
-        int len = strlen(error_msg);                                          
-        sendn(task->peerfd, error_msg, len);                                  
-                                                                              
-        return;                                                               
-    }                                                                         
-    else if (ret == 1) {                                                      
-        ret = rmdir(newfile);                                                 
-        if (ret == -1) {                                                      
-            sprintf(error_msg, "rm %s is an empty directory.\n", task->data); 
-            write_log(error_msg, "warn", my_lock_func);                       
-                                                                              
-            char is_true = '1';                                               
-            send(task->peerfd, &is_true, sizeof(is_true), 0);                 
-                                                                              
-            int len = strlen(error_msg);                                      
-            sendn(task->peerfd, error_msg, len);                              
-                                                                              
-            return;                                                           
-        }                                                                     
-                                                                              
-        sprintf(error_msg, "rmdir %s succese.\n", task->data);                
-        write_log(error_msg, "info", my_lock_func);                           
-        log_set_lock(my_lock_func,NULL);                                      
-        my_lock_func(true,NULL);                                              
-        log_info("Succeeded");                                                
-        my_lock_func(false,NULL);                                             
-                                                                              
-        char is_true = '0';                                                   
-        send(task->peerfd, &is_true, sizeof(is_true), 0);                     
-                                                                              
-        int len = strlen(error_msg);                                          
-        sendn(task->peerfd, error_msg, len);                                  
-                                                                              
-    }                                                                         
-    else if (ret == -1) {                                                     
-        sprintf(error_msg, "%s is not existing.\n", task->data);              
-        write_log(error_msg, "warn", my_lock_func);                           
-                                                                              
-        char is_true = '1';                                                   
-        send(task->peerfd, &is_true, sizeof(is_true), 0);                     
-                                                                              
-        int len = strlen(error_msg);                                          
-        sendn(task->peerfd, error_msg, len);                                  
-                                                                              
-        return;                                                               
-    }                                                                         
-                                                                              
-    return;                                                                   
-}                                                                             
+    char newfile[1024] = { 0 };                                               
+    parse_path(task, curr_dir, newfile);                                      
+
+    char* token = strtok(newfile, "/\n");
+    while ((token = strtok(NULL, "/\n")) != NULL) {
+        strcpy(f1.file_name, token);
+        int ret = select_file_table(conn, &f1);
+        if (ret == -1) {
+            sprintf(error_msg, "%s is not existing.\n", task->data); 
+            write_log(error_msg, "warn", my_lock_func);
+
+            char is_true = '1';
+            send(task->peerfd, &is_true, sizeof(is_true), 0);
+            int len = strlen(error_msg);
+            sendn(task->peerfd, error_msg, len);
+
+            return;
+        }
+        else if (f1.type == 'f') {
+            if (strtok(NULL, "/\n") != NULL) {
+                sprintf(error_msg, "%s is not existing.\n", task->data);              
+                write_log(error_msg, "warn", my_lock_func);                           
+
+                char is_true = '1';                                                   
+                send(task->peerfd, &is_true, sizeof(is_true), 0);                     
+
+                int len = strlen(error_msg);                                          
+                sendn(task->peerfd, error_msg, len);                                  
+                
+                return;
+            }
+
+            // 删除文件
+            sub_file_table(conn, &f1);
+
+            sprintf(error_msg, "unlink %s succese.\n", task->data);            
+            write_log(error_msg, "info", my_lock_func);
+
+            char is_true = '0';
+            send(task->peerfd, &is_true, sizeof(is_true), 0);
+            int len = strlen(error_msg);
+            sendn(task->peerfd, error_msg, len);
+
+            return;
+        }
+        f1.parent_id = f1.file_id;
+    }
+
+    sprintf(error_msg, "rm %s is an directory.\n", task->data); 
+    write_log(error_msg, "warn", my_lock_func);                       
+
+    char is_true = '1';                                               
+    send(task->peerfd, &is_true, sizeof(is_true), 0);                 
+
+    int len = strlen(error_msg);                                      
+    sendn(task->peerfd, error_msg, len);                              
+
+    return;                                                           
+}                                                                     
