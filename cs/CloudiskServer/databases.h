@@ -11,6 +11,7 @@
     if (ret) {                                                   \
         fprintf(stderr,"(%d, %s)\n",                             \
                mysql_stmt_errno(stmt), mysql_stmt_error(stmt));  \
+        mysql_stmt_close(stmt);                                  \
         return -1;                                               \
     }                                                            \
 }
