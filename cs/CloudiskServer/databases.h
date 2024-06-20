@@ -7,13 +7,13 @@
 #include <unistd.h>
 #include <mysql/mysql.h>
 
-#define MYSQL_STMT_ERROR_CHECK(ret, stmt) {                      \
-    if (ret) {                                                   \
-        fprintf(stderr,"(%d, %s)\n",                             \
-               mysql_stmt_errno(stmt), mysql_stmt_error(stmt));  \
-        mysql_stmt_close(stmt);                                  \
-        return -1;                                               \
-    }                                                            \
+#define MYSQL_STMT_ERROR_CHECK(ret, stmt) { \
+    if (ret) { \
+        fprintf(stderr,"(%d, %s)\n", \
+               mysql_stmt_errno(stmt), mysql_stmt_error(stmt)); \
+        mysql_stmt_close(stmt); \
+        return -1; \
+    } \
 }
 
 typedef struct {
@@ -33,7 +33,10 @@ typedef struct {
     char cryptpasswd[128];
     char pwd[128];
     int pwd_id;
+    int sockfd;
 } user_table;
+
+extern user_table client_users[100];
 
 // (成功返回 0， 失败返回 -1)
 // 创建表

@@ -74,11 +74,11 @@ typedef enum {
     TASK_LOGIN_PASSWD_ERROR,
 }CmdType;
 
-//用户结构体
-typedef struct{
-    struct sockaddr_in clientaddr;// ip
-    char directory_address[100];//客户端地址
-}User;
+// //用户结构体
+// typedef struct{
+//     struct sockaddr_in clientaddr;// ip
+//     char directory_address[100];//客户端地址
+// }User;
 
 typedef struct 
 {
@@ -124,7 +124,6 @@ typedef struct threadpool_s {
 }threadpool_t;
 
 //全局变量,存储所有用户的地址,索引是用户套接字的值；
-extern User client_users[100];
 
 int get_conf(HashTable *hash);
 
@@ -162,7 +161,7 @@ void rmdirCommand(task_t * task, MYSQL* conn);
 void notCommand(task_t * task);
 void putsCommand(task_t * task, MYSQL* conn);
 void getsCommand(task_t * task, MYSQL* conn);
-void username_validation(task_t * task, MYSQL* conn); 
-void password_validation(task_t * task, MYSQL* conn);
+void username_validation(task_t * task); 
+void password_validation(task_t * task);
 
 #endif
