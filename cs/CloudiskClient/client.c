@@ -65,7 +65,9 @@ static int passwd_send(int sockfd, train_t * pt)
         strncpy(t.buff, encrytped, t.len);
         ret = sendn(sockfd, &t, sizeof(t.len) + sizeof(t.type) + sizeof(t.file_size)  + t.len);
         /* printf("passwd_send %d bytes.\n", ret); */
-
+        if(ret==-1){
+            //
+        }
         memset(&t, 0, sizeof(t));
         ret = recvn(sockfd, &t.len, sizeof(t.len));
         /* printf("2 length: %d\n", t.len); */
