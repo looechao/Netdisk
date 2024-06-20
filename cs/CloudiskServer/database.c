@@ -232,3 +232,52 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     return 0;
 }
 
+int search_file(MYSQL* mysql, const char* sha1_hash) {
+    // 初始化MYSQL_STMT
+    MYSQL_STMT* stmt = mysql_stmt_init(mysql);
+    if (stmt == NULL) {
+        printf("(%d, %s)\n", mysql_errno(mysql), mysql_error(mysql));
+        return -1;
+    } 
+
+    // 执行PREPARE操作
+    const char* sql = "SELECT * FROM user WHERE shal = ?";
+    int ret = mysql_stmt_prepare(stmt, sql, strlen(sql));
+    MYSQL_STMT_ERROR_CHECK(ret, stmt);
+
+    // 获取占位符的个数
+    int count = mysql_stmt_param_count(stmt);
+    if (count != 1) {
+        printf("(%d, %s)\n", mysql_stmt_errno(stmt), mysql_stmt_error(stmt));
+        return -1;
+    }
+
+    // 设置输入参数
+    char sha1[64] = {0};
+    unsigned long  sha1_len;
+
+    strcpy(sha1, sha1_hash);
+    sha1_len = strlen(sha1);
+
+    MYSQL_BIND bind;
+    memset(&bind, 0, sizeof(bind));
+
+    // 绑定参数
+    bind.buffer_type = MYSQL_TYPE_VAR_STRING;
+    bind.buffer = sha1;
+    bind.is_null = 0;
+    bind.length = &sha1_len;
+
+    // 执行绑定操作
+    ret = mysql_stmt_bind_param(stmt, &bind);
+    MYSQL_STMT_ERROR_CHECK(ret, stmt);
+
+    // 执行EXECUTE操作
+    ret = mysql_stmt_execute(stmt);
+    MYSQL_STMT_ERROR_CHECK(ret, stmt);
+
+    mysql_stmt_free_result(stmt);
+    mysql_stmt_close(stmt);
+
+    return 0;
+}
