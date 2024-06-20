@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <shadow.h>
-#include "log.c"
+#include "log.h"
 extern  log_LockFn my_lock_func;
 
 static void get_setting(char *setting,char *passwd)

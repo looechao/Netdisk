@@ -1,5 +1,6 @@
 #include "thread_pool.h"
 #include "log.h"
+#include "databases.h"
 #define EPOLL_ARR_SIZE 100
 
 int exitPipe[2];
@@ -147,8 +148,8 @@ int main(void)
                     }
 
 
-                    strcpy(client_users[peerfd].directory_address,"./User");    
-                    client_users[peerfd].clientaddr=clientaddr;
+                    strcpy(client_users[peerfd].pwd,"./User");    
+                    /* client_users[peerfd].clientaddr=clientaddr; */
                      //添加用户节点
                     user_t * user = (user_t*)calloc(1, sizeof(user_t));
                     user->sockfd = peerfd;
