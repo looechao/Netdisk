@@ -118,7 +118,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     // 获取占位符的个数
     int count = mysql_stmt_param_count(stmt);
     if (count != 3) {
-        printf("(%d, %s)\n", mysql_stmt_errno(stmt), mysql_stmt_errno(stmt));
+        printf("(%d, %s)\n", mysql_stmt_errno(stmt), mysql_stmt_error(stmt));
         return -1;
     }
 
