@@ -25,7 +25,10 @@ typedef struct {
     char cryptpasswd[128];
     char pwd[128];
     int pwd_id;
+    int sockfd;
 } user_table;
+
+extern user_table client_users[100];
 
 // (成功返回 0， 失败返回 -1)
 // 创建表
