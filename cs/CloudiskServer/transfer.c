@@ -10,11 +10,11 @@ int transferFile(int sockfd,char *file_address,off_t file_start);
 
 extern  log_LockFn my_lock_func;
 
-void putsCommand(task_t * task) {
+void putsCommand(task_t * task, MYSQL* conn) {
     printf("execute puts command.\n");
 }
 
-void getsCommand(task_t * task) {
+void getsCommand(task_t * task, MYSQL* conn) {
     printf("execute gets command.\n");
     //获取文件位置
     char file_address[4096];

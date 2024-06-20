@@ -464,7 +464,7 @@ void cdCommand(task_t* task, MYSQL* conn)
     return;
 }
 
-void rmdirCommand(task_t * task)                                              
+void rmdirCommand(task_t * task, MYSQL* conn)                                              
 {                                                                             
     printf("execute rmdir command.\n");                                       
     // 错误消息                                                               
