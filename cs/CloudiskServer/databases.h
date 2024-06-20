@@ -52,7 +52,7 @@ int sub_file_table(MYSQL* conn, file_table* ptable);
 int select_file_table(MYSQL* conn, file_table* ptable); 
 
 // 根据 SHA-1 HASH 查找所有文件表(全部文件表)
-int search_file(const char* sha1_hash);
+int search_file(MYSQL* conn, const char* sha1_hash);
 
 // 增加用户(用户表)
 int add_user_table(MYSQL* conn, user_table* ptable);
