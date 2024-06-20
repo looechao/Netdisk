@@ -2,6 +2,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <crypt.h>
+#include <openssl/evp.h>
 
 #define MAXSIZE 4096 // 最大输入长度
 #define MAXLINE 1024
@@ -63,3 +64,5 @@ void notCommand(int sockfd);
 void putsCommand(int sockfd);
 void getsCommand(int sockfd);
 
+// 计算文件 SHA-1 
+void file_sha1(int fd, char* hash_value);
