@@ -1,4 +1,3 @@
-
 #include "client.h"
 
 void cdCommand(int sockfd) {
@@ -35,4 +34,49 @@ void rmdirCommand(int sockfd) {
     else if (is_true == '0') {
         printf("%s\n", buf);
     }
+}
+
+// 计算文件 SHA-1 哈希值
+void file_sha1(int fd, char* hash_value)
+{
+    // 计算 SHA-1 值
+    // 存放加密摘要上下文
+    EVP_MD_CTX* ctx = EVP_MD_CTX_new();;
+    // 采用 SHA-1 加密算法
+    const EVP_MD* md = EVP_sha1();;
+
+    // 初始化
+    EVP_DigestInit_ex(ctx, md, NULL);
+
+    char buff[1024];    // 暂存读文件内容
+    while (1) {
+        memset(buff, 0, sizeof(buff));
+        ssize_t rbytes = read(fd, buff, sizeof(buff));
+        if (rbytes == 0) {
+            break;
+        }
+        else if (rbytes == -1) {
+            perror("read_file");
+            exit(EXIT_FAILURE);
+        }
+
+        // 对每一段内容调用更新函数
+        EVP_DigestUpdate(ctx, buff, rbytes);
+    }
+
+    // 存储解析文件哈希值
+    unsigned char hash[EVP_MAX_MD_SIZE];
+    unsigned int len;   // 存放生产哈希值的长度
+    EVP_DigestFinal_ex(ctx, hash, &len);
+
+    // 存储 16 进制 hash 值
+    char result[EVP_MAX_MD_SIZE * 2 + 1] = { 0 };
+    for (unsigned int i = 0; i < len; ++i) {
+        char frag[3] = { 0 };
+        sprintf(frag, "%02x", hash[i]);
+        strcat(result, frag);
+    }
+    strcpy(hash_value, result);
+
+    close(fd);
 }
