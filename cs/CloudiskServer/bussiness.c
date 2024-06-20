@@ -1,4 +1,5 @@
 #include "thread_pool.h"
+#include "databases.h"
 
 //主线程调用:处理客户端发过来的消息
 void handleMessage(int sockfd, int epfd, task_queue_t * que)
@@ -43,33 +44,33 @@ void handleMessage(int sockfd, int epfd, task_queue_t * que)
 }
 
 //注意：此函数可以根据实际的业务逻辑，进行相应的扩展
-void doTask(task_t * task)
+void doTask(task_t * task, MYSQL* conn)
 {
     assert(task);
     switch(task->type) {
     case CMD_TYPE_PWD:  
-        pwdCommand(task);   break;
+        pwdCommand(task, conn);   break;
     case CMD_TYPE_CD:
-        cdCommand(task);    break;
+        cdCommand(task, conn);    break;
     case CMD_TYPE_LS:
-        lsCommand(task);    break;
+        lsCommand(task, conn);    break;
     case CMD_TYPE_MKDIR:
-        mkdirCommand(task);  break;
+        mkdirCommand(task, conn);  break;
     case CMD_TYPE_RMDIR:
-        rmdirCommand(task);  break;
+        rmdirCommand(task, conn);  break;
     case CMD_TYPE_NOTCMD:
         notCommand(task);   break;
     case CMD_TYPE_PUTS:
-        putsCommand(task);   break;
+        putsCommand(task, conn);   break;
     
     case CMD_TYPE_GETS:
-        getsCommand(task);   break;
+        getsCommand(task, conn);   break;
     
     case TASK_LOGIN_USERNAME:
         printf("coming \n");
-        username_validation(task);     break;
+        username_validation(task, conn);     break;
     case TASK_LOGIN_PASSWD:
-        password_validation(task);     break;
+        password_validation(task, conn);     break;
     
     default:
         break;

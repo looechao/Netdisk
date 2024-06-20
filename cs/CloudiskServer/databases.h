@@ -45,7 +45,7 @@ int add_file_table(MYSQL* conn, file_table* ptable);
 int sub_file_table(MYSQL* conn, file_table* ptable);
 
 // 要查找的目录或文件(虚拟文件表)
-int select_file_table(MYSQL* conn, file_table* ptable);
+int select_file_table(MYSQL* conn, file_table* ptable); 
 
 // 根据 SHA-1 HASH 查找所有文件表(全部文件表)
 int search_file(const char* sha1_hash);

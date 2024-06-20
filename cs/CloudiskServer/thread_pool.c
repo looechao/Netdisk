@@ -1,5 +1,6 @@
 #include "thread_pool.h"
 #include <bits/pthreadtypes.h>
+#include "databases.h"
 
 //声明全局变量
 User client_users[100];
@@ -9,11 +10,24 @@ void * threadFunc(void* arg)
 {
     //不断地从任务队列中获取任务，并执行
     threadpool_t * pThreadpool = (threadpool_t*)arg;
+
+    // 连接数据库
+    MYSQL* conn = mysql_init(NULL);
+    if (conn == NULL) {
+        printf("mysql_init failde...\n");
+        exit(EXIT_FAILURE);
+    }
+    conn = mysql_real_connect(conn, NULL, "root", "1234", "wangpan", 0, NULL, 0);
+    if (conn == NULL) {
+        printf("mysql_real_connect failed:%s\n", mysql_error(conn));
+        exit(EXIT_FAILURE);
+    }
+
     while(1) {
         task_t * ptask = taskDeque(&pThreadpool->que);
         if(ptask) {
             //执行业务逻辑
-            doTask(ptask);
+            doTask(ptask, conn);
             free(ptask);//执行完任务后，释放任务节点
         } else {//ptask为NULL的情况
             break;

@@ -42,7 +42,7 @@ CmdType parse_input(char* input, int peerfd) {
     splitString(input, strs, 10, &cnt);
 
     if(cnt==0){
-        return CMD_TYPE_USERNAME;
+        return TASK_LOGIN_USERNAME;
     }
     //解析命令
     train_t information;
@@ -67,8 +67,7 @@ CmdType parse_input(char* input, int peerfd) {
     if(information.type == CMD_TYPE_GETS){
         check_files(&information);   
     }
-    
-    printf("发送%d\n",information.type);
+
     //发送命令
     send(peerfd, &information, 
          sizeof(information.len)+sizeof(information.type)
