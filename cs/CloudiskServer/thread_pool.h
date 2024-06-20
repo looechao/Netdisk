@@ -28,6 +28,9 @@
 #include <sys/uio.h>
 #include <sys/sendfile.h>
 
+// 数据库
+#include <mysql/mysql.h>
+
 //哈希表
 #include "hashtable.h"
 
@@ -149,17 +152,17 @@ int recvn(int sockfd, void * buff, int len);
 void handleMessage(int sockfd, int epfd, task_queue_t * que);
 
 //执行task_t * task, msg* message);任务的总的函数
-void doTask(task_t * task);
+void doTask(task_t * task, MYSQL* conn);
 // 一个具体命令的执行
-void cdCommand(task_t * task);
-void lsCommand(task_t * task);
-void pwdCommand(task_t * task);
-void mkdirCommand(task_t * task);
-void rmdirCommand(task_t * task);
+void cdCommand(task_t * task, MYSQL* conn);
+void lsCommand(task_t * task, MYSQL* conn);
+void pwdCommand(task_t * task, MYSQL* conn);
+void mkdirCommand(task_t * task, MYSQL* conn);
+void rmdirCommand(task_t * task, MYSQL* conn);
 void notCommand(task_t * task);
-void putsCommand(task_t * task);
-void getsCommand(task_t * task);
-void username_validation(task_t * task); 
-void password_validation(task_t * task);
+void putsCommand(task_t * task, MYSQL* conn);
+void getsCommand(task_t * task, MYSQL* conn);
+void username_validation(task_t * task, MYSQL* conn); 
+void password_validation(task_t * task, MYSQL* conn);
 
 #endif

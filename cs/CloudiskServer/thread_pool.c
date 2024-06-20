@@ -27,7 +27,7 @@ void * threadFunc(void* arg)
         task_t * ptask = taskDeque(&pThreadpool->que);
         if(ptask) {
             //执行业务逻辑
-            doTask(ptask);
+            doTask(ptask, conn);
             free(ptask);//执行完任务后，释放任务节点
         } else {//ptask为NULL的情况
             break;
