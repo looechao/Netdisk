@@ -3,7 +3,7 @@
 #include "databases.h"
 
 //声明全局变量
-User client_users[100];
+user_table client_users[100];
 
 //每一个子线程在执行的函数执行体(start_routine)
 void * threadFunc(void* arg)
