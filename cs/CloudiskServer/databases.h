@@ -6,15 +6,13 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <mysql/mysql.h>
-#include "log.h"
 
-#define MYSQL_STMT_ERROR_CHECK(ret, stmt, my_lock_func) {         \
-    if (ret) {                                                               \
-        fprintf(stderr,"(%d, %s)\n",                                         \
-               mysql_stmt_errno(stmt), mysql_stmt_error(stmt));              \
-        write_log(mysql_stmt_error(stmt), "error", log_LockFn my_lock_func); \
-        return -1;                                                           \
-    }                                                                        \
+#define MYSQL_STMT_ERROR_CHECK(ret, stmt) {                      \
+    if (ret) {                                                   \
+        fprintf(stderr,"(%d, %s)\n",                             \
+               mysql_stmt_errno(stmt), mysql_stmt_error(stmt));  \
+        return -1;                                               \
+    }                                                            \
 }
 
 typedef struct {

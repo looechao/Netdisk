@@ -111,14 +111,14 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     } 
 
     // 执行PREPARE操作
-    const char* sql = "SELECT * FROM user WHERE parent_id = ? AND filename = ? AND owner_id = ?";
+    const char* sql = "SELECT * FROM user WHERE parent_id = ? AND filename = ? AND owner_id = ? AND tomb = 'y'";
     int ret = mysql_stmt_prepare(stmt, sql, strlen(sql));
     MYSQL_STMT_ERROR_CHECK(ret, stmt);
 
     // 获取占位符的个数
     int count = mysql_stmt_param_count(stmt);
     if (count != 3) {
-        printf("(%d, %s)\n", mysql_stmt_errno(stmt), mysql_stmt_errno(stmt));
+        printf("(%d, %s)\n", mysql_stmt_errno(stmt), mysql_stmt_error(stmt));
         return -1;
     }
 
