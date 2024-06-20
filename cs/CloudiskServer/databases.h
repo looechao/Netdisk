@@ -6,7 +6,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <mysql/mysql.h>
-#include "log.h"
 
 #define MYSQL_STMT_ERROR_CHECK(ret, stmt) { \
     if (ret) { \
