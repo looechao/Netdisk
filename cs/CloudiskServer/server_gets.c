@@ -136,7 +136,7 @@ int transferFile(int sockfd,char *file_name,off_t file_start)
 
     file.length=sizeof(file_stat.st_size);
     memcpy(file.content,&file_stat.st_size,file.length);
-    int ret=Send_Info(sockfd,(char *)&file,sizeof(file.length)+file.length,MSG_NOSIGNAL);
+    ret=Send_Info(sockfd,(char *)&file,sizeof(file.length)+file.length,MSG_NOSIGNAL);
     if (ret == -1) {
         fprintf(stderr,"seed");
 
