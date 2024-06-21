@@ -160,7 +160,7 @@ void mkdirCommand(task_t * task, MYSQL* conn);
 void rmdirCommand(task_t * task, MYSQL* conn);
 void notCommand(task_t * task);
 void putsCommand(task_t * task, MYSQL* conn);
-void getsCommand(task_t * task, MYSQL* conn);
+int getsCommand(task_t * task, MYSQL* conn);
 void username_validation(task_t * task); 
 void password_validation(task_t * task);
 
