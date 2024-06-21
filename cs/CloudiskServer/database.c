@@ -11,7 +11,7 @@ int select_user_table(MYSQL* mysql, user_table* ptable) {
     } 
 
     // 执行PREPARE操作
-    const char* sql = "SELECT * FROM user WHERE name = ?";
+    const char* sql = "SELECT * FROM user_table WHERE user_name = ?";
     int ret = mysql_stmt_prepare(stmt, sql, strlen(sql));
     MYSQL_STMT_ERROR_CHECK(ret, stmt);
 
@@ -85,6 +85,15 @@ int select_user_table(MYSQL* mysql, user_table* ptable) {
     ret = mysql_stmt_store_result(stmt);
     MYSQL_STMT_ERROR_CHECK(ret, stmt);
 
+    // 判断查找是否有符合条件的结果集
+    unsigned long num_rows = mysql_stmt_num_rows(stmt);
+    if (num_rows == 0) {
+        mysql_stmt_free_result(stmt);
+        mysql_stmt_close(stmt);
+
+        return -1;
+    }
+
     while (1) {
         int status = mysql_stmt_fetch(stmt);
         if (status == 1 || status == MYSQL_NO_DATA) {
@@ -114,7 +123,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     } 
 
     // 执行PREPARE操作
-    const char* sql = "SELECT * FROM user WHERE parent_id = ? AND filename = ? AND owner_id = ? AND tomb = 'y'";
+    const char* sql = "SELECT * FROM file_table WHERE parent_id = ? AND filename = ? AND owner_id = ? AND tomb = 'y'";
     int ret = mysql_stmt_prepare(stmt, sql, strlen(sql));
     MYSQL_STMT_ERROR_CHECK(ret, stmt);
 
@@ -215,6 +224,15 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     ret = mysql_stmt_store_result(stmt);
     MYSQL_STMT_ERROR_CHECK(ret, stmt);
 
+    // 判断查找是否有符合条件的结果集
+    unsigned long num_rows = mysql_stmt_num_rows(stmt);
+    if (num_rows == 0) {
+        mysql_stmt_free_result(stmt);
+        mysql_stmt_close(stmt);
+
+        return -1;
+    }
+
     while (1) {
         int status = mysql_stmt_fetch(stmt);
         if (status == 1 || status == MYSQL_NO_DATA) {
@@ -241,12 +259,11 @@ int search_file(MYSQL* mysql, const char* sha1_hash) {
     MYSQL_STMT* stmt = mysql_stmt_init(mysql);
     if (stmt == NULL) {
         printf("(%d, %s)\n", mysql_errno(mysql), mysql_error(mysql));
-        mysql_stmt_close(stmt);
         return -1;
     } 
 
     // 执行PREPARE操作
-    const char* sql = "SELECT * FROM user WHERE shal = ?";
+    const char* sql = "SELECT * FROM file_table WHERE sha1 = ?";
     int ret = mysql_stmt_prepare(stmt, sql, strlen(sql));
     MYSQL_STMT_ERROR_CHECK(ret, stmt);
 
@@ -281,6 +298,17 @@ int search_file(MYSQL* mysql, const char* sha1_hash) {
     // 执行EXECUTE操作
     ret = mysql_stmt_execute(stmt);
     MYSQL_STMT_ERROR_CHECK(ret, stmt);
+
+    ret = mysql_stmt_store_result(stmt);
+    MYSQL_STMT_ERROR_CHECK(ret, stmt);
+
+    unsigned long num_rows = mysql_stmt_num_rows(stmt);
+    if (num_rows == 0) {
+        mysql_stmt_free_result(stmt);
+        mysql_stmt_close(stmt);
+
+        return -1;
+    }
 
     mysql_stmt_free_result(stmt);
     mysql_stmt_close(stmt);
