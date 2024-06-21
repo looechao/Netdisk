@@ -19,6 +19,7 @@ typedef enum {
     CMD_TYPE_CD,
     CMD_TYPE_MKDIR,
     CMD_TYPE_RMDIR,
+    CMD_TYPE_RM,
     CMD_TYPE_PUTS,
     CMD_TYPE_GETS,
     CMD_TYPE_NOTCMD,  //不是命令

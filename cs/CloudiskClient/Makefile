@@ -14,7 +14,7 @@ TARGET = main
 SRCS = $(wildcard *.c)
 
 # 规则
-all: $(TARGET)
+all:clean $(TARGET)
 
 # 链接可执行文件
 $(TARGET):

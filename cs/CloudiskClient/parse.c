@@ -23,6 +23,9 @@ CmdType get_type (char* args) {
     else if (strcmp(args, "rmdir") == 0) {
         return CMD_TYPE_RMDIR;
     }
+    else if (strcmp(args, "rm") == 0) {
+        return CMD_TYPE_RM;
+    }
     else if (strcmp(args, "puts") == 0) {
         return CMD_TYPE_PUTS;
     }

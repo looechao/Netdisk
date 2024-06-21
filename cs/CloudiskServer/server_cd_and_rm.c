@@ -373,6 +373,8 @@ void parse_path(task_t* task, char* curr_dir, char* newfile) {
     if (last_post != NULL) {                         
         *last_post = '\0';                           
     }
+
+    destroy_stack(&user_dir_stack);
 }
 
 void cdCommand(task_t* task, MYSQL* conn)
