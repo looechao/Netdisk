@@ -147,13 +147,13 @@ int main(void)
                         printf("The key %s does not exist in the hashtable\n", key);
                     }
 
-
-                    strcpy(client_users[peerfd].pwd,"./User");    
+                    strcpy(client_users[peerfd].pwd,foundValue);    
                     /* client_users[peerfd].clientaddr=clientaddr; */
                      //添加用户节点
                     user_t * user = (user_t*)calloc(1, sizeof(user_t));
                     user->sockfd = peerfd;
 					appendNode(&userList, user);
+
                 } else if(fd == exitPipe[0]) {
                     //线程池要退出
                     int howmany = 0;
