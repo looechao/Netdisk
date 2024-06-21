@@ -40,6 +40,9 @@ int main() {
         case CMD_TYPE_RMDIR:
             //rmdirCommand(sockfd);  
             break;
+        case CMD_TYPE_RM:
+            //rmCommand(sockfd);  
+            break;
         case CMD_TYPE_NOTCMD:
             //notCommand(sockfd);   
             break;

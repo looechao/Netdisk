@@ -58,6 +58,8 @@ void doTask(task_t * task, MYSQL* conn)
     //    mkdirCommand(task, conn);  break;
     //case CMD_TYPE_RMDIR:
     //    rmdirCommand(task, conn);  break;
+    //case CMD_TYPE_RM:
+    //    rmCommand(task, conn);  break;
     //case CMD_TYPE_NOTCMD:
     //    notCommand(task);   break;
     //case CMD_TYPE_PUTS:

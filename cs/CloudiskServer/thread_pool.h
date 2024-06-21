@@ -158,6 +158,7 @@ void lsCommand(task_t * task, MYSQL* conn);
 void pwdCommand(task_t * task, MYSQL* conn);
 void mkdirCommand(task_t * task, MYSQL* conn);
 void rmdirCommand(task_t * task, MYSQL* conn);
+void rmCommand(task_t * task, MYSQL* conn); 
 void notCommand(task_t * task);
 void putsCommand(task_t * task, MYSQL* conn);
 int getsCommand(task_t * task, MYSQL* conn);
