@@ -22,8 +22,12 @@ void lsCommand(int sockfd) {
     char buf[4096] = { 0 };
 
     recv(sockfd, buf, sizeof(buf), 0);
-
+    
     printf("file_name\tfile_size\tfile_type\n");
+
+    if (strcmp(buf, "-1") == 0) {
+        return;
+    }
 
     char* token = strtok(buf, " \n");
     int i = 1;
