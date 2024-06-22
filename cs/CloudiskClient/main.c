@@ -11,6 +11,7 @@ int main() {
     char str[MAXLINE];
 
     for (; ; ) {
+        memset(str, 0, sizeof(str));
         printf("%s$>> ", username); // 提示符
         fflush(stdout);
         // char * ret=fgets(str, MAXLINE, stdin); // 从stdin读取命令
@@ -25,7 +26,6 @@ int main() {
             break;
         }
         
-        /* sleep(10); */
         if (strcmp(str, "exit\n") == 0) { // 检查是否为exit命令
             break; // 退出循环
         }

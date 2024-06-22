@@ -318,7 +318,13 @@ void removeFirstChar(char *str) {
 // 第三期
 // 分析客户端传的路径，防止越界访问
 void parse_path(task_t* task, char* curr_dir, char* newfile) {
-    char home_dir[1024] = "./User";
+    char home_dir[1024] = { 0 };
+    strcpy(home_dir, client_users[task->peerfd].user_name);
+    if (task->data[0] == '~') {
+        removeFirstChar(task->data);   
+        strcpy(curr_dir, home_dir);
+    }
+
     // 初始化栈
     dir_stack user_dir_stack;
     user_dir_stack.size = 0;
@@ -403,11 +409,6 @@ void cdCommand(task_t* task, MYSQL* conn)
     }                                                
 
     if (strlen(task->data) > 1) {
-        if (task->data[0] == '~') {
-            removeFirstChar(task->data);   
-            strcpy(current_dir, home_dir);
-            f1.parent_id = 0;
-        }
         
         char newfile[1024] = { 0 };
         parse_path(task, current_dir, newfile);
@@ -691,6 +692,8 @@ void rmdirCommand(task_t * task, MYSQL* conn)
 void rmCommand(task_t * task, MYSQL* conn)                                              
 {                                                                             
     printf("execute rm command.\n");                                       
+    write_log("execute rm command", "info", my_lock_func);
+
     // 错误消息                                                               
     char error_msg[4096] = { 0 };                                             
 
@@ -765,14 +768,67 @@ void rmCommand(task_t * task, MYSQL* conn)
     return;                                                           
 }                                                                     
 
-// void notCommand(task_t* task) {
-//     char error_msg[4096] = { 0 };
-//     write_log("Not command", "warn", my_lock_func);                       
-// 
-//     sprintf(error_msg, "Not '%s' command.\n"
-//             "Please enter 'ls' 'cd' 'pwd' 'mkdir' 'rmdir' 'rm' 'gets' 'puts' command.", task->data); 
-// 
-//     int len = strlen(error_msg);                                      
-//     printf("%s\n", error_msg);
-//     sendn(task->peerfd, error_msg, len);                              
-// }
+void lsCommand(task_t* task, MYSQL* conn) {
+    printf("execute ls command.\n");                                       
+    write_log("exiecute ls command", "info", my_lock_func);
+    char error_msg[4096] = { 0 };
+
+    // 初始化虚拟文件表
+    file_table f1;
+    memset(&f1, 0, sizeof(f1));
+    f1.parent_id = client_users[task->peerfd].pwd_id;
+    f1.owner_id = client_users[task->peerfd].user_id;
+
+    char home_dir[1024] = { 0 };
+    strcpy(home_dir, client_users[task->peerfd].user_name);
+    char current_dir[1024] = { 0 };
+    strcpy(current_dir, client_users[task->peerfd].pwd);
+
+    if (strlen(task->data) > 1) {
+
+        char newfile[1024] = { 0 };
+        parse_path(task, current_dir, newfile);
+        char temp[1024] = { 0 };
+        strcpy(temp, newfile);
+
+        char* token = strtok(newfile, "/\n");
+        f1.parent_id = 0;
+        while ((token = strtok(NULL, "/\n")) != NULL) {
+            strcpy(f1.file_name, token);
+            int ret = select_file_table(conn, &f1);
+            if (ret == -1) {
+                sprintf(error_msg, "%s is not existing.\n", task->data); 
+                write_log(error_msg, "warn", my_lock_func);
+
+                char is_true = '1';
+                send(task->peerfd, &is_true, sizeof(is_true), 0);
+                int len = strlen(error_msg);
+                sendn(task->peerfd, error_msg, len);
+
+                return;
+            }
+            else if (f1.type == 'f') {
+                sprintf(error_msg, "%s is a file and is not a dir.\n", task->data); 
+                write_log(error_msg, "warn", my_lock_func);
+
+                char is_true = '1';
+                send(task->peerfd, &is_true, sizeof(is_true), 0);
+                int len = strlen(error_msg);
+                sendn(task->peerfd, error_msg, len);
+
+                return;
+            }
+            f1.parent_id = f1.file_id;
+        }
+    }
+
+    char data[4096] = { 0 };
+    puts("start");
+    search_currdir_file(conn, &f1, data);
+
+    printf("data = %s\n", data);
+
+    int len = strlen(data);
+    sendn(task->peerfd, data, len);
+
+}
