@@ -122,3 +122,122 @@
 2024-06-22 09:55:34 INFO  log.c:162: 注册用户成功
 2024-06-22 09:55:41 ERROR log.c:168: 用户登录失败
 2024-06-22 09:55:43 INFO  log.c:162: 用户登录成功
+2024-06-22 10:32:08 INFO  main.c:98: server started !
+2024-06-22 10:32:19 ERROR log.c:168: 用户登录失败
+2024-06-22 10:32:22 INFO  log.c:162: 用户登录成功
+2024-06-22 10:33:25 INFO  log.c:162: 用户登录成功
+2024-06-22 10:38:38 INFO  log.c:162: 用户登录成功
+2024-06-22 10:39:31 INFO  log.c:162: 用户登录成功
+2024-06-22 10:41:32 INFO  log.c:162: 用户登录成功
+2024-06-22 10:42:59 INFO  log.c:162: 用户登录成功
+2024-06-22 10:46:17 INFO  log.c:162: 用户登录成功
+2024-06-22 10:47:26 INFO  log.c:162: 用户登录成功
+2024-06-22 10:49:53 INFO  log.c:162: 用户登录成功
+2024-06-22 10:53:55 INFO  log.c:162: 用户登录成功
+2024-06-22 10:56:09 ERROR log.c:168: 用户登录失败
+2024-06-22 10:56:11 INFO  log.c:162: 用户登录成功
+2024-06-22 10:56:48 INFO  main.c:98: server started !
+2024-06-22 10:56:55 INFO  log.c:162: 用户登录成功
+2024-06-22 11:08:24 INFO  main.c:98: server started !
+2024-06-22 11:08:32 INFO  log.c:162: 用户登录成功
+2024-06-22 11:09:50 INFO  main.c:98: server started !
+2024-06-22 11:09:57 INFO  log.c:162: 用户登录成功
+2024-06-22 11:10:08 INFO  main.c:98: server started !
+2024-06-22 11:10:14 INFO  log.c:162: 用户登录成功
+2024-06-22 11:14:40 INFO  log.c:162: 用户登录成功
+2024-06-22 11:15:44 INFO  main.c:98: server started !
+2024-06-22 11:15:51 INFO  log.c:162: 用户登录成功
+2024-06-22 11:20:25 INFO  main.c:98: server started !
+2024-06-22 11:20:34 INFO  log.c:162: 用户登录成功
+2024-06-22 11:20:52 INFO  log.c:162: 用户登录成功
+2024-06-22 11:26:01 INFO  main.c:98: server started !
+2024-06-22 11:26:08 INFO  log.c:162: 用户登录成功
+2024-06-22 11:28:03 INFO  main.c:98: server started !
+2024-06-22 11:28:11 INFO  main.c:98: server started !
+2024-06-22 11:28:18 INFO  log.c:162: 用户登录成功
+2024-06-22 11:30:31 INFO  main.c:98: server started !
+2024-06-22 11:30:40 INFO  main.c:98: server started !
+2024-06-22 11:30:46 INFO  log.c:162: 用户登录成功
+2024-06-22 11:31:35 INFO  log.c:162: 用户登录成功
+2024-06-22 11:34:13 INFO  main.c:98: server started !
+2024-06-22 11:34:20 INFO  log.c:162: 用户登录成功
+2024-06-22 11:46:24 INFO  main.c:98: server started !
+2024-06-22 11:46:31 INFO  log.c:162: 用户登录成功
+2024-06-22 11:46:38 WARN  log.c:165: makedir an directory aaa succese.
+2024-06-22 11:48:36 WARN  log.c:165: makedir an directory aaa succese.
+2024-06-22 11:52:23 INFO  main.c:98: server started !
+2024-06-22 11:52:31 INFO  log.c:162: 用户登录成功
+2024-06-22 11:52:35 WARN  log.c:165: makedir an directory aaa succese.
+2024-06-22 13:57:30 INFO  main.c:98: server started !
+2024-06-22 13:57:41 INFO  log.c:162: 用户登录成功
+2024-06-22 13:57:45 WARN  log.c:165: makedir an directory aaa succese.
+2024-06-22 14:00:47 INFO  main.c:98: server started !
+2024-06-22 14:00:55 INFO  log.c:162: 用户登录成功
+2024-06-22 14:00:59 WARN  log.c:165: makedir an directory aaa succese.
+2024-06-22 14:07:06 INFO  main.c:98: server started !
+2024-06-22 14:07:12 INFO  log.c:162: 用户登录成功
+2024-06-22 14:07:16 WARN  log.c:165: makedir an directory aaa succese.
+2024-06-22 14:07:40 WARN  log.c:165: makedir an directory aaa succese.
+2024-06-22 14:09:19 INFO  main.c:98: server started !
+2024-06-22 14:09:31 INFO  log.c:162: 用户登录成功
+2024-06-22 14:09:39 WARN  log.c:165: makedir an directory 111 succese.
+2024-06-22 14:13:21 INFO  main.c:98: server started !
+2024-06-22 14:13:31 INFO  log.c:162: 用户登录成功
+2024-06-22 14:13:36 WARN  log.c:165: makedir an directory 222 succese.
+2024-06-22 14:13:57 WARN  log.c:165: rm an directory 111 succese.
+2024-06-22 14:14:09 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 14:14:20 WARN  log.c:165: bbb is not existing.
+
+2024-06-22 14:14:30 WARN  log.c:165: aaa is not existing.
+
+2024-06-22 14:14:47 WARN  log.c:165: 222 is not existing.
+
+2024-06-22 14:14:50 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 14:15:13 WARN  log.c:165: 222 is not existing.
+
+2024-06-22 14:25:52 INFO  main.c:98: server started !
+2024-06-22 14:26:06 INFO  log.c:162: 用户登录成功
+2024-06-22 14:26:13 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 14:30:45 INFO  main.c:98: server started !
+2024-06-22 14:30:53 INFO  log.c:162: 用户登录成功
+2024-06-22 14:31:02 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 14:31:51 INFO  main.c:98: server started !
+2024-06-22 14:31:59 INFO  log.c:162: 用户登录成功
+2024-06-22 14:32:02 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 14:33:55 INFO  main.c:98: server started !
+2024-06-22 14:34:02 INFO  log.c:162: 用户登录成功
+2024-06-22 14:34:05 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 14:34:18 WARN  log.c:165: bbb is not existing.
+
+2024-06-22 14:35:56 INFO  main.c:98: server started !
+2024-06-22 14:36:03 INFO  log.c:162: 用户登录成功
+2024-06-22 14:36:07 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 14:36:12 WARN  log.c:165: bbb is not existing.
+
+2024-06-22 14:36:26 WARN  log.c:165: bbb is not existing.
+
+2024-06-22 14:36:49 WARN  log.c:165: bbb is not existing.
+
+2024-06-22 14:37:54 INFO  main.c:98: server started !
+2024-06-22 14:38:01 INFO  log.c:162: 用户登录成功
+2024-06-22 14:38:03 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 14:38:18 WARN  log.c:165: bbb is not existing.
+
+2024-06-22 14:42:17 INFO  main.c:98: server started !
+2024-06-22 14:42:26 INFO  log.c:162: 用户登录成功
+2024-06-22 14:42:29 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 14:42:47 WARN  log.c:165: bbb is not existing.
+
+2024-06-22 14:47:55 INFO  main.c:98: server started !
+2024-06-22 14:48:03 INFO  log.c:162: 用户登录成功
+2024-06-22 14:48:07 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 14:48:13 WARN  log.c:165: bbb is not existing.
+
+2024-06-22 14:50:28 INFO  main.c:98: server started !
+2024-06-22 14:50:41 INFO  log.c:162: 用户登录成功
+2024-06-22 14:50:45 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 14:50:51 WARN  log.c:165: rm an directory bbb succese.
+2024-06-22 15:06:13 INFO  main.c:98: server started !
+2024-06-22 15:06:22 INFO  log.c:162: 用户登录成功
+2024-06-22 15:06:31 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 15:06:51 INFO  log.c:162: Succeeded in switching directory ~

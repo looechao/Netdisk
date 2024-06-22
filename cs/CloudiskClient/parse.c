@@ -44,9 +44,9 @@ CmdType parse_input(char* input, int peerfd) {
     //分解字符串
     splitString(input, strs, 10, &cnt);
 
-    if(cnt==0){
-        return TASK_LOGIN_USERNAME;
-    }
+    // if(cnt==0){
+    //     return TASK_LOGIN_USERNAME;
+    // }
     //解析命令
     train_t information;
     

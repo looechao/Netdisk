@@ -61,7 +61,7 @@ int sendn(int sockfd, const void * buff, int len);
 
 CmdType parse_input(char* str, int peerfd); // 解析命令
 
-int login(int sockfd);
+int login(int sockfd, char* username);
 
 // 一个具体命令的执行
 void cdCommand(int sockfd);
@@ -69,7 +69,8 @@ void lsCommand(int sockfd);
 void pwdCommand(int sockfd);
 void mkdirCommand(int sockfd);
 void rmdirCommand(int sockfd);
-void notCommand(int sockfd);
+void rmCommand(int sockfd);
+void notCommand(void);
 void putsCommand(int sockfd);
 void getsCommand(int sockfd);
 

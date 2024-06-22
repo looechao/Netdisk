@@ -48,33 +48,31 @@ void doTask(task_t * task, MYSQL* conn)
 {
     assert(task);
     switch(task->type) {
-    //case CMD_TYPE_PWD:  
-    //    pwdCommand(task, conn);   break;
-    //case CMD_TYPE_CD:
-    //    cdCommand(task, conn);    break;
-    //case CMD_TYPE_LS:
-    //    lsCommand(task, conn);    break;
-    //case CMD_TYPE_MKDIR:
-    //    mkdirCommand(task, conn);  break;
-    //case CMD_TYPE_RMDIR:
-    //    rmdirCommand(task, conn);  break;
-    //case CMD_TYPE_RM:
-    //    rmCommand(task, conn);  break;
-    //case CMD_TYPE_NOTCMD:
-    //    notCommand(task);   break;
-    //case CMD_TYPE_PUTS:
-    //    putsCommand(task, conn);   break;
-    //
-    //case CMD_TYPE_GETS:
-    //    getsCommand(task, conn);   break;
-    //
+    case CMD_TYPE_PWD:  
+        pwdCommand(task);   break;
+    case CMD_TYPE_CD:
+        cdCommand(task, conn);    break;
+    case CMD_TYPE_LS:
+        lsCommand(task, conn);    break;
+    case CMD_TYPE_MKDIR:
+        mkdirCommand(task, conn);  break;
+    case CMD_TYPE_RMDIR:
+        rmdirCommand(task, conn);  break;
+    case CMD_TYPE_RM:
+        rmCommand(task, conn);  break;
+    // case CMD_TYPE_NOTCMD:
+    //     notCommand(task);   break;
+    // case CMD_TYPE_PUTS:
+    //     putsCommand(task, conn);   break;
+    
+    case CMD_TYPE_GETS:
+        getsCommand(task, conn);   break;
+    
     case TASK_LOGIN_USERNAME:
-        printf("coming \n");
         login_username(task, conn);     break;
     case TASK_LOGIN_PASSWD:
         login_password(task);     break;
     case TASK_REGISTER_USERNAME:
-        printf("coming \n");
         register_username(task, conn);     break;
     case TASK_REGISTER_PASSWD:
         register_password(task, conn);     break;
@@ -82,6 +80,4 @@ void doTask(task_t * task, MYSQL* conn)
     default:
         break;
     }
-    
 }
-

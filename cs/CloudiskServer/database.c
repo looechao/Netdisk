@@ -129,7 +129,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     } 
 
     // 执行PREPARE操作
-    const char* sql = "SELECT * FROM file_table WHERE parent_id = ? AND filename = ? AND owner_id = ? AND tomb = 'y'";
+    const char* sql = "SELECT * FROM file_table WHERE parent_id = ? AND file_name = ? AND owner_id = ? AND tomb = 'y'";
     int ret = mysql_stmt_prepare(stmt, sql, strlen(sql));
     MYSQL_STMT_ERROR_CHECK(ret, stmt);
 
@@ -447,7 +447,7 @@ int add_file_table(MYSQL *conn, file_table* ptable) {
     bind[4].length = 0;
 
     char type;
-    bind[5].buffer_type = MYSQL_TYPE_STRING;
+    bind[5].buffer_type = MYSQL_TYPE_VAR_STRING;
     bind[5].buffer = (char *)&type;
     bind[5].buffer_length = sizeof(type);
     bind[5].is_null = 0;
