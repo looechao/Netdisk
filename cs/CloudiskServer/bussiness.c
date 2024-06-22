@@ -23,7 +23,7 @@ void handleMessage(int sockfd, int epfd, task_queue_t * que)
     ret = recvn(sockfd,&ptask->file_size,sizeof(ptask->file_size));            
     printf("bussines ptask->file_size=%ld\n",ptask->file_size);
 
-
+    printf("ptask->data = %d\n", length);
     if(length > 0) {
         //1.3 获取消息内容
         ret = recvn(sockfd, ptask->data, length);

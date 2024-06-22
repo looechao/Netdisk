@@ -17,6 +17,24 @@ void cdCommand(int sockfd) {
     /* } */
 }
 
+void lsCommand(int sockfd) {
+    char buf[4096] = { 0 };
+
+    recv(sockfd, buf, sizeof(buf), 0);
+
+    char* token = strtok(buf, " \n");
+    int i = 1;
+    
+    while (token != NULL) {
+        printf("%s\t", token);
+        token = strtok(NULL, " \n");
+        if (i % 3 == 0) {
+            putchar('\n');
+        }
+        i++;
+    }
+}
+
 void rmdirCommand(int sockfd) {
     char is_true;
     char buf[4096] = { 0 };

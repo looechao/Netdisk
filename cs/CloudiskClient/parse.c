@@ -49,6 +49,7 @@ CmdType parse_input(char* input, int peerfd) {
     // }
     //解析命令
     train_t information;
+    memset(&information, 0, sizeof(information));
     
     information.type = get_type(strs[0]);
     information.len=0;
@@ -60,6 +61,7 @@ CmdType parse_input(char* input, int peerfd) {
     //假设最多两个命令
     //for(int i = 1; i < cnt; ++i) {
         //printf("strs[%d]: %s\n", i, strs[i]);
+    printf("cnt = %d\n", cnt);
     if(cnt>1){
         information.len=strlen(strs[1]);
         strcpy(information.buff,strs[1]);

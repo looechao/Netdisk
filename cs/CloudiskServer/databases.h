@@ -61,5 +61,8 @@ int add_user_table(MYSQL* conn, user_table* ptable);
 // 查找用户(用户表)
 int select_user_table(MYSQL* conn, user_table* ptable);
 
+// 查找当前目录下的文件
+int search_currdir_file(MYSQL* conn, file_table* ptable, char* data);
+
 #endif
 
