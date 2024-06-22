@@ -44,10 +44,8 @@ CmdType parse_input(char* input, train_t* information) {
     //分解字符串
     splitString(input, strs, 10, &cnt);
 
-    if (cnt == 0){
-        return TASK_LOGIN_USERNAME;
-    }
     //解析命令
+    memset(information, 0, sizeof(*information));
     
     information->type = get_type(strs[0]);
     information->len = 0;

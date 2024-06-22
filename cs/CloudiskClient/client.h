@@ -63,6 +63,14 @@ typedef enum {
     TASK_LOGIN_PASSWD,
     TASK_LOGIN_PASSWD_OK,
     TASK_LOGIN_PASSWD_ERROR,
+
+    TASK_REGISTER_USERNAME,
+    TASK_REGISTER_USERNAME_OK,
+    TASK_REGISTER_USERNAME_ERROR,
+    TASK_REGISTER_PASSWD,
+    TASK_REGISTER_SUCESSES,
+    TASK_REGISTER_ERROR,
+
 }CmdType;
 
 typedef struct 
@@ -88,15 +96,16 @@ int sendn(int sockfd, const void * buff, int len);
 
 CmdType parse_input(char* str, train_t* information); // 解析命令
 
-int login(int sockfd);
+int login(int sockfd, char* username);
 
 // 一个具体命令的执行
-void cdCommand(int sockfd);
+void cdCommand(int sockfd, char* username);
 void lsCommand(int sockfd);
 void pwdCommand(int sockfd);
 void mkdirCommand(int sockfd);
 void rmdirCommand(int sockfd);
-void notCommand(int sockfd);
+void rmCommand(int sockfd);
+void notCommand(void);
 void putsCommand(int sockfd);
 void getsCommand(int sockfd);
 void rmCommand(int sockfd);

@@ -5,10 +5,11 @@
 
 int main(void) {
     //连接服务器
-    int sockfd = my_connect("127.0.0.1", "8888");
+     int sockfd = my_connect("127.0.0.1", "8080");
                                                                   
-    //函数在client.c
-    login(sockfd);
+    //函数在login.c
+    char username[10] = { 0 };
+    login(sockfd, username);
 
     //创建线程池结构体
     threadpool_t threadpool;
@@ -24,14 +25,23 @@ int main(void) {
     //struct epoll_event* pEventArr = (struct epoll_event*)calloc(EPOLL_ARR_SIZE, sizeof(struct epoll_event));
 
     char str[MAXLINE];
-    for (; ; ) {
-        printf(">> "); // 提示符
-        char * ret = fgets(str, MAXLINE, stdin); // 从stdin读取命令
-        if(ret == NULL){
-            printf("\n");
-            break;    
-        }
 
+    for (; ; ) {
+        memset(str, 0, sizeof(str));
+        printf("%s$>> ", username); // 提示符
+        fflush(stdout);
+        // char * ret=fgets(str, MAXLINE, stdin); // 从stdin读取命令
+        // if(ret==NULL){
+        //     printf("\n");
+        //     break;    
+        // }
+        
+        ssize_t ret = read(STDIN_FILENO, str, MAXLINE);
+        if (ret == 0) {
+            putchar('\n');
+            break;
+        }
+        
         if (strcmp(str, "exit\n") == 0) { // 检查是否为exit命令
             break; // 退出循环
         }
@@ -56,7 +66,7 @@ int main(void) {
             pwdCommand(sockfd);   
             break;
         case CMD_TYPE_CD:
-            cdCommand(sockfd);    
+            cdCommand(sockfd, username);    
             break;
         case CMD_TYPE_LS:
             lsCommand(sockfd);    
@@ -70,14 +80,20 @@ int main(void) {
         case CMD_TYPE_RM:
             rmCommand(sockfd);  
             break;
+        case CMD_TYPE_NOTCMD:
+            notCommand();   
        /* case CMD_TYPE_NOTCMD:
             notCommand(sockfd);   
+>>>>>>> master
             break;
        * case CMD_TYPE_PUTS:
             putsCommand(sockfd);   
             break;
         case CMD_TYPE_GETS:
             getsCommand(sockfd);   
+<<<<<<< HEAD
+            break;
+=======
             break;*/
         default:
             break;
