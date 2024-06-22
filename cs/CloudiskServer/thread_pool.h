@@ -62,6 +62,7 @@ typedef enum {
     CMD_TYPE_CD,
     CMD_TYPE_MKDIR,
     CMD_TYPE_RMDIR,
+    CMD_TYPE_RM,
     CMD_TYPE_PUTS,
     CMD_TYPE_GETS,
     CMD_TYPE_NOTCMD,  //不是命令
@@ -163,7 +164,7 @@ void doTask(task_t * task, MYSQL* conn);
 // 一个具体命令的执行
 void cdCommand(task_t * task, MYSQL* conn);
 void lsCommand(task_t * task, MYSQL* conn);
-void pwdCommand(task_t * task, MYSQL* conn);
+void pwdCommand(task_t * task);
 void mkdirCommand(task_t * task, MYSQL* conn);
 void rmdirCommand(task_t * task, MYSQL* conn);
 void rmCommand(task_t * task, MYSQL* conn); 

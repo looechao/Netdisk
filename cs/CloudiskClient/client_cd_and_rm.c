@@ -4,13 +4,12 @@ void cdCommand(int sockfd) {
     char is_true;
     char buf[4096] = { 0 };
 
-    ssize_t rrbytes = recv(sockfd, &is_true, sizeof(char), MSG_WAITALL);
-    printf("is_true = %c\n", is_true);
+    recv(sockfd, &is_true, sizeof(char), MSG_WAITALL);
 
-    rrbytes = recv(sockfd, buf, sizeof(buf), 0);
-    printf("len = %ld\n", rrbytes);
+    recv(sockfd, buf, sizeof(buf), 0);
 
     if (is_true == '1') {
+        puts("1111");
         printf("%s\n", buf);
     }
     /* else if (is_true == '0') { */
@@ -22,11 +21,25 @@ void rmdirCommand(int sockfd) {
     char is_true;
     char buf[4096] = { 0 };
 
-    ssize_t rrbytes = recv(sockfd, &is_true, sizeof(char), MSG_WAITALL);
-    printf("is_true = %c\n", is_true);
+    recv(sockfd, &is_true, sizeof(char), MSG_WAITALL);
 
-    rrbytes = recv(sockfd, buf, sizeof(buf), 0);
-    printf("len = %ld\n", rrbytes);
+    recv(sockfd, buf, sizeof(buf), 0);
+
+    if (is_true == '1') {
+        printf("%s\n", buf);
+    }
+    // else if (is_true == '0') {
+    //     printf("%s\n", buf);
+    // }
+}
+
+void mkdirCommand(int sockfd) {
+    char is_true;
+    char buf[4096] = { 0 };
+
+    recv(sockfd, &is_true, sizeof(char), MSG_WAITALL);
+
+    recv(sockfd, buf, sizeof(buf), 0);
 
     if (is_true == '1') {
         printf("%s\n", buf);
@@ -40,11 +53,9 @@ void rmCommand(int sockfd) {
     char is_true;
     char buf[4096] = { 0 };
 
-    ssize_t rrbytes = recv(sockfd, &is_true, sizeof(char), MSG_WAITALL);
-    printf("is_true = %c\n", is_true);
+    recv(sockfd, &is_true, sizeof(char), MSG_WAITALL);
 
-    rrbytes = recv(sockfd, buf, sizeof(buf), 0);
-    printf("len = %ld\n", rrbytes);
+    recv(sockfd, buf, sizeof(buf), 0);
 
     if (is_true == '1') {
         printf("%s\n", buf);
@@ -53,6 +64,12 @@ void rmCommand(int sockfd) {
     //     printf("%s\n", buf);
     // }
 }
+
+void notCommand(void) {
+    printf("Not command!\n"
+           "Please enter 'ls' 'cd' 'pwd' 'mkdir' 'rmdir' 'rm' 'gets' 'puts' command.\n");
+}
+
 
 // 计算文件 SHA-1 哈希值
 void file_sha1(int fd, char* hash_value)
@@ -95,6 +112,4 @@ void file_sha1(int fd, char* hash_value)
         strcat(result, frag);
     }
     strcpy(hash_value, result);
-
-    close(fd);
 }

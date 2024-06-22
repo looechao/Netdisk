@@ -1,6 +1,6 @@
 #include "client.h"
 
-static int login_username_send(int sockfd, train_t *t);
+static int login_username_send(int sockfd, train_t *t, char* usename);
 static int login_passwd_send(int sockfd, train_t *t);
 
 static int register_username_send(int sockfd, train_t *t);
@@ -27,28 +27,29 @@ void generate_encrypted_code(char* passwd, char* salt, char* cryptpasswd) {
     }
 }
 
-int login(int sockfd)
+int login(int sockfd, char* username)
 {
     train_t t;
     memset(&t, 0, sizeof(t));
 
     printf("请输入 [0]register 或 [1]login ：\n");
     while (1) {
-        int num;
-        scanf("%d", &num);
-        if (num == 0) {
+        char num[3] = { 0 };
+        read(STDIN_FILENO, num, sizeof(num));
+
+        if (strcmp(num, "0\n") == 0) {
             register_username_send(sockfd, &t);
             /* printf("username_finish\n"); */
             register_passwd_send(sockfd, &t);
         }
-        else if (num != 1) {
+        else if (strcmp(num, "1\n") != 0) {
             puts("输入无效，请输入 [0]register 或 [1]login ：");
             continue;
         }
         break;
     }
 
-    login_username_send(sockfd, &t);
+    login_username_send(sockfd, &t, username);
     login_passwd_send(sockfd, &t);
     return 0;
 }
@@ -141,7 +142,7 @@ static int register_passwd_send(int sockfd, train_t* t)
     return 0;
 }
 
-static int login_username_send(int sockfd, train_t *pt)
+static int login_username_send(int sockfd, train_t *pt, char* username)
 {
     printf("username_send.\n");
     train_t t;
@@ -170,6 +171,7 @@ static int login_username_send(int sockfd, train_t *pt)
         }
         //用户名正确，读取setting
         ret = recvn(sockfd, t.buff, t.len);
+        strcpy(username, user);
         break;
     }
     memcpy(pt, &t, sizeof(t));

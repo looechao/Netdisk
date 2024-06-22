@@ -386,8 +386,8 @@ void cdCommand(task_t* task, MYSQL* conn)
     // 初始化虚拟文件表
     file_table f1;
     memset(&f1, 0, sizeof(f1));
-    f1.parent_id = client_users->pwd_id;
-    f1.owner_id = client_users->user_id;
+    f1.parent_id = client_users[task->peerfd].pwd_id;
+    f1.owner_id = client_users[task->peerfd].user_id;
 
     // 模拟用户根目录
     char home_dir[1024] = { 0 };
@@ -415,6 +415,7 @@ void cdCommand(task_t* task, MYSQL* conn)
         strcpy(temp, newfile);
 
         char* token = strtok(newfile, "/\n");
+        f1.parent_id = 0;
         while ((token = strtok(NULL, "/\n")) != NULL) {
             strcpy(f1.file_name, token);
             int ret = select_file_table(conn, &f1);
@@ -464,17 +465,20 @@ void cdCommand(task_t* task, MYSQL* conn)
     return;
 }
 
-void rmdirCommand(task_t * task, MYSQL* conn)                                              
+void mkdirCommand(task_t * task, MYSQL* conn)                                              
 {                                                                             
-    printf("execute rmdir command.\n");                                       
+    printf("execute mkdir command.\n");                                       
     // 错误消息                                                               
     char error_msg[4096] = { 0 };                                             
 
     // 初始化虚拟文件表
     file_table f1;
     memset(&f1, 0, sizeof(f1));
-    f1.parent_id = client_users->pwd_id;
-    f1.owner_id = client_users->user_id;
+    f1.parent_id = client_users[task->peerfd].pwd_id;
+    f1.owner_id = client_users[task->peerfd].user_id;
+    /* printf("owner_id = %d\n", client_users[task->peerfd].user_id); */
+    f1.type = 'd';
+    strcpy(f1.sha1, "0");
                                                                               
     // 模拟用户根目录                                                         
     char curr_dir[128] ;                                                      
@@ -490,6 +494,100 @@ void rmdirCommand(task_t * task, MYSQL* conn)
         last_post++;
 
         char* token = strtok(newfile, "/\n");
+        f1.parent_id = 0;
+        while ((token = strtok(NULL, "/\n")) != NULL) {
+            strcpy(f1.file_name, token);
+            int ret = select_file_table(conn, &f1);
+            if (ret == -1) {
+                sprintf(error_msg, "%s is not existing.\n", task->data); 
+                write_log(error_msg, "warn", my_lock_func);
+
+                char is_true = '1';
+                send(task->peerfd, &is_true, sizeof(is_true), 0);
+                int len = strlen(error_msg);
+                sendn(task->peerfd, error_msg, len);
+
+                return;
+            }
+            else if (f1.type == 'f') {
+                sprintf(error_msg, "%s is not existing.\n", task->data);              
+                write_log(error_msg, "warn", my_lock_func);                           
+
+                char is_true = '1';                                                   
+                send(task->peerfd, &is_true, sizeof(is_true), 0);                     
+
+                int len = strlen(error_msg);                                          
+                sendn(task->peerfd, error_msg, len);                                  
+
+                return;
+
+            }
+            f1.parent_id = f1.file_id;
+        }
+
+    }
+    else {
+        last_post = newfile;
+    }
+
+    strcpy(f1.file_name, last_post);
+    int ret = select_file_table(conn, &f1);
+    if (ret == 0) {
+        sprintf(error_msg, "%s is existing.\n", task->data); 
+        write_log(error_msg, "warn", my_lock_func);
+
+        char is_true = '1';
+        send(task->peerfd, &is_true, sizeof(is_true), 0);
+        int len = strlen(error_msg);
+        sendn(task->peerfd, error_msg, len);
+
+        return;
+    }
+
+    // 添加目录
+    add_file_table(conn, &f1);
+
+    sprintf(error_msg, "makedir an directory %s succese.", task->data); 
+    write_log(error_msg, "warn", my_lock_func);                       
+
+    char is_true = '0';                                               
+    send(task->peerfd, &is_true, sizeof(is_true), 0);                 
+
+    int len = strlen(error_msg);                                      
+    sendn(task->peerfd, error_msg, len);                              
+
+    return;                                                           
+}
+
+void rmdirCommand(task_t * task, MYSQL* conn)                                              
+{                                                                             
+    printf("execute rmdir command.\n");                                       
+    // 错误消息                                                               
+    char error_msg[4096] = { 0 };                                             
+
+    // 初始化虚拟文件表
+    file_table f1;
+    memset(&f1, 0, sizeof(f1));
+    f1.parent_id = client_users[task->peerfd].pwd_id;
+    f1.owner_id = client_users[task->peerfd].user_id;
+    /* printf("owner_id = %d\n", client_users[task->peerfd].user_id); */
+
+    // 模拟用户根目录                                                         
+    char curr_dir[128] ;                                                      
+    strcpy(curr_dir, client_users[task->peerfd].pwd);           
+
+    char newfile[1024] = { 0 };                                               
+    parse_path(task, curr_dir, newfile);                                      
+    printf("new_dir = %s\n", newfile);
+
+    // 取出最后一个目录
+    char* last_post = strrchr(newfile, '/');
+    if (last_post != NULL) {
+        *last_post = '\0';
+        last_post++;
+
+        char* token = strtok(newfile, "/\n");
+        f1.parent_id = 0;
         while ((token = strtok(NULL, "/\n")) != NULL) {
             strcpy(f1.file_name, token);
             int ret = select_file_table(conn, &f1);
@@ -535,6 +633,7 @@ void rmdirCommand(task_t * task, MYSQL* conn)
     else {
         last_post = newfile;
     }
+    printf("last_post = %s\n", last_post);
 
     strcpy(f1.file_name, last_post);
     int ret = select_file_table(conn, &f1);
@@ -598,8 +697,8 @@ void rmCommand(task_t * task, MYSQL* conn)
     // 初始化虚拟文件表
     file_table f1;
     memset(&f1, 0, sizeof(f1));
-    f1.parent_id = client_users->pwd_id;
-    f1.owner_id = client_users->user_id;
+    f1.parent_id = client_users[task->peerfd].pwd_id;
+    f1.owner_id = client_users[task->peerfd].user_id;
                                                                               
     // 模拟用户根目录                                                         
     char curr_dir[128] ;                                                      
@@ -609,6 +708,7 @@ void rmCommand(task_t * task, MYSQL* conn)
     parse_path(task, curr_dir, newfile);                                      
 
     char* token = strtok(newfile, "/\n");
+    f1.parent_id = 0;
     while ((token = strtok(NULL, "/\n")) != NULL) {
         strcpy(f1.file_name, token);
         int ret = select_file_table(conn, &f1);
@@ -664,3 +764,15 @@ void rmCommand(task_t * task, MYSQL* conn)
 
     return;                                                           
 }                                                                     
+
+// void notCommand(task_t* task) {
+//     char error_msg[4096] = { 0 };
+//     write_log("Not command", "warn", my_lock_func);                       
+// 
+//     sprintf(error_msg, "Not '%s' command.\n"
+//             "Please enter 'ls' 'cd' 'pwd' 'mkdir' 'rmdir' 'rm' 'gets' 'puts' command.", task->data); 
+// 
+//     int len = strlen(error_msg);                                      
+//     printf("%s\n", error_msg);
+//     sendn(task->peerfd, error_msg, len);                              
+// }
