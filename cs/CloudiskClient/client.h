@@ -31,10 +31,6 @@
 #include <sys/uio.h>
 #include <sys/sendfile.h>
 
-//哈希表
-#include "hashtable.h"
-
-
 #define MAXSIZE 4096 // 最大输入长度
 #define MAXLINE 1024
 #define SIZE(a) (sizeof(a)/sizeof(a[0]))
