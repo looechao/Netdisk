@@ -68,12 +68,17 @@ void doTask(task_t * task, MYSQL* conn)
     //case CMD_TYPE_GETS:
     //    getsCommand(task, conn);   break;
     //
-    //case TASK_LOGIN_USERNAME:
-    //    printf("coming \n");
-    //    username_validation(task, conn);     break;
-    //case TASK_LOGIN_PASSWD:
-    //    password_validation(task, conn);     break;
-    
+    case TASK_LOGIN_USERNAME:
+        printf("coming \n");
+        login_username(task, conn);     break;
+    case TASK_LOGIN_PASSWD:
+        login_password(task);     break;
+    case TASK_REGISTER_USERNAME:
+        printf("coming \n");
+        register_username(task, conn);     break;
+    case TASK_REGISTER_PASSWD:
+        register_password(task, conn);     break;
+
     default:
         break;
     }

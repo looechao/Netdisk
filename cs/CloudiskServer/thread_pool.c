@@ -5,23 +5,13 @@
 //声明全局变量
 user_table client_users[100];
 
+extern MYSQL* conn;
+
 //每一个子线程在执行的函数执行体(start_routine)
 void * threadFunc(void* arg)
 {
     //不断地从任务队列中获取任务，并执行
     threadpool_t * pThreadpool = (threadpool_t*)arg;
-
-    // 连接数据库
-    MYSQL* conn = mysql_init(NULL);
-    if (conn == NULL) {
-        printf("mysql_init failde...\n");
-        exit(EXIT_FAILURE);
-    }
-    conn = mysql_real_connect(conn, NULL, "root", "1234", "wangpan", 0, NULL, 0);
-    if (conn == NULL) {
-        printf("mysql_real_connect failed:%s\n", mysql_error(conn));
-        exit(EXIT_FAILURE);
-    }
 
     while(1) {
         task_t * ptask = taskDeque(&pThreadpool->que);

@@ -72,6 +72,14 @@ typedef enum {
     TASK_LOGIN_PASSWD,
     TASK_LOGIN_PASSWD_OK,
     TASK_LOGIN_PASSWD_ERROR,
+
+    TASK_REGISTER_USERNAME,
+    TASK_REGISTER_USERNAME_OK,
+    TASK_REGISTER_USERNAME_ERROR,
+    TASK_REGISTER_PASSWD,
+    TASK_REGISTER_SUCESSES,
+    TASK_REGISTER_ERROR,
+
 }CmdType;
 
 // //用户结构体
@@ -162,7 +170,11 @@ void rmCommand(task_t * task, MYSQL* conn);
 void notCommand(task_t * task);
 void putsCommand(task_t * task, MYSQL* conn);
 int getsCommand(task_t * task, MYSQL* conn);
-void username_validation(task_t * task); 
-void password_validation(task_t * task);
+/* void username_validation(task_t * task); */ 
+/* void password_validation(task_t * task); */
+void register_username(task_t * task, MYSQL* conn);
+void register_password(task_t * task, MYSQL* conn);
+void login_username(task_t* task, MYSQL* conn);
+void login_password(task_t* task);
 
 #endif
