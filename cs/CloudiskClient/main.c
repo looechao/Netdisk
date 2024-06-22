@@ -2,7 +2,7 @@
 
 int main() {
     //连接服务器
-     int sockfd = my_connect("127.0.0.1", "8888");
+     int sockfd = my_connect("127.0.0.1", "8080");
                                                                   
     //函数在login.c
     login(sockfd);

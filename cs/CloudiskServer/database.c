@@ -49,11 +49,12 @@ int select_user_table(MYSQL* mysql, user_table* ptable) {
 
     int res_user_id;
     char res_user_name[128];
+    char res_salt[128];
     char res_cryptpasswd[128];
     char res_pwd[128];
     int res_pwd_id;
 
-    MYSQL_BIND res_bind[5];
+    MYSQL_BIND res_bind[6];
     memset(res_bind, 0, sizeof(res_bind));
 
     // 绑定输出参数
@@ -64,18 +65,22 @@ int select_user_table(MYSQL* mysql, user_table* ptable) {
     res_bind[1].buffer_type = MYSQL_TYPE_VAR_STRING;
     res_bind[1].buffer = res_user_name;
     res_bind[1].buffer_length = sizeof(res_user_name); // 确定值，空间要大
-
+                                                       
     res_bind[2].buffer_type = MYSQL_TYPE_VAR_STRING;
-    res_bind[2].buffer = res_cryptpasswd;
-    res_bind[2].buffer_length = sizeof(res_cryptpasswd); // 确定值
+    res_bind[2].buffer = res_salt;
+    res_bind[2].buffer_length = sizeof(res_salt); // 确定值
 
     res_bind[3].buffer_type = MYSQL_TYPE_VAR_STRING;
-    res_bind[3].buffer = res_pwd;
-    res_bind[3].buffer_length = sizeof(res_pwd); // 确定值    
+    res_bind[3].buffer = res_cryptpasswd;
+    res_bind[3].buffer_length = sizeof(res_cryptpasswd); // 确定值
+
+    res_bind[4].buffer_type = MYSQL_TYPE_VAR_STRING;
+    res_bind[4].buffer = res_pwd;
+    res_bind[4].buffer_length = sizeof(res_pwd); // 确定值    
     
-    res_bind[4].buffer_type = MYSQL_TYPE_LONG;
-    res_bind[4].buffer = &res_pwd_id;
-    res_bind[4].buffer_length = sizeof(int);
+    res_bind[5].buffer_type = MYSQL_TYPE_LONG;
+    res_bind[5].buffer = &res_pwd_id;
+    res_bind[5].buffer_length = sizeof(int);
 
     // 执行绑定操作
     ret = mysql_stmt_bind_result(stmt, res_bind);
@@ -101,6 +106,7 @@ int select_user_table(MYSQL* mysql, user_table* ptable) {
         }
         ptable->user_id = res_user_id;
         strcpy(ptable->user_name, res_user_name);
+        strcpy(ptable->salt, res_salt);
         strcpy(ptable->cryptpasswd, res_cryptpasswd);
         strcpy(ptable->pwd, res_pwd);
         ptable->pwd_id = res_pwd_id;
@@ -319,7 +325,7 @@ int search_file(MYSQL* mysql, const char* sha1_hash) {
 //------------------------------------------------------------------------------------------
 // 添加用户
 int add_user_table(MYSQL *conn, user_table* ptable) {
-    const char *stmt_str = "INSERT INTO user_table (user_name, cryptpasswd, pwd, pwd_id) VALUES (?, ?, '~', 0)";
+    const char *stmt_str = "INSERT INTO user_table (user_name, salt, cryptpasswd, pwd, pwd_id) VALUES (?, ?, ?, '~', 0)";
     MYSQL_STMT *stmt = mysql_stmt_init(conn);
     if (stmt == NULL) {
         fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
@@ -330,7 +336,7 @@ int add_user_table(MYSQL *conn, user_table* ptable) {
         MYSQL_STMT_ERROR_CHECK(1, stmt);
     }
 
-    MYSQL_BIND bind[2];
+    MYSQL_BIND bind[3];
     memset(bind, 0, sizeof(bind));
 
     char user_name[128] = {0};
@@ -341,13 +347,21 @@ int add_user_table(MYSQL *conn, user_table* ptable) {
     bind[0].is_null = 0;
     bind[0].length = &user_name_length;
 
+    char salt[128] = {0};
+    unsigned long salt_length;
+    bind[1].buffer_type = MYSQL_TYPE_STRING;
+    bind[1].buffer = (char *)salt;
+    bind[1].buffer_length = sizeof(salt);
+    bind[1].is_null = 0;
+    bind[1].length = &salt_length;
+
     char cryptpasswd[128] = {0};
     unsigned long cryptpasswd_length;
-    bind[1].buffer_type = MYSQL_TYPE_STRING;
-    bind[1].buffer = (char *)cryptpasswd;
-    bind[1].buffer_length = sizeof(cryptpasswd);
-    bind[1].is_null = 0;
-    bind[1].length = &cryptpasswd_length;
+    bind[2].buffer_type = MYSQL_TYPE_STRING;
+    bind[2].buffer = (char *)cryptpasswd;
+    bind[2].buffer_length = sizeof(cryptpasswd);
+    bind[2].is_null = 0;
+    bind[2].length = &cryptpasswd_length;
 
     if (mysql_stmt_bind_param(stmt, bind)) {
         MYSQL_STMT_ERROR_CHECK(1, stmt);
@@ -356,6 +370,13 @@ int add_user_table(MYSQL *conn, user_table* ptable) {
     strcpy(user_name, ptable->user_name);
     user_name_length = strlen(user_name);
     if (user_name_length == 0) {
+        mysql_stmt_close(stmt);
+        return -1;
+    }
+
+    strcpy(salt, ptable->salt);
+    salt_length = strlen(salt);
+    if (salt_length == 0) {
         mysql_stmt_close(stmt);
         return -1;
     }
