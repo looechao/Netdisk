@@ -8,7 +8,7 @@ void freeStrs(char * pstrs[], int count);
 //获取命令类型
 CmdType get_type (char* args) {
     
-    if(strcmp(args, "pwd") == 0) {
+    if (strcmp(args, "pwd") == 0) {
         return CMD_TYPE_PWD;
     }
     else if (strcmp(args, "ls") == 0) {
@@ -38,53 +38,43 @@ CmdType get_type (char* args) {
 }
 
 // 解析命令行输入，分离命令和参数
-CmdType parse_input(char* input, int peerfd) {
-    char * strs[10] = {0};
+CmdType parse_input(char* input, train_t* information) {
+    char* strs[10] = {0};
     int cnt = 0;
     //分解字符串
     splitString(input, strs, 10, &cnt);
 
-    // if(cnt==0){
-    //     return TASK_LOGIN_USERNAME;
-    // }
     //解析命令
-    train_t information;
-    memset(&information, 0, sizeof(information));
+    memset(information, 0, sizeof(*information));
     
-    information.type = get_type(strs[0]);
-    information.len=0;
-    information.file_size=0;
+    information->type = get_type(strs[0]);
+    information->len = 0;
+    information->file_size = 0;
 
-    if(information.type==CMD_TYPE_NOTCMD){
-        return information.type;
+    if (information->type == CMD_TYPE_NOTCMD) {
+        return information->type;
     }
     //假设最多两个命令
     //for(int i = 1; i < cnt; ++i) {
         //printf("strs[%d]: %s\n", i, strs[i]);
-    if(cnt>1){
-        information.len=strlen(strs[1]);
-        strcpy(information.buff,strs[1]);
+    if (cnt > 1) {
+        information->len = strlen(strs[1]);
+        strcpy(information->buff, strs[1]);
     } 
     //}
     
     //如果是gets命令，需要查看当前是否有这个文件
-    if(information.type == CMD_TYPE_GETS){
-        check_files(&information);   
+    if(information->type == CMD_TYPE_GETS){
+        check_files(information);   
     }
 
-    //发送命令
-    send(peerfd, &information, 
-         sizeof(information.len)+sizeof(information.type)
-         +sizeof(information.file_size)+ information.len
-         , 0); 
-    
     freeStrs(strs, cnt);
-    return information.type;
+    return information->type;
 }
 
 int check_files(train_t *command){
      //默认存储文件夹./default_download
-    char default_download[]="./default_download/";
+    char default_download[] = "./default_download/";
 
     char full_path[1024];
     // 初始化 full_path 为 default_download 的内容
@@ -107,10 +97,11 @@ int check_files(train_t *command){
     if (stat(full_path, &file_stat) == 0) {
         printf("文件 %s 存在,在后面继续下载\n", full_path);
         printf("文件大小: %ld 字节\n", file_stat.st_size);
+
         command->file_size=file_stat.st_size;
     } else {
         printf("文件 %s 没有，需重新下载\n", full_path);
-        command->file_size=0;
+        command->file_size = 0;
     }
     
     return 1;
