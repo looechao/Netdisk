@@ -1,6 +1,6 @@
 #include "client.h"
 
-void cdCommand(int sockfd) {
+void cdCommand(int sockfd, char* username) {
     char is_true;
     char buf[4096] = { 0 };
 
@@ -12,9 +12,10 @@ void cdCommand(int sockfd) {
         puts("1111");
         printf("%s\n", buf);
     }
-    /* else if (is_true == '0') { */
-    /*     printf("%s\n", buf); */
-    /* } */
+    else if (is_true == '0') {
+        strcpy(username, buf);
+        /* printf("%s\n", buf); */
+    }
 }
 
 void lsCommand(int sockfd) {
@@ -22,11 +23,18 @@ void lsCommand(int sockfd) {
 
     recv(sockfd, buf, sizeof(buf), 0);
 
+    printf("file_name\tfile_size\tfile_type\n");
+
     char* token = strtok(buf, " \n");
     int i = 1;
     
     while (token != NULL) {
-        printf("%s\t", token);
+        printf("%5s\t", token);
+
+        if (strlen(token) < 8) {
+            putchar('\t');
+        }
+
         token = strtok(NULL, " \n");
         if (i % 3 == 0) {
             putchar('\n');

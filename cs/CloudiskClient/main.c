@@ -39,7 +39,7 @@ int main() {
             pwdCommand(sockfd);   
             break;
         case CMD_TYPE_CD:
-            cdCommand(sockfd);    
+            cdCommand(sockfd, username);    
             break;
         case CMD_TYPE_LS:
             lsCommand(sockfd);    

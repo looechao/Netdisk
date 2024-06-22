@@ -407,3 +407,25 @@
 2024-06-22 19:41:13 INFO  main.c:98: server started !
 2024-06-22 19:41:19 INFO  log.c:162: 用户登录成功
 2024-06-22 19:41:21 INFO  log.c:162: exiecute ls command
+2024-06-22 19:51:14 INFO  main.c:98: server started !
+2024-06-22 19:51:22 INFO  log.c:162: 用户登录成功
+2024-06-22 19:51:25 INFO  log.c:162: exiecute ls command
+2024-06-22 19:52:08 INFO  log.c:162: 用户登录成功
+2024-06-22 19:52:13 INFO  log.c:162: exiecute ls command
+2024-06-22 19:52:55 INFO  log.c:162: 用户登录成功
+2024-06-22 19:52:57 INFO  log.c:162: exiecute ls command
+2024-06-22 19:53:56 INFO  log.c:162: exiecute ls command
+2024-06-22 19:56:26 INFO  log.c:162: 用户登录成功
+2024-06-22 19:56:29 INFO  log.c:162: exiecute ls command
+2024-06-22 19:57:10 INFO  log.c:162: exiecute ls command
+2024-06-22 20:01:21 INFO  log.c:162: 用户登录成功
+2024-06-22 20:01:22 INFO  log.c:162: exiecute ls command
+2024-06-22 20:01:28 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 20:11:51 INFO  main.c:98: server started !
+2024-06-22 20:11:58 INFO  log.c:162: 用户登录成功
+2024-06-22 20:12:04 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 20:12:19 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 20:17:27 INFO  main.c:98: server started !
+2024-06-22 20:17:33 INFO  log.c:162: 用户登录成功
+2024-06-22 20:17:35 INFO  log.c:162: exiecute ls command
+2024-06-22 20:17:37 INFO  log.c:162: Succeeded in switching directory ~/aaa

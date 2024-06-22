@@ -64,7 +64,7 @@ CmdType parse_input(char* str, int peerfd); // 解析命令
 int login(int sockfd, char* username);
 
 // 一个具体命令的执行
-void cdCommand(int sockfd);
+void cdCommand(int sockfd, char* username);
 void lsCommand(int sockfd);
 void pwdCommand(int sockfd);
 void mkdirCommand(int sockfd);

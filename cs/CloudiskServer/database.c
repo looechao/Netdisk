@@ -310,15 +310,15 @@ int search_currdir_file(MYSQL* mysql, file_table* ptable, char* data) {
     if (!res) {
         MYSQL_STMT_ERROR_CHECK(-1, stmt);
     }
-    MYSQL_FIELD* field;
-    int cols = mysql_num_fields(res);
-    field = mysql_fetch_fields(res);
-    for (int i = 0; i < cols; ++i) {
-        strcat(data, field[i].name);
-        strcat(data, " ");
-        printf("%s\t ", field[i].name);
-    }
-    putchar('\n');
+    // MYSQL_FIELD* field;
+    // int cols = mysql_num_fields(res);
+    // field = mysql_fetch_fields(res);
+    // for (int i = 0; i < cols; ++i) {
+    //     strcat(data, field[i].name);
+    //     strcat(data, " ");
+    //     printf("%s\t ", field[i].name);
+    // }
+    // putchar('\n');
 
     // 绑定结果
     MYSQL_BIND result[3];
@@ -348,7 +348,7 @@ int search_currdir_file(MYSQL* mysql, file_table* ptable, char* data) {
     }
 
     while (!mysql_stmt_fetch(stmt)) {
-        printf("%s\t%d\t%s\t", res_name, res_size, res_type);
+        /* printf("%s\t%d\t%s\t", res_name, res_size, res_type); */
         char temp[128] = { 0 };
         sprintf(temp, "%s %d %s ", res_name, res_size, res_type);
         strcat(data, temp);

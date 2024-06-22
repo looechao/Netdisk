@@ -461,6 +461,11 @@ void cdCommand(task_t* task, MYSQL* conn)
     char is_true = '0';
     send(task->peerfd, &is_true, sizeof(is_true), 0);
     int len = strlen(error_msg);
+
+    char* temp = current_dir + 1;
+    char temp2[512] = { 0 };
+    strcpy(temp2, temp);
+    sprintf(current_dir, "%s%s", client_users[task->peerfd].user_name, temp2);
     sendn(task->peerfd, current_dir, len);
 
     return;
@@ -823,10 +828,7 @@ void lsCommand(task_t* task, MYSQL* conn) {
     }
 
     char data[4096] = { 0 };
-    puts("start");
     search_currdir_file(conn, &f1, data);
-
-    printf("data = %s\n", data);
 
     int len = strlen(data);
     sendn(task->peerfd, data, len);
