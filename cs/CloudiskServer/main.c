@@ -19,7 +19,7 @@ MYSQL *connect_database() {
         exit(EXIT_FAILURE);
     }
 
-    if (mysql_real_connect(conn, NULL, "root", "84561", "wangpan", 0, NULL, 0) == NULL) {
+    if (mysql_real_connect(conn, NULL, "root", "1234", "wangpan", 0, NULL, 0) == NULL) {
         fprintf(stderr, "mysql_real_connect failed:%s\n", mysql_error(conn));
         mysql_close(conn);
         exit(EXIT_FAILURE);
