@@ -70,10 +70,10 @@ int main(void) {
         case CMD_TYPE_RM:
             rmCommand(sockfd);  
             break;
-        case CMD_TYPE_NOTCMD:
+       /* case CMD_TYPE_NOTCMD:
             notCommand(sockfd);   
             break;
-       /* case CMD_TYPE_PUTS:
+       * case CMD_TYPE_PUTS:
             putsCommand(sockfd);   
             break;
         case CMD_TYPE_GETS:
