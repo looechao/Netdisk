@@ -49,11 +49,12 @@ int select_user_table(MYSQL* mysql, user_table* ptable) {
 
     int res_user_id;
     char res_user_name[128];
+    char res_salt[128];
     char res_cryptpasswd[128];
     char res_pwd[128];
     int res_pwd_id;
 
-    MYSQL_BIND res_bind[5];
+    MYSQL_BIND res_bind[6];
     memset(res_bind, 0, sizeof(res_bind));
 
     // 绑定输出参数
@@ -64,18 +65,22 @@ int select_user_table(MYSQL* mysql, user_table* ptable) {
     res_bind[1].buffer_type = MYSQL_TYPE_VAR_STRING;
     res_bind[1].buffer = res_user_name;
     res_bind[1].buffer_length = sizeof(res_user_name); // 确定值，空间要大
-
+                                                       
     res_bind[2].buffer_type = MYSQL_TYPE_VAR_STRING;
-    res_bind[2].buffer = res_cryptpasswd;
-    res_bind[2].buffer_length = sizeof(res_cryptpasswd); // 确定值
+    res_bind[2].buffer = res_salt;
+    res_bind[2].buffer_length = sizeof(res_salt); // 确定值
 
     res_bind[3].buffer_type = MYSQL_TYPE_VAR_STRING;
-    res_bind[3].buffer = res_pwd;
-    res_bind[3].buffer_length = sizeof(res_pwd); // 确定值    
+    res_bind[3].buffer = res_cryptpasswd;
+    res_bind[3].buffer_length = sizeof(res_cryptpasswd); // 确定值
+
+    res_bind[4].buffer_type = MYSQL_TYPE_VAR_STRING;
+    res_bind[4].buffer = res_pwd;
+    res_bind[4].buffer_length = sizeof(res_pwd); // 确定值    
     
-    res_bind[4].buffer_type = MYSQL_TYPE_LONG;
-    res_bind[4].buffer = &res_pwd_id;
-    res_bind[4].buffer_length = sizeof(int);
+    res_bind[5].buffer_type = MYSQL_TYPE_LONG;
+    res_bind[5].buffer = &res_pwd_id;
+    res_bind[5].buffer_length = sizeof(int);
 
     // 执行绑定操作
     ret = mysql_stmt_bind_result(stmt, res_bind);
@@ -101,6 +106,7 @@ int select_user_table(MYSQL* mysql, user_table* ptable) {
         }
         ptable->user_id = res_user_id;
         strcpy(ptable->user_name, res_user_name);
+        strcpy(ptable->salt, res_salt);
         strcpy(ptable->cryptpasswd, res_cryptpasswd);
         strcpy(ptable->pwd, res_pwd);
         ptable->pwd_id = res_pwd_id;
@@ -123,7 +129,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     } 
 
     // 执行PREPARE操作
-    const char* sql = "SELECT * FROM file_table WHERE parent_id = ? AND filename = ? AND owner_id = ? AND tomb = 'y'";
+    const char* sql = "SELECT * FROM file_table WHERE parent_id = ? AND file_name = ? AND owner_id = ? AND tomb = 'y'";
     int ret = mysql_stmt_prepare(stmt, sql, strlen(sql));
     MYSQL_STMT_ERROR_CHECK(ret, stmt);
 
@@ -254,6 +260,116 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     return 0;
 }
 
+int search_currdir_file(MYSQL* mysql, file_table* ptable, char* data) {
+    MYSQL_STMT* stmt = mysql_stmt_init(mysql);
+    if (stmt == NULL) {
+        printf("(%d, %s)\n", mysql_errno(mysql), mysql_error(mysql));
+        return -1;
+    }
+
+    // 准备一个 SQL 预处理语句
+    const char* cmd = "SELECT file_name, file_size, type FROM file_table WHERE parent_id = ? AND owner_id = ? AND tomb = 'y'";
+    if (mysql_stmt_prepare(stmt, cmd, strlen(cmd))) {
+        MYSQL_STMT_ERROR_CHECK(-1, stmt);
+    }
+
+    // 获取占位符的个数
+    int count = mysql_stmt_param_count(stmt);
+    if (count != 2) {
+        MYSQL_STMT_ERROR_CHECK(-1, stmt);
+    }
+
+    // 设置参数
+    MYSQL_BIND bind[2];
+    memset(bind, 0, sizeof(bind));
+    int pid = ptable->parent_id;
+    int uid = ptable->owner_id;
+
+    // 绑定参数
+    bind[0].buffer_type = MYSQL_TYPE_LONG;
+    bind[0].buffer = (char*)&pid;
+    bind[0].is_null = 0;
+    bind[0].length = 0;
+
+    bind[1].buffer_type = MYSQL_TYPE_LONG;
+    bind[1].buffer = (char*)&uid;
+    bind[1].is_null = 0;
+    bind[1].length = 0;
+
+    if (mysql_stmt_bind_param(stmt, bind)) {
+        MYSQL_STMT_ERROR_CHECK(-1, stmt);
+    }
+
+    // 执行
+    if (mysql_stmt_execute(stmt)) {
+        MYSQL_STMT_ERROR_CHECK(-1, stmt);
+    }
+
+    // 获取 field 字段
+    MYSQL_RES* res = mysql_stmt_result_metadata(stmt);
+    if (!res) {
+        MYSQL_STMT_ERROR_CHECK(-1, stmt);
+    }
+    // MYSQL_FIELD* field;
+    // int cols = mysql_num_fields(res);
+    // field = mysql_fetch_fields(res);
+    // for (int i = 0; i < cols; ++i) {
+    //     strcat(data, field[i].name);
+    //     strcat(data, " ");
+    //     printf("%s\t ", field[i].name);
+    // }
+    // putchar('\n');
+
+    // 绑定结果
+    MYSQL_BIND result[3];
+    memset(result, 0, sizeof(result));
+    char res_name[20] = {0};
+    int res_size;
+    char res_type[4] = { 0 };
+
+    result[0].buffer_type = MYSQL_TYPE_VAR_STRING;
+    result[0].buffer = (char*)&res_name;
+    result[0].buffer_length = sizeof(res_name);
+
+    result[1].buffer_type = MYSQL_TYPE_LONG;
+    result[1].buffer = &res_size;
+    result[1].buffer_length = sizeof(res_size);
+
+    result[2].buffer_type = MYSQL_TYPE_VAR_STRING;
+    result[2].buffer = res_type;
+    result[2].buffer_length = sizeof(res_type);
+
+    if (mysql_stmt_bind_result(stmt, result)) {
+        MYSQL_STMT_ERROR_CHECK(-1, stmt);
+    }
+
+    if (mysql_stmt_store_result(stmt)) {
+        MYSQL_STMT_ERROR_CHECK(-1, stmt);
+    }
+
+    while (!mysql_stmt_fetch(stmt)) {
+        /* printf("%s\t%d\t%s\t", res_name, res_size, res_type); */
+        char temp[128] = { 0 };
+        sprintf(temp, "%s %d %s ", res_name, res_size, res_type);
+        strcat(data, temp);
+    }
+
+    //while (1) {
+    //    int status = mysql_stmt_fetch(stmt);
+    //    if (status == 1 || status == MYSQL_NO_DATA) {
+    //        break;
+    //    }
+
+    //    printf("%d\t%s\t%s\t%s", res_id, res_name, res_birth, res_sex);
+    //    putchar('\n');
+    //}
+
+    mysql_stmt_free_result(stmt);
+    mysql_stmt_close(stmt);
+
+    return 0;
+}
+
 int search_file(MYSQL* mysql, const char* sha1_hash) {
     // 初始化MYSQL_STMT
     MYSQL_STMT* stmt = mysql_stmt_init(mysql);
@@ -319,7 +435,7 @@ int search_file(MYSQL* mysql, const char* sha1_hash) {
 //------------------------------------------------------------------------------------------
 // 添加用户
 int add_user_table(MYSQL *conn, user_table* ptable) {
-    const char *stmt_str = "INSERT INTO user_table (user_name, cryptpasswd, pwd, pwd_id) VALUES (?, ?, '~', 0)";
+    const char *stmt_str = "INSERT INTO user_table (user_name, salt, cryptpasswd, pwd, pwd_id) VALUES (?, ?, ?, '~', 0)";
     MYSQL_STMT *stmt = mysql_stmt_init(conn);
     if (stmt == NULL) {
         fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
@@ -330,7 +446,7 @@ int add_user_table(MYSQL *conn, user_table* ptable) {
         MYSQL_STMT_ERROR_CHECK(1, stmt);
     }
 
-    MYSQL_BIND bind[2];
+    MYSQL_BIND bind[3];
     memset(bind, 0, sizeof(bind));
 
     char user_name[128] = {0};
@@ -341,13 +457,21 @@ int add_user_table(MYSQL *conn, user_table* ptable) {
     bind[0].is_null = 0;
     bind[0].length = &user_name_length;
 
+    char salt[128] = {0};
+    unsigned long salt_length;
+    bind[1].buffer_type = MYSQL_TYPE_STRING;
+    bind[1].buffer = (char *)salt;
+    bind[1].buffer_length = sizeof(salt);
+    bind[1].is_null = 0;
+    bind[1].length = &salt_length;
+
     char cryptpasswd[128] = {0};
     unsigned long cryptpasswd_length;
-    bind[1].buffer_type = MYSQL_TYPE_STRING;
-    bind[1].buffer = (char *)cryptpasswd;
-    bind[1].buffer_length = sizeof(cryptpasswd);
-    bind[1].is_null = 0;
-    bind[1].length = &cryptpasswd_length;
+    bind[2].buffer_type = MYSQL_TYPE_STRING;
+    bind[2].buffer = (char *)cryptpasswd;
+    bind[2].buffer_length = sizeof(cryptpasswd);
+    bind[2].is_null = 0;
+    bind[2].length = &cryptpasswd_length;
 
     if (mysql_stmt_bind_param(stmt, bind)) {
         MYSQL_STMT_ERROR_CHECK(1, stmt);
@@ -356,6 +480,13 @@ int add_user_table(MYSQL *conn, user_table* ptable) {
     strcpy(user_name, ptable->user_name);
     user_name_length = strlen(user_name);
     if (user_name_length == 0) {
+        mysql_stmt_close(stmt);
+        return -1;
+    }
+
+    strcpy(salt, ptable->salt);
+    salt_length = strlen(salt);
+    if (salt_length == 0) {
         mysql_stmt_close(stmt);
         return -1;
     }
@@ -426,7 +557,7 @@ int add_file_table(MYSQL *conn, file_table* ptable) {
     bind[4].length = 0;
 
     char type;
-    bind[5].buffer_type = MYSQL_TYPE_STRING;
+    bind[5].buffer_type = MYSQL_TYPE_VAR_STRING;
     bind[5].buffer = (char *)&type;
     bind[5].buffer_length = sizeof(type);
     bind[5].is_null = 0;

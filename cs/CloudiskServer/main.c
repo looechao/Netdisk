@@ -8,12 +8,26 @@ int exitPipe[2];
 pthread_mutex_t lock;
 pthread_mutexattr_t attr;
 
-#include "linked_list.h"
-#include "user.h"
-
 #define EPOLL_ARR_SIZE 100
 
-ListNode * userList = NULL;
+// 连接数据库
+MYSQL* conn;
+MYSQL *connect_database() {
+    MYSQL *conn = mysql_init(NULL);
+    if (conn == NULL) {
+        fprintf(stderr, "mysql_init() failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (mysql_real_connect(conn, NULL, "root", "84561", "wangpan", 0, NULL, 0) == NULL) {
+        fprintf(stderr, "mysql_real_connect failed:%s\n", mysql_error(conn));
+        mysql_close(conn);
+        exit(EXIT_FAILURE);
+    }
+
+    return conn;
+}
+
 void sigHandler(int num)
 {
     printf("\n sig is coming.%d\n",num);
@@ -37,6 +51,7 @@ int main(void)
         return 0;
     }
 
+    conn = connect_database();
 
     //ip,port,threadNum
     printf("sizeof(CmdType):%lu\n", sizeof(CmdType));
@@ -147,13 +162,6 @@ int main(void)
                         printf("The key %s does not exist in the hashtable\n", key);
                     }
 
-
-                    strcpy(client_users[peerfd].pwd,"./User");    
-                    /* client_users[peerfd].clientaddr=clientaddr; */
-                     //添加用户节点
-                    user_t * user = (user_t*)calloc(1, sizeof(user_t));
-                    user->sockfd = peerfd;
-					appendNode(&userList, user);
                 } else if(fd == exitPipe[0]) {
                     //线程池要退出
                     int howmany = 0;
