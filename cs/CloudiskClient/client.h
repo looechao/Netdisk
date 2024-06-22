@@ -1,11 +1,48 @@
-#include <func.h>
+#ifndef __WD_CLIENT_H
+#define __WD_CLIENT_H
+
 #include <string.h>
 #include <unistd.h>
 #include <crypt.h>
 #include <openssl/evp.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <errno.h>
+#include <error.h>
+#include <sys/mman.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <signal.h>
+#include <dirent.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <sys/epoll.h>
+#include <assert.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <pthread.h>
+#include <sys/uio.h>
+#include <sys/sendfile.h>
+
+//哈希表
+#include "hashtable.h"
+
 
 #define MAXSIZE 4096 // 最大输入长度
 #define MAXLINE 1024
+#define SIZE(a) (sizeof(a)/sizeof(a[0]))
+
+#define THREAD_ERROR_CHECK(ret, func) {\
+    if(ret != 0) {\
+        fprintf(stderr, "%s:%s\n", func, strerror(ret));\
+    }}
 
 #define ERROR_CHECK(ret, num, msg) {\
     if(ret == num) {\
@@ -48,10 +85,12 @@ typedef struct{
 
 //连接
 int my_connect(const char* ip,const char* port);
+int addEpollReadfd(int epfd, int fd);
+int delEpollReadfd(int epfd, int fd);
 int recvn(int sockfd, void * buff, int len);
 int sendn(int sockfd, const void * buff, int len);
 
-CmdType parse_input(char* str, int peerfd); // 解析命令
+CmdType parse_input(char* str, train_t* information); // 解析命令
 
 int login(int sockfd);
 
@@ -64,6 +103,9 @@ void rmdirCommand(int sockfd);
 void notCommand(int sockfd);
 void putsCommand(int sockfd);
 void getsCommand(int sockfd);
+void rmCommand(int sockfd);
 
 // 计算文件 SHA-1 
 void file_sha1(int fd, char* hash_value);
+
+#endif
