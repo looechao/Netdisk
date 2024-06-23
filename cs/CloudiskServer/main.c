@@ -13,6 +13,7 @@ pthread_mutexattr_t attr;
 // 建立环形队列
 ListNode* arr_queue[ARR_MAX_SIZE];
 int cs=0;
+int epfd;
 
 // 连接数据库
 MYSQL* conn;
@@ -154,7 +155,7 @@ int main(void)
     int listenfd = tcpInit(foundValue, foundValue2);
 
     //创建epoll实例
-    int epfd = epoll_create1(0);
+    epfd = epoll_create1(0);
     ERROR_CHECK(epfd, -1, "epoll_create1");
 
     //对listenfd进行监听
