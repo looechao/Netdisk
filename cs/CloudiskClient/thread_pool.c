@@ -10,7 +10,7 @@ void* threadFunc(void* arg) {
         task_t* ptask = taskDeque(&pthreadpool->que);
         if (ptask) {
             // 执行业务逻辑
-            int sockfd = my_connect("127.0.0.1", "8888");
+            int sockfd = my_connect("127.0.0.1", "8080");
             train_t t = ptask->t;
             sendn(sockfd, &t, sizeof(t.len)+sizeof(t.type)+sizeof(t.file_size)+ t.len);
             if (t.type == CMD_TYPE_PUTS) {
