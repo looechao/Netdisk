@@ -14,7 +14,7 @@ void* threadFunc(void* arg) {
             train_t t = ptask->t;
             sendn(sockfd, &t, sizeof(t.len)+sizeof(t.type)+sizeof(t.file_size)+ t.len);
             if (t.type == CMD_TYPE_PUTS) {
-                putsCommand(sockfd);   
+                //putsCommand(sockfd);   
             }
             else if (t.type == CMD_TYPE_GETS) {
                 getsCommand(sockfd);

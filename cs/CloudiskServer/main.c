@@ -2,13 +2,17 @@
 #include "log.h"
 #include "databases.h"
 #define EPOLL_ARR_SIZE 100
-
+#define ARR_MAX_SIZE 30
+#include "linked_list.h"
+#include <time.h>
 int exitPipe[2];
 //创建全局锁
 pthread_mutex_t lock;
 pthread_mutexattr_t attr;
 
-#define EPOLL_ARR_SIZE 100
+// 建立环形队列
+ListNode* arr_queue[ARR_MAX_SIZE];
+int cs=0;
 
 // 连接数据库
 MYSQL* conn;
@@ -19,7 +23,7 @@ MYSQL *connect_database() {
         exit(EXIT_FAILURE);
     }
 
-    if (mysql_real_connect(conn, NULL, "root", "84561", "wangpan", 0, NULL, 0) == NULL) {
+    if (mysql_real_connect(conn, NULL, "root", "1234", "wangpan", 0, NULL, 0) == NULL) {
         fprintf(stderr, "mysql_real_connect failed:%s\n", mysql_error(conn));
         mysql_close(conn);
         exit(EXIT_FAILURE);
@@ -43,6 +47,19 @@ int main(void)
     // 创建并初始化一个哈希表
     HashTable hash;
     initHashTable(&hash);
+
+    // 为环形队列中的每个链表初始化一个头结点
+    for (int i = 0; i < ARR_MAX_SIZE; ++i) {
+        arr_queue[i] = createNode(0);
+    }
+    
+    // 建立哈希表,存每个用户最后活跃时间
+    HashTable last_active;
+    initHashTable(&last_active);
+    
+    // 时间索引
+    time_t curtime_index = time(NULL) % 30;
+
     
     //获取配置文件
     int ret=get_conf(&hash);
@@ -70,7 +87,10 @@ int main(void)
         
         //销毁哈希表
         destroyHashTable(&hash);
-
+        destroyHashTable(&last_active);
+        for (int i = 0; i < ARR_MAX_SIZE; ++i) {                                                                           
+            freeList(arr_queue[i]);
+        }
         exit(0);//父进程退出
     }
     //子进程
@@ -81,7 +101,6 @@ int main(void)
         log_add_fp(fp,LOG_INFO);
     }else{
         exit(1);
-
     }
 
     //true - 关闭控制台写日志；
@@ -98,9 +117,12 @@ int main(void)
     log_info("server started !");
     //释放锁
     my_lock_func(false,NULL);
-
+//-------------------------------------------------------------------------------1
     threadpool_t threadpool;
     memset(&threadpool, 0, sizeof(threadpool));
+    threadpool_t thread_time_pool;
+    memset(&threadpool, 0, sizeof(thread_time_pool));
+
 
     //初始化线程池
     char key[100]="thread_num";
@@ -112,6 +134,11 @@ int main(void)
     //启动线程池
     threadpoolStart(&threadpool);
 
+    threadpoolInit(&thread_time_pool,1);
+    //启动线程池
+    threadpool_time_Start(&thread_time_pool);
+
+//-------------------------------------------------------------------------------1
     strcpy(key,"ip");
     foundValue = (char*)find(&hash,key);
     if (foundValue == EMPTY) {
@@ -136,6 +163,7 @@ int main(void)
 
     struct epoll_event * pEventArr = (struct epoll_event*)
         calloc(EPOLL_ARR_SIZE, sizeof(struct epoll_event));
+
     while(1) {
         int nready = epoll_wait(epfd, pEventArr, EPOLL_ARR_SIZE, -1);
         if(nready == -1 && errno == EINTR) {
@@ -156,11 +184,7 @@ int main(void)
                     addEpollReadfd(epfd, peerfd);
                     //将默认工作目录,用户ip放入用户结构体,
                     
-                    strcpy(key,"make_user_address");
-                    foundValue = (char*)find(&hash,key);
-                    if (foundValue == EMPTY) {
-                        printf("The key %s does not exist in the hashtable\n", key);
-                    }
+                    
 
                 } else if(fd == exitPipe[0]) {
                     //线程池要退出
@@ -184,10 +208,33 @@ int main(void)
                     exit(0);
                 } else {//客户端的连接的处理
                     handleMessage(fd, epfd, &threadpool.que);
+                    // 删除旧用户上次的last_active
+                    char old_key[50];
+                    sprintf(old_key, "%d", fd);
+                    
+                    uintptr_t ptr_as_uintptr = (uintptr_t)find(&last_active, old_key);
+                    int last_time = (int)ptr_as_uintptr; // 返回void*
+                    printf("删除结点i%d\n",last_time);
+                    // 删除值为peerfd的那项
+                    deleteNode(&arr_queue[last_time], (void*)6);
+                    printf("删除完成\n");
                 }
+                // 客户端活跃
+                // 加入环形队列
+                curtime_index = time(NULL) % 30;
+                int jointime_index = (curtime_index + 30 - 1) % 30;
+                ListNode* add_head = arr_queue[jointime_index]; 
+                char key[50];
+                sprintf(key, "%d",fd);
+                appendNode(&add_head, (void*)key);
+
+                uintptr_t handle_as_uintptr = (uintptr_t)jointime_index;
+                insert(&last_active, key, (void*)handle_as_uintptr);
+                printHashTable(&last_active);  
             }
         }
     }
     return 0;
 }
+
 

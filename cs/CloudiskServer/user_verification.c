@@ -128,6 +128,7 @@ void login_username(task_t* task, MYSQL* conn) {
     t.type = TASK_LOGIN_USERNAME_OK;
     t.file_size = 0;
     sendn(u1.sockfd, &t, sizeof(t.len) + sizeof(t.type) + sizeof(t.file_size) + t.len);
+    printf("登录结束\n");
 }
 
 void login_password(task_t * task) {

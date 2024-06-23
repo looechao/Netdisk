@@ -69,7 +69,7 @@ static int register_username_send(int sockfd, train_t *t) {
         t->file_size = 0;
         strncpy(t->buff, user, t->len);
         ret = sendn(sockfd, t, sizeof(t->len) + sizeof(t->type) + sizeof(t->file_size) + t->len);
-        /* printf("username_send %d bytes.\n", ret); */
+        printf("username_send %d bytes.\n", ret);
 
         //接收信息
         memset(t, 0, sizeof(*t));
