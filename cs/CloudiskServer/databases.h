@@ -22,7 +22,7 @@ typedef struct {
     char file_name[128];     // 要增加或删除的文件和目录
     int owner_id;
     char sha1[64];
-    int filesize;
+    off_t filesize;
     char type;      // d 是目录， f是文件
     char tomb;      // y 是活着， n是死
 } file_table;

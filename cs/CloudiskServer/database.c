@@ -508,7 +508,7 @@ int add_user_table(MYSQL *conn, user_table* ptable) {
 
 // 在虚拟文件表添加文件(目录)
 int add_file_table(MYSQL *conn, file_table* ptable) {
-    const char *stmt_str = "INSERT INTO file_table (parent_id, file_name, owner_id, sha1, filesize, type, tomb) VALUES (?, ?, ?, ?, ?, ?, 'y')";
+    const char *stmt_str = "INSERT INTO file_table (parent_id, file_name, owner_id, sha1, file_size, type, tomb) VALUES (?, ?, ?, ?, ?, ?, 'y')";
     MYSQL_STMT *stmt = mysql_stmt_init(conn);
     if (!stmt) {
         fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
