@@ -105,14 +105,15 @@ void login_username(task_t* task, MYSQL* conn) {
 
     // 查表，检查用户是否存在
     int ret = select_user_table(conn, &u1);
+    printf("ret = %d\n", ret);
 
     // 用户不存在
     if (ret == -1) {
         train_t t;
         t.len = 0;
-        t.type = TASK_REGISTER_USERNAME_ERROR;
+        t.type = TASK_LOGIN_USERNAME_ERROR;
         t.file_size = 0;
-        sendn(u1.sockfd, &t, sizeof(t.len) + sizeof(t.type) + sizeof(t.file_size));
+        sendn(u1.sockfd, &t, sizeof(t.len) + sizeof(t.type) + sizeof(t.file_size) + t.len);
         write_log("用户不存在", "error", my_lock_func);
         printf("用户不存在\n");
         return;

@@ -450,3 +450,93 @@
 2024-06-22 20:54:34 INFO  log.c:162: exiecute ls command
 2024-06-22 20:54:35 INFO  log.c:162: exiecute ls command
 2024-06-22 20:54:43 INFO  log.c:162: Succeeded in switching directory xiao
+2024-06-22 21:06:30 INFO  main.c:98: server started !
+2024-06-22 21:06:39 INFO  log.c:162: 用户登录成功
+2024-06-22 21:06:41 INFO  log.c:162: exiecute ls command
+2024-06-22 21:06:44 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:06:46 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:06:50 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:06:52 INFO  log.c:162: Succeeded in switching directory xiao
+2024-06-22 21:07:06 INFO  log.c:162: Succeeded in switching directory xiao/aaa
+2024-06-22 21:07:12 INFO  log.c:162: Succeeded in switching directory xiao
+2024-06-22 21:07:16 INFO  log.c:162: Succeeded in switching directory xiao/aaa
+2024-06-22 21:07:20 INFO  log.c:162: Succeeded in switching directory xiao
+2024-06-22 21:32:59 INFO  main.c:98: server started !
+2024-06-22 21:35:51 INFO  log.c:162: 用户登录成功
+2024-06-22 21:35:57 INFO  log.c:162: exiecute ls command
+2024-06-22 21:36:32 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:36:37 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:36:41 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:36:44 INFO  log.c:162: Succeeded in switching directory xiao
+2024-06-22 21:38:28 INFO  log.c:162: Succeeded in switching directory xiao
+2024-06-22 21:38:41 INFO  log.c:162: Succeeded in switching directory xiao/aaa
+2024-06-22 21:38:54 INFO  log.c:162: Succeeded in switching directory xiao
+2024-06-22 21:38:59 INFO  log.c:162: Succeeded in switching directory xiao/aaa
+2024-06-22 21:39:03 INFO  log.c:162: Succeeded in switching directory xiao
+2024-06-22 21:41:15 INFO  main.c:98: server started !
+2024-06-22 21:41:24 INFO  log.c:162: 用户登录成功
+2024-06-22 21:41:28 INFO  log.c:162: exiecute ls command
+2024-06-22 21:41:30 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:41:34 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:41:37 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:41:41 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:41:43 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:41:48 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:41:56 INFO  log.c:162: exiecute ls command
+2024-06-22 21:42:24 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:42:25 INFO  log.c:162: exiecute ls command
+2024-06-22 21:42:29 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:42:31 INFO  log.c:162: exiecute ls command
+2024-06-22 21:42:41 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:42:50 WARN  log.c:165: avc is not existing.
+
+2024-06-22 21:43:13 WARN  log.c:165: 斗破苍穹 is a file and is not a dir.
+
+2024-06-22 21:43:31 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:43:34 INFO  log.c:162: exiecute ls command
+2024-06-22 21:43:59 INFO  log.c:162: exiecute ls command
+2024-06-22 21:44:02 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:44:05 INFO  log.c:162: exiecute ls command
+2024-06-22 21:44:14 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:44:17 INFO  log.c:162: exiecute ls command
+2024-06-22 21:44:20 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:44:22 INFO  log.c:162: exiecute ls command
+2024-06-22 21:47:13 INFO  main.c:98: server started !
+2024-06-22 21:47:27 INFO  log.c:162: 用户登录成功
+2024-06-22 21:47:29 INFO  log.c:162: exiecute ls command
+2024-06-22 21:47:34 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:47:57 ERROR log.c:168: 用户不存在
+2024-06-22 21:47:59 ERROR log.c:168: 用户登录失败
+2024-06-22 21:48:06 ERROR log.c:168: 用户登录失败
+2024-06-22 21:50:13 INFO  main.c:98: server started !
+2024-06-22 21:50:22 INFO  log.c:162: 用户登录成功
+2024-06-22 21:50:26 INFO  log.c:162: exiecute ls command
+2024-06-22 21:50:30 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:50:35 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:51:09 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:51:19 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:51:33 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:51:40 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:51:44 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:51:53 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:51:56 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:52:05 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:52:10 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 21:52:21 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-22 21:52:25 WARN  log.c:165: abc is not existing.
+
+2024-06-22 21:52:32 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-22 22:27:36 INFO  main.c:98: server started !
+2024-06-22 22:27:49 ERROR log.c:168: 注册用户已存在
+2024-06-22 22:28:19 ERROR log.c:168: 用户不存在
+2024-06-22 22:28:38 INFO  main.c:98: server started !
+2024-06-22 22:28:45 ERROR log.c:168: 用户不存在
+2024-06-22 22:45:03 INFO  main.c:98: server started !
+2024-06-22 22:45:10 ERROR log.c:168: 用户不存在
+2024-06-22 22:45:12 ERROR log.c:168: 用户不存在
+2024-06-22 22:45:13 ERROR log.c:168: 用户不存在
+2024-06-22 22:45:14 ERROR log.c:168: 用户不存在
+2024-06-22 22:45:15 ERROR log.c:168: 用户不存在
+2024-06-22 22:45:16 ERROR log.c:168: 用户不存在
+2024-06-22 22:45:17 ERROR log.c:168: 用户不存在
+2024-06-22 22:45:22 INFO  log.c:162: 用户登录成功
