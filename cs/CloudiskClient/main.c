@@ -57,7 +57,7 @@ int main() {
             notCommand();   
             break;
         case CMD_TYPE_PUTS:
-            //putsCommand(sockfd);   
+            putsCommand(sockfd);   
             break;
         case CMD_TYPE_GETS:
             getsCommand(sockfd);   
