@@ -13,6 +13,7 @@ void handleMessage(int sockfd, int epfd, task_queue_t * que)
     //1.2 获取消息类型
     int cmdType = -1;
     ret = recvn(sockfd, &cmdType, sizeof(cmdType));
+
     printf("recv cmd type: %d\n", cmdType);
 
     task_t *ptask = (task_t*)calloc(1, sizeof(task_t));
@@ -22,6 +23,8 @@ void handleMessage(int sockfd, int epfd, task_queue_t * que)
     //还需要传递文件大小，来实现断开重连
     ret = recvn(sockfd,&ptask->file_size,sizeof(ptask->file_size));            
     printf("bussines ptask->file_size=%ld\n",ptask->file_size);
+    //给任务增加epfd
+    ptask->epfd = epfd;
 
     printf("ptask->data = %d\n", length);
     if(length > 0) {
@@ -62,8 +65,8 @@ void doTask(task_t * task, MYSQL* conn)
         rmCommand(task, conn);  break;
     // case CMD_TYPE_NOTCMD:
     //     notCommand(task);   break;
-    // case CMD_TYPE_PUTS:
-    //     putsCommand(task, conn);   break;
+    case CMD_TYPE_PUTS:
+        putsCommand(task, conn);   break;
     
     case CMD_TYPE_GETS:
         getsCommand(task, conn);   break;
