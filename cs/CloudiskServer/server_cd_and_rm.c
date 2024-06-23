@@ -319,7 +319,7 @@ void removeFirstChar(char *str) {
 // 分析客户端传的路径，防止越界访问
 void parse_path(task_t* task, char* curr_dir, char* newfile) {
     char home_dir[1024] = { 0 };
-    strcpy(home_dir, "~");
+    strcpy(home_dir, client_users[task->peerfd].user_name);
     if (task->data[0] == '~') {
         removeFirstChar(task->data);   
         strcpy(curr_dir, home_dir);
@@ -386,7 +386,6 @@ void parse_path(task_t* task, char* curr_dir, char* newfile) {
 void cdCommand(task_t* task, MYSQL* conn)
 {
     printf("execute cd command.\n");
-    write_log("execute cd command", "info", my_lock_func);
     // 存储操作信息
     char error_msg[4096] = { 0 };
 
@@ -398,10 +397,9 @@ void cdCommand(task_t* task, MYSQL* conn)
 
     // 模拟用户根目录
     char home_dir[1024] = { 0 };
-    strcpy(home_dir, "~");
+    strcpy(home_dir, client_users[task->peerfd].user_name);
     char current_dir[1024] = { 0 };
     strcpy(current_dir, client_users[task->peerfd].pwd);
-    /* printf("curr_dir = %s\n", current_dir); */
 
     // 解析命令
     // 使用 strrchr 查找字符 '\n' 最后一次出现的位置  
@@ -456,7 +454,6 @@ void cdCommand(task_t* task, MYSQL* conn)
         strcpy(current_dir, home_dir);
     }
 
-    /* printf("after_dir = %s\n", current_dir); */
     strcpy(client_users[task->peerfd].pwd, current_dir);
     sprintf(error_msg, "Succeeded in switching directory %s", current_dir); 
     write_log(error_msg,"info" , my_lock_func);
@@ -834,10 +831,6 @@ void lsCommand(task_t* task, MYSQL* conn) {
     search_currdir_file(conn, &f1, data);
 
     int len = strlen(data);
-    if (len == 0) {
-        sendn(task->peerfd, "-1", 2);
-    }
-    else {
-        sendn(task->peerfd, data, len);
-    }
+    sendn(task->peerfd, data, len);
+
 }
