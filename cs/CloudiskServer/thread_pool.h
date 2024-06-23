@@ -109,6 +109,7 @@ typedef struct
 
 typedef struct task_s{
     int peerfd;
+    int epfd; //epollfd实例
     CmdType type;
     off_t file_size;
     char data[1000];
@@ -179,5 +180,6 @@ void register_username(task_t * task, MYSQL* conn);
 void register_password(task_t * task, MYSQL* conn);
 void login_username(task_t* task, MYSQL* conn);
 void login_password(task_t* task);
+
 
 #endif

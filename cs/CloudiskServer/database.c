@@ -182,7 +182,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     char res_file_name[128];
     int res_owner_id;
     char res_sha1[64];
-    int res_file_size;
+    int res_filesize;
     char res_type;
     char res_tomb;
 
@@ -211,7 +211,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     res_bind[4].buffer_length = sizeof(res_sha1); // 确定值
 
     res_bind[5].buffer_type = MYSQL_TYPE_LONG;
-    res_bind[5].buffer = &res_file_size;
+    res_bind[5].buffer = &res_filesize;
     res_bind[5].buffer_length = sizeof(int);   
 
     res_bind[6].buffer_type = MYSQL_TYPE_STRING;
@@ -249,7 +249,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
         strcpy(ptable->file_name, res_file_name);
         ptable->owner_id = res_owner_id;
         strcpy(ptable->sha1, res_sha1);
-        ptable->file_size = res_file_size;
+        ptable->filesize = res_filesize;
         ptable->type = res_type;
         ptable->tomb = res_tomb;
     }
@@ -550,9 +550,9 @@ int add_file_table(MYSQL *conn, file_table* ptable) {
     bind[3].is_null = 0;
     bind[3].length = &sha1_length;
 
-    int file_size;
+    int filesize;
     bind[4].buffer_type = MYSQL_TYPE_LONG;
-    bind[4].buffer = (char *)&file_size;
+    bind[4].buffer = (char *)&filesize;
     bind[4].is_null = 0;
     bind[4].length = 0;
 
@@ -573,7 +573,7 @@ int add_file_table(MYSQL *conn, file_table* ptable) {
     owner_id = ptable->owner_id;
     strcpy(sha1, ptable->sha1);
     sha1_length = strlen(sha1);
-    file_size = ptable->file_size;
+    filesize = ptable->filesize;
     type = ptable->type;
 
     if (mysql_stmt_execute(stmt)) {
