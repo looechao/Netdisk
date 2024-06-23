@@ -9,12 +9,11 @@ void cdCommand(int sockfd, char* username) {
     recv(sockfd, buf, sizeof(buf), 0);
 
     if (is_true == '1') {
-        puts("1111");
         printf("%s\n", buf);
     }
     else if (is_true == '0') {
         strcpy(username, buf);
-        /* printf("%s\n", buf); */
+        printf("%s\n", buf);
     }
 }
 
