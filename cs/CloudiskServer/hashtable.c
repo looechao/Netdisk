@@ -3,9 +3,11 @@
 // hash函数
 unsigned int hash(const char *key) {  
     unsigned int hashVal = 0;  
+    puts(key);
     while (*key != '\0') {  
-        hashVal = (hashVal << 5) + hashVal + *key++;  
-    }  
+        hashVal = (hashVal << 5) + hashVal + *key++;
+
+    }
     return hashVal % MAX_SIZE;  
 }  
   
@@ -21,7 +23,7 @@ void initHashTable(HashTable *ht) {
 // 插入键值对  
 void insert(HashTable *ht, const char *key, void * value) {  
     unsigned int index = hash(key);  
-    // 线性探测解决冲突  
+    // 线性探测解决冲突
     while (ht->table[index].value != EMPTY) {  
         index = (index + 1) % MAX_SIZE;  
         if (strcmp(ht->table[index].key, key) == 0) {  
@@ -68,7 +70,7 @@ void printHashTable(HashTable *ht) {
     printf("hashtable's content:\n");
     for (int i = 0; i < MAX_SIZE; i++) {  
         if (ht->table[i].value != EMPTY) {  
-            printf("Key: %s, Value: %s\n", ht->table[i].key, (const char*)ht->table[i].value);  
+            printf("Key: %s, Value: \n", ht->table[i].key);  
         }  
     }  
     printf("\n");
