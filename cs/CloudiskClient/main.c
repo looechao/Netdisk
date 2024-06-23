@@ -1,28 +1,12 @@
 #include "client.h"
-#include "thread_pool.h"
 
-#define EPOLL_ARR_SIZE 100
-
-int main(void) {
+int main() {
     //连接服务器
      int sockfd = my_connect("127.0.0.1", "8080");
                                                                   
     //函数在login.c
     char username[10] = { 0 };
     login(sockfd, username);
-
-    //创建线程池结构体
-    threadpool_t threadpool;
-    memset(&threadpool, 0, sizeof(threadpool));
-    // 初始化线程池
-    threadpoolInit(&threadpool, 1);
-    // 启动线程池
-    threadpoolStart(&threadpool);
-
-    // 创建epoll实例
-    //int epfd = epoll_create1(0);
-    //ERROR_CHECK(epfd, -1, "epoll_create1");
-    //struct epoll_event* pEventArr = (struct epoll_event*)calloc(EPOLL_ARR_SIZE, sizeof(struct epoll_event));
 
     char str[MAXLINE];
 
@@ -46,22 +30,11 @@ int main(void) {
             break; // 退出循环
         }
         
-        // 解析命令  返回train_t
-        train_t t;
-        CmdType type = parse_input(str, &t);
+        // 解析 并 发送命令
+        CmdType type= parse_input(str, sockfd);
         
-        // 长命令加入任务队列；短命令直接处理 
-        if (type == CMD_TYPE_GETS || type == CMD_TYPE_PUTS) {
-            task_t* ptask = (task_t*)calloc(1, sizeof(task_t));
-            ptask->t = t;
-            taskEnque(&threadpool.que, ptask);
-        }
-        else {
-            sendn(sockfd, &t, sizeof(t.len)+sizeof(t.type)+sizeof(t.file_size)+ t.len);
-        }
-
         // 接收服务器返回的信息 #所有人自己创建.c文件，如：gets.c文件存放 getsCommand(sockfd);   
-        switch (type) {
+        switch(type){
         case CMD_TYPE_PWD:  
             pwdCommand(sockfd);   
             break;
@@ -82,25 +55,18 @@ int main(void) {
             break;
         case CMD_TYPE_NOTCMD:
             notCommand();   
-       /* case CMD_TYPE_NOTCMD:
-            notCommand(sockfd);   
->>>>>>> master
             break;
-       * case CMD_TYPE_PUTS:
+        case CMD_TYPE_PUTS:
             putsCommand(sockfd);   
             break;
         case CMD_TYPE_GETS:
             getsCommand(sockfd);   
-<<<<<<< HEAD
             break;
-=======
-            break;*/
         default:
             break;
         }
     }
     close(sockfd);
-
     return 0;
 }
 
