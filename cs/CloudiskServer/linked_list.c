@@ -14,21 +14,26 @@ ListNode* createNode(void * val) {
 // 在链表末尾添加元素
 void appendNode(ListNode **head, void *val) {
     ListNode *newNode = createNode(val);
+    
     if (*head == NULL) {
         *head = newNode;
         return;
     }
+    
     ListNode *current = *head;
     while (current->next != NULL) {
         current = current->next;
     }
     current->next = newNode;
+    printf("添加链表\n");
 }
 
 // 删除链表中值为target的节点（假设只删除一个）
 void deleteNode(ListNode **head, void * target) {
+    
+    printf("deleteNode1\n");
     if (*head == NULL) return;
-
+    printf("deleteNode2\n");
     if ((*head)->val == target) {
         ListNode *temp = *head;
         *head = (*head)->next;

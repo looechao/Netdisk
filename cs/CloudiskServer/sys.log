@@ -450,3 +450,206 @@
 2024-06-22 20:54:34 INFO  log.c:162: exiecute ls command
 2024-06-22 20:54:35 INFO  log.c:162: exiecute ls command
 2024-06-22 20:54:43 INFO  log.c:162: Succeeded in switching directory xiao
+2024-06-22 21:46:56 INFO  main.c:98: server started !
+2024-06-22 21:57:46 INFO  main.c:98: server started !
+2024-06-22 21:59:53 INFO  main.c:98: server started !
+2024-06-22 22:03:45 INFO  main.c:98: server started !
+2024-06-22 22:03:56 ERROR log.c:168: 注册用户插入用户表失败
+2024-06-22 22:04:10 ERROR log.c:168: 用户不存在
+2024-06-22 22:04:12 ERROR log.c:168: 用户登录失败
+2024-06-22 22:04:49 ERROR log.c:168: 用户登录失败
+2024-06-22 22:04:50 ERROR log.c:168: 用户登录失败
+2024-06-22 22:04:51 ERROR log.c:168: 用户登录失败
+2024-06-22 22:04:52 ERROR log.c:168: 用户登录失败
+2024-06-22 22:04:52 ERROR log.c:168: 用户登录失败
+2024-06-22 22:04:54 ERROR log.c:168: 用户登录失败
+2024-06-22 22:04:57 ERROR log.c:168: 用户登录失败
+2024-06-22 22:16:19 INFO  main.c:98: server started !
+2024-06-22 22:16:45 INFO  log.c:162: 注册用户成功
+2024-06-22 22:16:51 INFO  log.c:162: 用户登录成功
+2024-06-22 22:16:59 WARN  log.c:165: makedir an directory aaa succese.
+2024-06-22 22:17:00 INFO  log.c:162: exiecute ls command
+2024-06-22 22:17:02 INFO  log.c:162: exiecute ls command
+2024-06-22 22:19:49 INFO  log.c:162: 用户登录成功
+2024-06-22 22:19:54 WARN  log.c:165: makedir an directory  succese.
+2024-06-22 22:20:11 INFO  main.c:98: server started !
+2024-06-22 22:20:58 INFO  main.c:98: server started !
+2024-06-22 22:22:13 INFO  main.c:98: server started !
+2024-06-22 22:25:14 INFO  main.c:98: server started !
+2024-06-22 22:26:19 INFO  main.c:98: server started !
+2024-06-22 22:26:28 INFO  log.c:162: 用户登录成功
+2024-06-22 22:26:34 WARN  log.c:165: aaa is existing.
+
+2024-06-22 22:26:38 INFO  log.c:162: exiecute ls command
+2024-06-22 22:46:26 INFO  main.c:97: server started !
+2024-06-22 22:46:58 INFO  main.c:97: server started !
+2024-06-22 22:48:54 INFO  main.c:97: server started !
+2024-06-22 22:49:31 INFO  main.c:97: server started !
+2024-06-22 22:51:38 INFO  main.c:97: server started !
+2024-06-22 22:51:48 INFO  main.c:97: server started !
+2024-06-22 22:52:58 INFO  main.c:97: server started !
+2024-06-22 22:54:08 INFO  main.c:97: server started !
+2024-06-22 22:55:54 INFO  main.c:97: server started !
+2024-06-22 22:56:09 INFO  main.c:97: server started !
+2024-06-23 11:54:53 INFO  main.c:97: server started !
+2024-06-23 11:57:36 INFO  main.c:98: server started !
+2024-06-23 11:59:44 INFO  main.c:99: server started !
+2024-06-23 12:00:03 INFO  main.c:99: server started !
+2024-06-23 12:00:06 INFO  main.c:99: server started !
+2024-06-23 12:00:58 INFO  main.c:99: server started !
+2024-06-23 12:03:10 INFO  main.c:99: server started !
+2024-06-23 12:07:11 INFO  main.c:98: server started !
+2024-06-23 12:07:22 INFO  log.c:162: 用户登录成功
+2024-06-23 12:07:30 INFO  log.c:162: exiecute ls command
+2024-06-23 12:07:41 WARN  log.c:165: makedir an directory wmsj succese.
+2024-06-23 12:07:55 INFO  log.c:162: exiecute ls command
+2024-06-23 12:08:01 WARN  log.c:165: makedir an directory  succese.
+2024-06-23 12:09:59 INFO  log.c:162: 用户登录成功
+2024-06-23 12:10:05 WARN  log.c:165: makedir an directory 1111 succese.
+2024-06-23 12:14:11 INFO  main.c:98: server started !
+2024-06-23 12:17:29 INFO  main.c:98: server started !
+2024-06-23 12:19:19 INFO  main.c:98: server started !
+2024-06-23 12:25:25 INFO  main.c:98: server started !
+2024-06-23 12:25:32 INFO  log.c:162: 用户登录成功
+2024-06-23 12:25:37 WARN  log.c:165: makedir an directory 1111 succese.
+2024-06-23 12:25:42 INFO  log.c:162: exiecute ls command
+2024-06-23 12:26:17 ERROR log.c:168: 用户登录失败
+2024-06-23 12:26:19 INFO  log.c:162: 用户登录成功
+2024-06-23 12:26:23 INFO  log.c:162: exiecute ls command
+2024-06-23 12:26:46 INFO  log.c:162: 用户登录成功
+2024-06-23 12:27:00 INFO  log.c:162: 用户登录成功
+2024-06-23 12:27:01 INFO  log.c:162: exiecute ls command
+2024-06-23 12:27:04 INFO  log.c:162: Succeeded in switching directory ~/1111
+2024-06-23 12:27:11 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-23 12:27:13 INFO  log.c:162: Succeeded in switching directory ~/1111
+2024-06-23 12:27:15 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-23 12:27:23 WARN  log.c:165: add is not existing.
+
+2024-06-23 12:27:26 INFO  log.c:162: Succeeded in switching directory ~/aaa
+2024-06-23 12:27:28 INFO  log.c:162: Succeeded in switching directory ~
+2024-06-23 12:33:40 ERROR log.c:168: 用户登录失败
+2024-06-23 12:33:43 ERROR log.c:168: 用户登录失败
+2024-06-23 12:33:46 ERROR log.c:168: 用户登录失败
+2024-06-23 12:33:47 INFO  log.c:162: 用户登录成功
+2024-06-23 12:37:56 INFO  main.c:112: server started !
+2024-06-23 12:38:10 ERROR log.c:168: 用户登录失败
+2024-06-23 12:38:11 INFO  log.c:162: 用户登录成功
+2024-06-23 12:42:14 INFO  main.c:113: server started !
+2024-06-23 12:46:01 INFO  main.c:113: server started !
+2024-06-23 12:47:21 INFO  main.c:113: server started !
+2024-06-23 12:48:06 INFO  main.c:113: server started !
+2024-06-23 12:52:27 INFO  main.c:113: server started !
+2024-06-23 12:53:02 INFO  main.c:113: server started !
+2024-06-23 12:53:34 INFO  main.c:113: server started !
+2024-06-23 12:56:45 INFO  main.c:113: server started !
+2024-06-23 12:56:54 INFO  main.c:113: server started !
+2024-06-23 12:57:17 INFO  main.c:113: server started !
+2024-06-23 12:59:05 INFO  main.c:113: server started !
+2024-06-23 12:59:29 INFO  main.c:113: server started !
+2024-06-23 12:59:50 INFO  main.c:113: server started !
+2024-06-23 13:00:40 INFO  main.c:113: server started !
+2024-06-23 13:00:48 ERROR log.c:168: 用户不存在
+2024-06-23 13:00:49 ERROR log.c:168: 用户登录失败
+2024-06-23 13:00:55 ERROR log.c:168: 用户登录失败
+2024-06-23 13:00:55 ERROR log.c:168: 用户登录失败
+2024-06-23 13:01:07 ERROR log.c:168: 用户登录失败
+2024-06-23 13:01:08 ERROR log.c:168: 用户登录失败
+2024-06-23 13:01:08 ERROR log.c:168: 用户登录失败
+2024-06-23 13:01:08 ERROR log.c:168: 用户登录失败
+2024-06-23 13:01:18 INFO  main.c:113: server started !
+2024-06-23 13:01:36 INFO  main.c:113: server started !
+2024-06-23 13:01:48 INFO  log.c:162: 用户登录成功
+2024-06-23 13:01:50 INFO  log.c:162: exiecute ls command
+2024-06-23 13:01:55 WARN  log.c:165: makedir an directory 2222 succese.
+2024-06-23 14:15:11 INFO  main.c:113: server started !
+2024-06-23 14:16:01 INFO  main.c:113: server started !
+2024-06-23 14:17:01 INFO  main.c:113: server started !
+2024-06-23 14:18:47 INFO  main.c:113: server started !
+2024-06-23 14:27:47 INFO  main.c:113: server started !
+2024-06-23 14:29:53 INFO  main.c:113: server started !
+2024-06-23 14:33:32 INFO  main.c:115: server started !
+2024-06-23 14:34:44 INFO  main.c:115: server started !
+2024-06-23 14:37:35 INFO  main.c:115: server started !
+2024-06-23 14:40:10 INFO  main.c:115: server started !
+2024-06-23 14:41:06 INFO  main.c:115: server started !
+2024-06-23 14:43:34 INFO  main.c:115: server started !
+2024-06-23 14:44:52 INFO  main.c:115: server started !
+2024-06-23 14:45:52 INFO  main.c:115: server started !
+2024-06-23 14:50:28 INFO  main.c:115: server started !
+2024-06-23 14:55:52 INFO  main.c:115: server started !
+2024-06-23 15:00:47 INFO  main.c:115: server started !
+2024-06-23 15:03:54 INFO  main.c:115: server started !
+2024-06-23 15:06:02 INFO  main.c:115: server started !
+2024-06-23 15:06:28 INFO  main.c:115: server started !
+2024-06-23 15:08:41 INFO  main.c:115: server started !
+2024-06-23 15:09:20 INFO  main.c:115: server started !
+2024-06-23 15:09:34 INFO  main.c:115: server started !
+2024-06-23 15:14:26 INFO  main.c:115: server started !
+2024-06-23 15:19:46 INFO  main.c:115: server started !
+2024-06-23 15:23:59 INFO  main.c:115: server started !
+2024-06-23 15:25:07 INFO  main.c:115: server started !
+2024-06-23 15:25:28 INFO  main.c:115: server started !
+2024-06-23 15:27:29 INFO  main.c:115: server started !
+2024-06-23 15:37:44 INFO  main.c:115: server started !
+2024-06-23 15:37:58 INFO  log.c:162: 用户登录成功
+2024-06-23 15:43:00 INFO  main.c:115: server started !
+2024-06-23 15:43:13 INFO  log.c:162: 用户登录成功
+2024-06-23 15:43:54 INFO  log.c:162: exiecute ls command
+2024-06-23 15:45:20 INFO  log.c:162: exiecute ls command
+2024-06-23 15:45:57 INFO  log.c:162: exiecute ls command
+2024-06-23 15:45:59 INFO  log.c:162: exiecute ls command
+2024-06-23 15:49:06 INFO  main.c:115: server started !
+2024-06-23 15:49:21 INFO  log.c:162: 用户登录成功
+2024-06-23 15:50:31 INFO  log.c:162: exiecute ls command
+2024-06-23 15:51:43 INFO  main.c:115: server started !
+2024-06-23 15:52:31 INFO  main.c:115: server started !
+2024-06-23 15:52:46 INFO  log.c:162: 用户登录成功
+2024-06-23 15:53:12 INFO  log.c:162: 用户登录成功
+2024-06-23 15:53:46 INFO  log.c:162: 注册用户成功
+2024-06-23 15:53:55 INFO  log.c:162: 用户登录成功
+2024-06-23 15:54:09 INFO  log.c:162: exiecute ls command
+2024-06-23 15:54:40 INFO  log.c:162: 注册用户成功
+2024-06-23 15:54:44 INFO  log.c:162: 用户登录成功
+2024-06-23 15:55:52 INFO  log.c:162: exiecute ls command
+2024-06-23 15:55:57 INFO  log.c:162: exiecute ls command
+2024-06-23 15:56:03 INFO  log.c:162: exiecute ls command
+2024-06-23 15:56:09 WARN  log.c:165: makedir an directory aaa succese.
+2024-06-23 15:56:29 WARN  log.c:165: makedir an directory bbb succese.
+2024-06-23 15:56:40 WARN  log.c:165: makedir an directory bbb succese.
+2024-06-23 15:56:46 WARN  log.c:165: makedir an directory ccc succese.
+2024-06-23 15:56:47 INFO  log.c:162: exiecute ls command
+2024-06-23 15:56:52 INFO  log.c:162: exiecute ls command
+2024-06-23 15:56:55 INFO  log.c:162: exiecute ls command
+2024-06-23 15:58:36 WARN  log.c:165: makedir an directory aaa succese.
+2024-06-23 15:58:55 INFO  log.c:162: exiecute ls command
+2024-06-23 16:03:42 INFO  main.c:115: server started !
+2024-06-23 16:04:02 INFO  main.c:115: server started !
+2024-06-23 16:05:02 INFO  main.c:115: server started !
+2024-06-23 16:34:05 INFO  main.c:118: server started !
+2024-06-23 16:34:43 INFO  main.c:118: server started !
+2024-06-23 16:34:55 ERROR log.c:168: 用户不存在
+2024-06-23 16:35:16 INFO  log.c:162: 用户登录成功
+2024-06-23 16:35:24 INFO  log.c:162: 用户登录成功
+2024-06-23 16:36:34 ERROR log.c:168: 用户登录失败
+2024-06-23 16:36:40 ERROR log.c:168: 用户登录失败
+2024-06-23 16:36:40 ERROR log.c:168: 用户登录失败
+2024-06-23 16:36:54 INFO  log.c:162: exiecute ls command
+2024-06-23 16:38:14 INFO  main.c:118: server started !
+2024-06-23 16:38:33 ERROR log.c:168: 用户登录失败
+2024-06-23 16:38:35 INFO  log.c:162: 用户登录成功
+2024-06-23 16:41:38 INFO  main.c:118: server started !
+2024-06-23 16:45:19 INFO  main.c:118: server started !
+2024-06-23 16:47:34 INFO  main.c:118: server started !
+2024-06-23 16:47:51 INFO  log.c:162: 用户登录成功
+2024-06-23 16:48:11 INFO  log.c:162: exiecute ls command
+2024-06-23 17:00:04 INFO  main.c:118: server started !
+2024-06-23 17:01:28 INFO  main.c:118: server started !
+2024-06-23 17:03:26 INFO  main.c:118: server started !
+2024-06-23 17:09:02 INFO  main.c:117: server started !
+2024-06-23 17:09:55 INFO  main.c:117: server started !
+2024-06-23 17:13:40 INFO  main.c:117: server started !
+2024-06-23 17:16:09 INFO  main.c:117: server started !
+2024-06-23 17:52:47 INFO  main.c:117: server started !
+2024-06-23 17:54:14 INFO  log.c:162: 用户登录成功
+2024-06-23 18:00:13 INFO  main.c:117: server started !
+2024-06-23 18:00:51 INFO  main.c:117: server started !

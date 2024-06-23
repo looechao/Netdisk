@@ -18,9 +18,6 @@ void appendNode(ListNode **head, void *val);
 // 删除链表中值为target的节点（假设只删除一个）
 void deleteNode(ListNode **head, void * target);
 
-// 删除链表中值为peerfd的节点（假设只删除一个）
-void deleteNode2(ListNode **head, int peerfd);
-
 // 打印链表
 void printList(ListNode *head);
 
