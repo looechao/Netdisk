@@ -182,7 +182,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     char res_file_name[128];
     int res_owner_id;
     char res_sha1[64];
-    int res_filesize;
+    int res_file_size;
     char res_type;
     char res_tomb;
 
@@ -211,7 +211,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
     res_bind[4].buffer_length = sizeof(res_sha1); // 确定值
 
     res_bind[5].buffer_type = MYSQL_TYPE_LONG;
-    res_bind[5].buffer = &res_filesize;
+    res_bind[5].buffer = &res_file_size;
     res_bind[5].buffer_length = sizeof(int);   
 
     res_bind[6].buffer_type = MYSQL_TYPE_STRING;
@@ -249,7 +249,7 @@ int select_file_table(MYSQL* mysql, file_table* ptable) {
         strcpy(ptable->file_name, res_file_name);
         ptable->owner_id = res_owner_id;
         strcpy(ptable->sha1, res_sha1);
-        ptable->filesize = res_filesize;
+        ptable->file_size = res_file_size;
         ptable->type = res_type;
         ptable->tomb = res_tomb;
     }
@@ -508,7 +508,7 @@ int add_user_table(MYSQL *conn, user_table* ptable) {
 
 // 在虚拟文件表添加文件(目录)
 int add_file_table(MYSQL *conn, file_table* ptable) {
-    const char *stmt_str = "INSERT INTO file_table (parent_id, file_name, owner_id, sha1, filesize, type, tomb) VALUES (?, ?, ?, ?, ?, ?, 'y')";
+    const char *stmt_str = "INSERT INTO file_table (parent_id, file_name, owner_id, sha1, file_size, type, tomb) VALUES (?, ?, ?, ?, ?, ?, 'y')";
     MYSQL_STMT *stmt = mysql_stmt_init(conn);
     if (!stmt) {
         fprintf(stderr, "%s\n", mysql_stmt_error(stmt));
@@ -550,9 +550,9 @@ int add_file_table(MYSQL *conn, file_table* ptable) {
     bind[3].is_null = 0;
     bind[3].length = &sha1_length;
 
-    int filesize;
+    int file_size;
     bind[4].buffer_type = MYSQL_TYPE_LONG;
-    bind[4].buffer = (char *)&filesize;
+    bind[4].buffer = (char *)&file_size;
     bind[4].is_null = 0;
     bind[4].length = 0;
 
@@ -573,7 +573,7 @@ int add_file_table(MYSQL *conn, file_table* ptable) {
     owner_id = ptable->owner_id;
     strcpy(sha1, ptable->sha1);
     sha1_length = strlen(sha1);
-    filesize = ptable->filesize;
+    file_size = ptable->file_size;
     type = ptable->type;
 
     if (mysql_stmt_execute(stmt)) {
