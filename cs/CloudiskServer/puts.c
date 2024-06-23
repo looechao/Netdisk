@@ -6,7 +6,8 @@ int recvn_server(int sockfd, void *buf, int length){
     int total = 0;
     char* p = (char *)buf;
     while(total < length){
-        ssize_t sret = recv(sockfd, buf+total, length-total, 0);
+        
+        ssize_t sret = recv(sockfd, buf + total, length-total, 0);
         if(sret < 0){
             if(errno == EAGAIN || errno == EWOULDBLOCK){
                 continue;
@@ -97,10 +98,7 @@ void putsCommand(task_t * task, MYSQL* conn) {
         add_file_table(conn, &f1);
     }else{//秒传，更新文件表
         File train = {2, "on"};
-<<<<<<< HEAD
-=======
         // 如果文件名不同|用户不同|父目录不同，则在文件表中添加新的数据
->>>>>>> master
         send(task->peerfd, &train, sizeof(train.length)+train.length, MSG_NOSIGNAL);
         printf("speed_transfer_done!\n");
     }

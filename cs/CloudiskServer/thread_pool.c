@@ -1,12 +1,18 @@
 #include "thread_pool.h"
 #include <bits/pthreadtypes.h>
 #include "databases.h"
+#include "linked_list.h"
+#include "hashtable.h"
 
 //声明全局变量
 user_table client_users[100];
 
+extern ListNode* arr_queue[30];
+extern HashTable last_active;
+extern int cs;
+extern int epfd;
 extern MYSQL* conn;
-
+//---------------------------------------------------------------------------------1
 //每一个子线程在执行的函数执行体(start_routine)
 void * threadFunc(void* arg)
 {
@@ -27,6 +33,41 @@ void * threadFunc(void* arg)
     return NULL;
 }
 
+//每一个子线程在执行的函数执行体(start_routine)
+void * thread_time_Func(void* arg)
+{
+    while(1) {
+        // 超时的需要踢出
+        time_t curtime_index = time(NULL) % 30;
+        ListNode* del_head = arr_queue[curtime_index];
+
+        while (del_head->next != NULL) {
+            
+            printf("踢了一个\n");
+            ListNode* curr = del_head-> next;
+
+            uintptr_t ptr_as_uintptr = (uintptr_t)curr->val;
+            int del_fd = (int)ptr_as_uintptr; // 返回void*                             
+            // 关闭连接
+            close(del_fd);
+            epoll_ctl(epfd, EPOLL_CTL_DEL, del_fd, NULL);
+
+            del_head->next = curr->next;
+            free(curr);
+    
+            char key[50];
+            sprintf(key, "%d", del_fd);
+            erase(&last_active, key);
+            printf("Connection %d has been closed due to inactivity.\n", del_fd);
+        }
+        sleep(1);
+
+    }
+    printf("sub thread %ld is exiting.\n", pthread_self());
+    return arg;
+}
+
+//---------------------------------------------------------------------------------1
 
 int threadpoolInit(threadpool_t * pthreadpool, int num)
 {
@@ -43,7 +84,7 @@ int threadpoolDestroy(threadpool_t * pthreadpool)
     queueDestroy(&pthreadpool->que);
     return 0;
 }
-
+//-------------------------------------------------------------------------------------2
 int threadpoolStart(threadpool_t * pthreadpool)
 {
     if(pthreadpool) {
@@ -56,7 +97,21 @@ int threadpoolStart(threadpool_t * pthreadpool)
     }
     return 0;
 }
+int threadpool_time_Start(threadpool_t * pthreadpool)
+{
+    if(pthreadpool) {
+        for(int i = 0; i < pthreadpool->pthreadNum; ++i) {
+            int ret = pthread_create(&pthreadpool->pthreads[i],
+                           NULL,
+                           thread_time_Func,NULL);
+            THREAD_ERROR_CHECK(ret, "pthread_create");
+        }
+    }
+    return 0;
+}
 
+
+//-------------------------------------------------------------------------------------2
 int threadpoolStop(threadpool_t * pthreadpool)
 {
     //如果任务队列中还有任务，先等待一下，所有任务执行完毕之后

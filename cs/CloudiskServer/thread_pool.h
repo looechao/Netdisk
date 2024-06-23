@@ -148,6 +148,8 @@ int broadcastALL(task_queue_t* que);
 int threadpoolInit(threadpool_t *, int num);
 int threadpoolDestroy(threadpool_t *);
 int threadpoolStart(threadpool_t *);
+int threadpool_time_Start(threadpool_t *);
+
 int threadpoolStop(threadpool_t *);
 
 
