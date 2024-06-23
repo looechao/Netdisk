@@ -525,3 +525,14 @@
 2024-06-23 10:11:05 INFO  log.c:162: 用户登录成功
 2024-06-23 10:11:06 INFO  log.c:162: exiecute ls command
 2024-06-23 10:11:08 INFO  log.c:162: exiecute ls command
+<<<<<<< HEAD
+=======
+2024-06-23 16:19:36 INFO  main.c:98: server started !
+2024-06-23 16:19:44 INFO  log.c:162: 用户登录成功
+2024-06-23 16:20:27 INFO  main.c:98: server started !
+2024-06-23 16:20:34 INFO  log.c:162: 用户登录成功
+2024-06-23 18:54:58 INFO  main.c:98: server started !
+2024-06-23 18:55:06 INFO  log.c:162: 用户登录成功
+2024-06-23 18:56:04 INFO  main.c:98: server started !
+2024-06-23 18:56:14 INFO  log.c:162: 用户登录成功
+>>>>>>> master
