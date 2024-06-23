@@ -536,3 +536,10 @@
 2024-06-23 18:56:04 INFO  main.c:98: server started !
 2024-06-23 18:56:14 INFO  log.c:162: 用户登录成功
 >>>>>>> master
+2024-06-23 19:38:07 INFO  main.c:98: server started !
+2024-06-23 19:38:47 INFO  main.c:98: server started !
+2024-06-23 19:38:54 INFO  main.c:98: server started !
+2024-06-23 19:39:08 INFO  log.c:162: 用户登录成功
+2024-06-23 19:39:10 INFO  log.c:162: exiecute ls command
+2024-06-23 19:39:11 INFO  log.c:162: exiecute ls command
+2024-06-23 19:40:35 INFO  log.c:162: 用户登录成功
