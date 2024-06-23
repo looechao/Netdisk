@@ -429,114 +429,107 @@
 2024-06-22 20:17:33 INFO  log.c:162: 用户登录成功
 2024-06-22 20:17:35 INFO  log.c:162: exiecute ls command
 2024-06-22 20:17:37 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 20:47:08 INFO  main.c:98: server started !
-2024-06-22 20:47:27 INFO  log.c:162: 用户登录成功
-2024-06-22 20:47:29 INFO  log.c:162: exiecute ls command
-2024-06-22 20:47:32 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 20:47:35 INFO  log.c:162: exiecute ls command
-2024-06-22 20:47:40 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 20:47:46 INFO  log.c:162: Succeeded in switching directory ~/222
-2024-06-22 20:47:47 INFO  log.c:162: exiecute ls command
-2024-06-22 20:48:08 INFO  main.c:98: server started !
-2024-06-22 20:48:13 INFO  log.c:162: 用户登录成功
-2024-06-22 20:48:15 INFO  log.c:162: exiecute ls command
-2024-06-22 20:48:17 INFO  log.c:162: Succeeded in switching directory ~/222
-2024-06-22 20:48:21 INFO  log.c:162: exiecute ls command
-2024-06-22 20:54:20 INFO  main.c:98: server started !
-2024-06-22 20:54:26 INFO  log.c:162: 用户登录成功
-2024-06-22 20:54:28 INFO  log.c:162: exiecute ls command
-2024-06-22 20:54:30 INFO  log.c:162: Succeeded in switching directory ~/222
-2024-06-22 20:54:32 INFO  log.c:162: exiecute ls command
-2024-06-22 20:54:34 INFO  log.c:162: exiecute ls command
-2024-06-22 20:54:35 INFO  log.c:162: exiecute ls command
-2024-06-22 20:54:43 INFO  log.c:162: Succeeded in switching directory xiao
-2024-06-22 21:06:30 INFO  main.c:98: server started !
-2024-06-22 21:06:39 INFO  log.c:162: 用户登录成功
-2024-06-22 21:06:41 INFO  log.c:162: exiecute ls command
-2024-06-22 21:06:44 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:06:46 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:06:50 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:06:52 INFO  log.c:162: Succeeded in switching directory xiao
-2024-06-22 21:07:06 INFO  log.c:162: Succeeded in switching directory xiao/aaa
-2024-06-22 21:07:12 INFO  log.c:162: Succeeded in switching directory xiao
-2024-06-22 21:07:16 INFO  log.c:162: Succeeded in switching directory xiao/aaa
-2024-06-22 21:07:20 INFO  log.c:162: Succeeded in switching directory xiao
-2024-06-22 21:32:59 INFO  main.c:98: server started !
-2024-06-22 21:35:51 INFO  log.c:162: 用户登录成功
-2024-06-22 21:35:57 INFO  log.c:162: exiecute ls command
-2024-06-22 21:36:32 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:36:37 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:36:41 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:36:44 INFO  log.c:162: Succeeded in switching directory xiao
-2024-06-22 21:38:28 INFO  log.c:162: Succeeded in switching directory xiao
-2024-06-22 21:38:41 INFO  log.c:162: Succeeded in switching directory xiao/aaa
-2024-06-22 21:38:54 INFO  log.c:162: Succeeded in switching directory xiao
-2024-06-22 21:38:59 INFO  log.c:162: Succeeded in switching directory xiao/aaa
-2024-06-22 21:39:03 INFO  log.c:162: Succeeded in switching directory xiao
-2024-06-22 21:41:15 INFO  main.c:98: server started !
-2024-06-22 21:41:24 INFO  log.c:162: 用户登录成功
-2024-06-22 21:41:28 INFO  log.c:162: exiecute ls command
-2024-06-22 21:41:30 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:41:34 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:41:37 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:41:41 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:41:43 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:41:48 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:41:56 INFO  log.c:162: exiecute ls command
-2024-06-22 21:42:24 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:42:25 INFO  log.c:162: exiecute ls command
-2024-06-22 21:42:29 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:42:31 INFO  log.c:162: exiecute ls command
-2024-06-22 21:42:41 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:42:50 WARN  log.c:165: avc is not existing.
-
-2024-06-22 21:43:13 WARN  log.c:165: 斗破苍穹 is a file and is not a dir.
-
-2024-06-22 21:43:31 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:43:34 INFO  log.c:162: exiecute ls command
-2024-06-22 21:43:59 INFO  log.c:162: exiecute ls command
-2024-06-22 21:44:02 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:44:05 INFO  log.c:162: exiecute ls command
-2024-06-22 21:44:14 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:44:17 INFO  log.c:162: exiecute ls command
-2024-06-22 21:44:20 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:44:22 INFO  log.c:162: exiecute ls command
-2024-06-22 21:47:13 INFO  main.c:98: server started !
-2024-06-22 21:47:27 INFO  log.c:162: 用户登录成功
-2024-06-22 21:47:29 INFO  log.c:162: exiecute ls command
-2024-06-22 21:47:34 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:47:57 ERROR log.c:168: 用户不存在
-2024-06-22 21:47:59 ERROR log.c:168: 用户登录失败
-2024-06-22 21:48:06 ERROR log.c:168: 用户登录失败
-2024-06-22 21:50:13 INFO  main.c:98: server started !
-2024-06-22 21:50:22 INFO  log.c:162: 用户登录成功
-2024-06-22 21:50:26 INFO  log.c:162: exiecute ls command
-2024-06-22 21:50:30 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:50:35 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:51:09 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:51:19 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:51:33 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:51:40 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:51:44 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:51:53 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:51:56 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:52:05 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:52:10 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 21:52:21 INFO  log.c:162: Succeeded in switching directory ~/aaa
-2024-06-22 21:52:25 WARN  log.c:165: abc is not existing.
-
-2024-06-22 21:52:32 INFO  log.c:162: Succeeded in switching directory ~
-2024-06-22 22:27:36 INFO  main.c:98: server started !
-2024-06-22 22:27:49 ERROR log.c:168: 注册用户已存在
-2024-06-22 22:28:19 ERROR log.c:168: 用户不存在
-2024-06-22 22:28:38 INFO  main.c:98: server started !
-2024-06-22 22:28:45 ERROR log.c:168: 用户不存在
-2024-06-22 22:45:03 INFO  main.c:98: server started !
-2024-06-22 22:45:10 ERROR log.c:168: 用户不存在
-2024-06-22 22:45:12 ERROR log.c:168: 用户不存在
-2024-06-22 22:45:13 ERROR log.c:168: 用户不存在
-2024-06-22 22:45:14 ERROR log.c:168: 用户不存在
-2024-06-22 22:45:15 ERROR log.c:168: 用户不存在
-2024-06-22 22:45:16 ERROR log.c:168: 用户不存在
-2024-06-22 22:45:17 ERROR log.c:168: 用户不存在
-2024-06-22 22:45:22 INFO  log.c:162: 用户登录成功
+2024-06-22 20:30:27 INFO  main.c:98: server started !
+2024-06-22 20:30:36 ERROR log.c:168: 用户不存在
+2024-06-22 20:30:39 ERROR log.c:168: 用户登录失败
+2024-06-22 20:31:18 INFO  main.c:98: server started !
+2024-06-22 20:31:35 ERROR log.c:168: 注册用户插入用户表失败
+2024-06-22 20:31:45 INFO  main.c:98: server started !
+2024-06-22 20:32:13 ERROR log.c:168: 注册用户插入用户表失败
+2024-06-22 20:32:28 INFO  main.c:98: server started !
+2024-06-22 20:32:55 ERROR log.c:168: 注册用户插入用户表失败
+2024-06-22 20:39:15 INFO  main.c:98: server started !
+2024-06-22 20:39:26 INFO  log.c:162: 注册用户成功
+2024-06-22 20:39:31 INFO  log.c:162: 用户登录成功
+2024-06-22 20:39:35 INFO  log.c:162: exiecute ls command
+2024-06-22 20:40:01 INFO  main.c:98: server started !
+2024-06-22 20:40:10 INFO  log.c:162: 用户登录成功
+2024-06-22 20:40:17 WARN  log.c:165: makedir an directory usr succese.
+2024-06-22 20:40:18 INFO  log.c:162: exiecute ls command
+2024-06-22 20:40:49 INFO  main.c:98: server started !
+2024-06-22 20:42:40 INFO  main.c:98: server started !
+2024-06-22 20:42:47 INFO  log.c:162: 用户登录成功
+2024-06-22 20:42:58 WARN  log.c:165: makedir an directory aaa succese.
+2024-06-22 20:45:11 INFO  main.c:98: server started !
+2024-06-22 20:45:27 INFO  log.c:162: 用户登录成功
+2024-06-22 20:45:32 WARN  log.c:165: makedir an directory usr succese.
+2024-06-22 20:45:35 INFO  log.c:162: exiecute ls command
+2024-06-22 20:45:40 INFO  log.c:162: Succeeded in switching directory ~/usr
+2024-06-22 20:45:40 INFO  log.c:162: exiecute ls command
+2024-06-22 20:55:55 INFO  main.c:98: server started !
+2024-06-22 20:56:03 INFO  log.c:162: 用户登录成功
+2024-06-22 20:56:05 INFO  log.c:162: exiecute ls command
+2024-06-22 20:56:54 INFO  log.c:162: 用户登录成功
+2024-06-22 20:57:41 INFO  main.c:98: server started !
+2024-06-22 20:57:49 INFO  log.c:162: 用户登录成功
+2024-06-22 21:00:27 INFO  main.c:98: server started !
+2024-06-22 21:00:35 INFO  log.c:162: 用户登录成功
+2024-06-22 21:06:20 INFO  main.c:98: server started !
+2024-06-22 21:06:28 INFO  log.c:162: 用户登录成功
+2024-06-22 21:10:56 INFO  main.c:98: server started !
+2024-06-22 21:11:03 INFO  log.c:162: 用户登录成功
+2024-06-22 21:14:10 INFO  main.c:98: server started !
+2024-06-22 21:14:25 INFO  main.c:98: server started !
+2024-06-22 21:14:32 INFO  log.c:162: 用户登录成功
+2024-06-22 21:16:37 INFO  main.c:98: server started !
+2024-06-22 21:17:02 INFO  main.c:98: server started !
+2024-06-22 21:19:24 INFO  main.c:98: server started !
+2024-06-22 21:20:08 INFO  main.c:98: server started !
+2024-06-22 21:20:21 INFO  main.c:98: server started !
+2024-06-22 21:21:11 INFO  main.c:98: server started !
+2024-06-22 21:23:04 INFO  main.c:98: server started !
+2024-06-22 21:24:33 INFO  main.c:98: server started !
+2024-06-22 21:25:25 INFO  main.c:98: server started !
+2024-06-22 21:27:43 INFO  main.c:98: server started !
+2024-06-22 21:27:48 ERROR log.c:168: 用户不存在
+2024-06-22 21:28:40 INFO  main.c:98: server started !
+2024-06-22 21:29:46 INFO  main.c:98: server started !
+2024-06-22 21:30:19 INFO  main.c:98: server started !
+2024-06-22 21:40:06 INFO  main.c:98: server started !
+2024-06-22 21:40:12 INFO  log.c:162: 用户登录成功
+2024-06-22 21:41:23 INFO  main.c:98: server started !
+2024-06-22 21:41:29 INFO  log.c:162: 用户登录成功
+2024-06-22 21:42:03 INFO  main.c:98: server started !
+2024-06-22 21:42:10 INFO  log.c:162: 用户登录成功
+2024-06-22 22:27:25 INFO  main.c:98: server started !
+2024-06-22 22:27:34 INFO  log.c:162: 用户登录成功
+2024-06-22 22:27:58 INFO  main.c:98: server started !
+2024-06-22 22:28:41 INFO  main.c:98: server started !
+2024-06-22 22:28:47 INFO  log.c:162: 用户登录成功
+2024-06-23 09:37:17 INFO  main.c:98: server started !
+2024-06-23 09:37:27 INFO  log.c:162: 用户登录成功
+2024-06-23 09:38:23 INFO  main.c:98: server started !
+2024-06-23 09:38:29 ERROR log.c:168: 用户不存在
+2024-06-23 09:38:46 INFO  main.c:98: server started !
+2024-06-23 09:38:55 INFO  log.c:162: 用户登录成功
+2024-06-23 09:39:50 INFO  main.c:98: server started !
+2024-06-23 09:39:58 INFO  log.c:162: 用户登录成功
+2024-06-23 09:48:31 INFO  main.c:98: server started !
+2024-06-23 09:48:41 INFO  log.c:162: 用户登录成功
+2024-06-23 09:49:57 INFO  main.c:98: server started !
+2024-06-23 09:50:05 INFO  log.c:162: 用户登录成功
+2024-06-23 09:55:39 INFO  main.c:98: server started !
+2024-06-23 09:55:46 INFO  log.c:162: 用户登录成功
+2024-06-23 09:57:19 INFO  main.c:98: server started !
+2024-06-23 09:57:29 INFO  log.c:162: 用户登录成功
+2024-06-23 10:00:07 INFO  main.c:98: server started !
+2024-06-23 10:00:15 INFO  log.c:162: 用户登录成功
+2024-06-23 10:02:07 INFO  main.c:98: server started !
+2024-06-23 10:02:12 INFO  log.c:162: 用户登录成功
+2024-06-23 10:03:08 INFO  main.c:98: server started !
+2024-06-23 10:03:17 INFO  log.c:162: 用户登录成功
+2024-06-23 10:04:27 INFO  main.c:98: server started !
+2024-06-23 10:04:33 INFO  log.c:162: 用户登录成功
+2024-06-23 10:04:50 INFO  log.c:162: exiecute ls command
+2024-06-23 10:10:59 INFO  main.c:98: server started !
+2024-06-23 10:11:05 INFO  log.c:162: 用户登录成功
+2024-06-23 10:11:06 INFO  log.c:162: exiecute ls command
+2024-06-23 10:11:08 INFO  log.c:162: exiecute ls command
+2024-06-23 16:19:36 INFO  main.c:98: server started !
+2024-06-23 16:19:44 INFO  log.c:162: 用户登录成功
+2024-06-23 16:20:27 INFO  main.c:98: server started !
+2024-06-23 16:20:34 INFO  log.c:162: 用户登录成功
+2024-06-23 18:54:58 INFO  main.c:98: server started !
+2024-06-23 18:55:06 INFO  log.c:162: 用户登录成功
+2024-06-23 18:56:04 INFO  main.c:98: server started !
+2024-06-23 18:56:14 INFO  log.c:162: 用户登录成功
