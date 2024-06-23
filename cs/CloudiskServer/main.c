@@ -12,6 +12,7 @@ pthread_mutexattr_t attr;
 
 // 建立环形队列
 ListNode* arr_queue[ARR_MAX_SIZE];
+HashTable last_active;
 int cs=0;
 int epfd;
 
@@ -55,7 +56,7 @@ int main(void)
     }
     
     // 建立哈希表,存每个用户最后活跃时间
-    HashTable last_active;
+   //  HashTable last_active;
     initHashTable(&last_active);
     
     // 时间索引

@@ -105,7 +105,7 @@ void login_username(task_t* task, MYSQL* conn) {
 
     // 查表，检查用户是否存在
     int ret = select_user_table(conn, &u1);
-
+ 
     // 用户不存在
     if (ret == -1) {
         train_t t;

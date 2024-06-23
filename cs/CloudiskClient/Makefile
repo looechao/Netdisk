@@ -5,7 +5,8 @@ CC = gcc
 CFLAGS = -Wall -pthread -g
 
 # 链接器标志
-LDFLAGS = -lcrypto -lcrypt -lmysqlclient
+LDFLAGS = -lcrypto -lcrypt 
+LIBS = -L /usr/lib64/mysql -lmysqlclient
 
 # 目标可执行文件
 TARGET = main
@@ -18,7 +19,7 @@ all:clean $(TARGET)
 
 # 链接可执行文件
 $(TARGET):
-	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS) $(LDFLAGS) $(LIBS)
 
 # 清理
 clean:

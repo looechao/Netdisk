@@ -831,10 +831,6 @@ void lsCommand(task_t* task, MYSQL* conn) {
     search_currdir_file(conn, &f1, data);
 
     int len = strlen(data);
-    if (len == 0) {
-        sendn(task->peerfd, "-1", 2);
-    }
-    else {
-        sendn(task->peerfd, data, len);
-    }
+    sendn(task->peerfd, data, len);
+
 }

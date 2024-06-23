@@ -10,6 +10,7 @@ user_table client_users[100];
 extern ListNode* arr_queue[30];
 extern HashTable last_active;
 extern int cs;
+extern int epfd;
 extern MYSQL* conn;
 //---------------------------------------------------------------------------------1
 //每一个子线程在执行的函数执行体(start_routine)
@@ -40,21 +41,17 @@ void * thread_time_Func(void* arg)
         time_t curtime_index = time(NULL) % 30;
         ListNode* del_head = arr_queue[curtime_index];
 
-        //int jointime_index = (curtime_index + 30 - 1) % 30;     
-        //ListNode* add_head = arr_queue[jointime_index];         
-        //char key[50];                                           
-        //int fd = 10;
-        //sprintf(key, "%d", fd);                                  
-        //appendNode(&add_head, (void*)key);                      
-
-        
         while (del_head->next != NULL) {
             
-            printf("踢了一个");
+            printf("踢了一个\n");
             ListNode* curr = del_head-> next;
-            int del_fd = *((int*)curr->val);
+
+            uintptr_t ptr_as_uintptr = (uintptr_t)curr->val;
+            int del_fd = (int)ptr_as_uintptr; // 返回void*                             
             // 关闭连接
             close(del_fd);
+            epoll_ctl(epfd, EPOLL_CTL_DEL, del_fd, NULL);
+
             del_head->next = curr->next;
             free(curr);
     
